@@ -1,0 +1,3 @@
+ALTER TABLE consultorios ADD COLUMN imagen VARCHAR(255),
+    ADD COLUMN latitud DECIMAL(10,8),
+    ADD COLUMN longitud DECIMAL(11,8);

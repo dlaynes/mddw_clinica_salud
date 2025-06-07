@@ -13,7 +13,7 @@ public class Receta {
     private String id;
 
     @ManyToOne()
-    @JoinColumn(name = "historial_id")
+    @JoinColumn(name = "historial_id", referencedColumnName = "historial_id", table = "historial_medico")
     HistorialMedico historialMedico;
 
     @NotBlank(message = "El medicamento es obligatorio")

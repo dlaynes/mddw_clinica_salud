@@ -15,19 +15,19 @@ public class HistorialMedico {
     private String id;
 
     @ManyToOne()
-    @JoinColumn(name="paciente_id", nullable = false)
+    @JoinColumn(name="paciente_id", referencedColumnName = "paciente_id", table = "pacientes", nullable = false)
     private Paciente paciente;
 
     @ManyToOne()
-    @JoinColumn(name="medico_id", nullable = false)
+    @JoinColumn(name="medico_id", referencedColumnName = "medico_id", table = "medicos", nullable = false)
     private Medico medico;
 
     @ManyToOne()
-    @JoinColumn(name="especialidad_id", nullable = false)
+    @JoinColumn(name="especialidad_id", referencedColumnName = "especialidad_id", table = "especialidades", nullable = false)
     private Especialidad especialidad;
 
     @ManyToOne()
-    @JoinColumn(name="servicio_id")
+    @JoinColumn(name="servicio_id", referencedColumnName = "servicio_id", table = "servicios")
     private Servicio servicio;
 
     @Column(name = "fecha_consulta")

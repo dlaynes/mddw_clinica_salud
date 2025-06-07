@@ -16,19 +16,19 @@ public class Cita {
     private String id;
 
     @ManyToOne()
-    @JoinColumn(name="paciente_id", nullable = false)
+    @JoinColumn(name="paciente_id", referencedColumnName = "paciente_id", table = "pacientes", nullable = false)
     private Paciente paciente;
 
     @ManyToOne()
-    @JoinColumn(name="medico_id", nullable = false)
+    @JoinColumn(name="medico_id", referencedColumnName = "medico_id", table = "medicos", nullable = false)
     Medico medico;
 
     @ManyToOne()
-    @JoinColumn(name="especialidad_id", nullable = false)
+    @JoinColumn(name="especialidad_id", referencedColumnName = "especialidad_id", table = "especialidades", nullable = false)
     Especialidad especialidad;
 
     @ManyToOne()
-    @JoinColumn(name="consultorio_id", nullable = false)
+    @JoinColumn(name="consultorio_id", referencedColumnName = "consultorio_id", table = "consultorios", nullable = false)
     Consultorio consultorio;
 
     @Column(name = "fecha_hora")

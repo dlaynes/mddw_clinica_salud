@@ -1,8 +1,8 @@
 package com.grupo2.clinicasalud.model;
 
+import com.grupo2.clinicasalud.validator.coordinates.CoordinatesConstraint;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "consultorios")
@@ -29,9 +29,11 @@ public class Consultorio {
     @Column(name = "imagen")
     private String imagen;
 
+    @CoordinatesConstraint
     @Column(name = "latitud")
     private double latitud;
 
+    @CoordinatesConstraint
     @Column(name = "longitud")
     private double longitud;
 

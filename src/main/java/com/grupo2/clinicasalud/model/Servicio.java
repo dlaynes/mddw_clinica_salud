@@ -14,7 +14,7 @@ public class Servicio {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="especialidad_id")
+    @Column(name ="servicio_id")
     private String id;
 
     @NotBlank(message = "El nombre es obligatorio")

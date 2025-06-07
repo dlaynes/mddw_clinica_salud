@@ -1,18 +1,16 @@
 package com.grupo2.clinicasalud.model;
 
 public enum Genero {
-    masculino('M'),
-    femenino('F'),
-    otro('O');
+    masculino,
+    femenino,
+    otro;
 
-    private final char tipo;
-
-    Genero(char tipo){
-        this.tipo = tipo;
-    }
-
-    public char getTipo(){
-        return this.tipo;
-    }
-
+    public String toString(){
+        return switch (this) {
+            case masculino -> "M";
+            case femenino -> "F";
+            case otro -> "O";
+            default -> "";
+        };
+    };
 }

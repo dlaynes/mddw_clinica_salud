@@ -1,18 +1,19 @@
 package com.grupo2.clinicasalud.model;
 
 public enum EstadoCita {
-    programada("Programada"),
-    completada("Completada"),
-    cancelada("Cancelada"),
-    enEspera("En espera");
+    programada,
+    completada,
+    cancelada,
+    enEspera;
 
-    private final String estado;
-
-    EstadoCita(String estado) {
-        this.estado = estado;
-    }
-
-    public String getEstado() {
-        return this.estado;
+    @Override
+    public String toString() {
+        return switch (this){
+            case programada -> "Programada";
+            case cancelada -> "Cancelada";
+            case enEspera -> "En espera";
+            case completada -> "Completada";
+            default -> "Desconocido";
+        };
     }
 }

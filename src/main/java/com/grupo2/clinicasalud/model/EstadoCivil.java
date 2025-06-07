@@ -1,18 +1,18 @@
 package com.grupo2.clinicasalud.model;
 
 public enum EstadoCivil {
-    casado('C'),
-    soltero('S'),
-    viudo('V'),
-    divorciado('D');
+    casado,
+    soltero,
+    viudo,
+    divorciado;
 
-    private final char tipo;
-
-    EstadoCivil(char tipo){
-        this.tipo = tipo;
-    }
-
-    public char getTipo(){
-        return this.tipo;
+    public String toString(){
+        return switch (this) {
+            case casado -> "C";
+            case soltero -> "S";
+            case viudo -> "V";
+            case divorciado -> "D";
+            default -> "Desconocido";
+        };
     }
 }

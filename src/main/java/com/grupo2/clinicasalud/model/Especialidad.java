@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "especialidades")
@@ -32,6 +33,26 @@ public class Especialidad {
 
     @Column(name = "color")
     private String color;
+
+    @ManyToMany(mappedBy = "especialidades")
+    @JoinTable(
+            name = "especialidades_medicos",
+            joinColumns = @JoinColumn(name = "especialidad_id"),
+            inverseJoinColumns = @JoinColumn(name = "medico_id")
+    )
+    private Set<Medico> medicos;
+
+    public Especialidad(long id, String nombre, String descripcion, Date fechaCreacion, String color){
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.color = color;
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Especialidad(){
+
+    }
 
     public long getId() {
         return id;
@@ -73,12 +94,12 @@ public class Especialidad {
         this.descripcion = descripcion;
     }
 
-    public Especialidad(long id, String nombre, String descripcion, Date fechaCreacion, String color){
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.color = color;
-        this.fechaCreacion = fechaCreacion;
+    public Set<Medico> getMedicos() {
+        return medicos;
+    }
+
+    public void setMedicos(Set<Medico> medicos) {
+        this.medicos = medicos;
     }
 
     public static List<Especialidad> dameEspecialidades(){

@@ -1,11 +1,15 @@
 package com.grupo2.clinicasalud.model;
 
+import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
+import com.grupo2.clinicasalud.model.converter.GeneroAttributeConverter;
+import com.grupo2.clinicasalud.model.converter.TipoDocumentoAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "medicos")
@@ -27,6 +31,7 @@ public class Medico {
 
     @NotBlank(message = "El tipo de documento es obligatorio")
     @Column(name = "tipo_documento")
+    @Convert(converter = TipoDocumentoAttributeConverter.class)
     private TipoDocumento tipoDocumento;
 
     @NotBlank(message = "El número de documento es obligatorio")
@@ -51,11 +56,21 @@ public class Medico {
 
     @NotBlank(message = "El género es obligatorio")
     @Column(name = "genero")
+    @Convert(converter = GeneroAttributeConverter.class)
     private Genero genero;
 
     @NotBlank(message = "El estado civil es obligatorio")
     @Column(name = "estado_civil")
+    @Convert(converter = EstadoCitaAttributeConverter.class)
     private EstadoCivil estadoCivil;
+
+    @ManyToMany(mappedBy = "medicos")
+    @JoinTable(
+            name = "especialidades_medicos",
+            joinColumns = @JoinColumn(name = "medico_id"),
+            inverseJoinColumns = @JoinColumn(name = "especialidad_id")
+    )
+    private Set<Especialidad> especialidades;
 
     public Medico(String id, String nombre, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, String email, String apellido, Date fechaCreacion, Genero genero, EstadoCivil estadoCivil) {
         this.id = id;
@@ -152,5 +167,13 @@ public class Medico {
 
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Set<Especialidad> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(Set<Especialidad> especialidades) {
+        this.especialidades = especialidades;
     }
 }

@@ -1,17 +1,17 @@
 package com.grupo2.clinicasalud.model;
 
 public enum TipoDocumento {
-    dni('D'),
-    carnetExtranjeria('E'),
-    pasaporte('P');
+    dni,
+    carnetExtranjeria,
+    pasaporte;
 
-    private final char tipo;
-
-    TipoDocumento(char tipo){
-        this.tipo = tipo;
-    }
-
-    public char getTipo(){
-        return this.tipo;
+    @Override
+    public String toString() {
+        return switch (this) {
+            case dni -> "D";
+            case carnetExtranjeria -> "E";
+            case pasaporte -> "P";
+            default -> "";
+        };
     }
 }

@@ -11,7 +11,7 @@
 	<groupId>com.grupo2</groupId>
 	<artifactId>clinicasalud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>happypets</name>
+	<name>clinicasalud</name>
 	<description>Clínica Salud</description>
 	<url/>
 	<licenses>

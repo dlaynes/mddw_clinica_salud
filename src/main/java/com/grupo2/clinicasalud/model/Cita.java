@@ -8,6 +8,24 @@ import java.util.Date;
 
 @Entity
 @Table(name = "citas")
+@SecondaryTables({
+        @SecondaryTable(
+                name = "pacientes",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "paciente_id")
+        ),
+        @SecondaryTable(
+                name = "medicos",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "medico_id")
+        ),
+        @SecondaryTable(
+                name = "especialidades",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "especialidad_id")
+        ),
+        @SecondaryTable(
+                name = "consultorios",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "consultorio_id")
+        )
+})
 public class Cita {
 
     @Id()
@@ -16,19 +34,19 @@ public class Cita {
     private String id;
 
     @ManyToOne()
-    @JoinColumn(name="paciente_id", referencedColumnName = "paciente_id", table = "pacientes", nullable = false)
+    @JoinColumn(name="paciente_id", nullable = false)
     private Paciente paciente;
 
     @ManyToOne()
-    @JoinColumn(name="medico_id", referencedColumnName = "medico_id", table = "medicos", nullable = false)
+    @JoinColumn(name="medico_id", nullable = false)
     Medico medico;
 
     @ManyToOne()
-    @JoinColumn(name="especialidad_id", referencedColumnName = "especialidad_id", table = "especialidades", nullable = false)
+    @JoinColumn(name="especialidad_id", nullable = false)
     Especialidad especialidad;
 
     @ManyToOne()
-    @JoinColumn(name="consultorio_id", referencedColumnName = "consultorio_id", table = "consultorios", nullable = false)
+    @JoinColumn(name="consultorio_id", nullable = false)
     Consultorio consultorio;
 
     @Column(name = "fecha_hora")

@@ -64,11 +64,11 @@ public class Medico {
     @Convert(converter = EstadoCitaAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
-    @ManyToMany(mappedBy = "medicos")
+    @ManyToMany()
     @JoinTable(
             name = "especialidades_medicos",
-            joinColumns = @JoinColumn(name = "medico_id"),
-            inverseJoinColumns = @JoinColumn(name = "especialidad_id")
+            joinColumns = @JoinColumn(name = "especialidad_id"),
+            inverseJoinColumns = @JoinColumn(name = "medico_id")
     )
     private Set<Especialidad> especialidades;
 

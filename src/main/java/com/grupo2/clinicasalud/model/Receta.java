@@ -6,6 +6,13 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "recetas")
+
+@SecondaryTables({
+        @SecondaryTable(
+                name = "historial_medico",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "historial_id")
+        )
+})
 public class Receta {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +20,7 @@ public class Receta {
     private String id;
 
     @ManyToOne()
-    @JoinColumn(name = "historial_id", referencedColumnName = "historial_id", table = "historial_medico")
+    @JoinColumn(name = "historial_id")
     HistorialMedico historialMedico;
 
     @NotBlank(message = "El medicamento es obligatorio")
@@ -28,7 +35,7 @@ public class Receta {
 
     @NotBlank(message = "La duración es obligatoria")
     @Size(min = 2, max = 100, message = "La duración debe tener entre 2 y 100 caracteres")
-    @Column(name = "dosis")
+    @Column(name = "duracion")
     private String duracion;
 
     @Size(min = 5, max = 1000, message = "Las instrucciones deben tener entre 2 y 1000 caracteres")

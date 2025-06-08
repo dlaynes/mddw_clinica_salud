@@ -35,11 +35,6 @@ public class Especialidad {
     private String color;
 
     @ManyToMany(mappedBy = "especialidades")
-    @JoinTable(
-            name = "especialidades_medicos",
-            joinColumns = @JoinColumn(name = "especialidad_id"),
-            inverseJoinColumns = @JoinColumn(name = "medico_id")
-    )
     private Set<Medico> medicos;
 
     public Especialidad(long id, String nombre, String descripcion, Date fechaCreacion, String color){

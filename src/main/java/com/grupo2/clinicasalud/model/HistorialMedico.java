@@ -8,6 +8,24 @@ import java.util.List;
 
 @Entity
 @Table(name = "historial_medico")
+@SecondaryTables({
+        @SecondaryTable(
+                name = "pacientes",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "paciente_id")
+        ),
+        @SecondaryTable(
+                name = "medicos",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "medico_id")
+        ),
+        @SecondaryTable(
+                name = "especialidades",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "especialidad_id")
+        ),
+        @SecondaryTable(
+                name = "servicios",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name = "servicio_id")
+        )
+})
 public class HistorialMedico {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,19 +33,19 @@ public class HistorialMedico {
     private String id;
 
     @ManyToOne()
-    @JoinColumn(name="paciente_id", referencedColumnName = "paciente_id", table = "pacientes", nullable = false)
+    @JoinColumn(name="paciente_id", nullable = false)
     private Paciente paciente;
 
     @ManyToOne()
-    @JoinColumn(name="medico_id", referencedColumnName = "medico_id", table = "medicos", nullable = false)
+    @JoinColumn(name="medico_id", nullable = false)
     private Medico medico;
 
     @ManyToOne()
-    @JoinColumn(name="especialidad_id", referencedColumnName = "especialidad_id", table = "especialidades", nullable = false)
+    @JoinColumn(name="especialidad_id", nullable = false)
     private Especialidad especialidad;
 
     @ManyToOne()
-    @JoinColumn(name="servicio_id", referencedColumnName = "servicio_id", table = "servicios")
+    @JoinColumn(name="servicio_id")
     private Servicio servicio;
 
     @Column(name = "fecha_consulta")

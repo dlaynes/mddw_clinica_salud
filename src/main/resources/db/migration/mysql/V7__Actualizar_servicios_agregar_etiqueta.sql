@@ -1,0 +1,1 @@
+ALTER TABLE servicios ADD COLUMN slug VARCHAR(100);

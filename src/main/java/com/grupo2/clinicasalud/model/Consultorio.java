@@ -11,7 +11,7 @@ public class Consultorio {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="consultorio_id")
-    private String id;
+    private long id;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
@@ -37,7 +37,7 @@ public class Consultorio {
     @Column(name = "longitud")
     private double longitud;
 
-    public Consultorio(String id, String nombre, String descripcion, String ubicacion, String imagen, double latitud, double longitud) {
+    public Consultorio(long id, String nombre, String descripcion, String ubicacion, String imagen, double latitud, double longitud) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -47,11 +47,15 @@ public class Consultorio {
         this.longitud = longitud;
     }
 
-    public String getId() {
+    public Consultorio(){
+
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

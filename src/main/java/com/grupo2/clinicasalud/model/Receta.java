@@ -17,7 +17,7 @@ public class Receta {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="receta_id")
-    private String id;
+    private long id;
 
     @ManyToOne()
     @JoinColumn(name = "historial_id")
@@ -42,7 +42,7 @@ public class Receta {
     @Column(name = "instrucciones")
     private String instrucciones;
 
-    public Receta(String id, HistorialMedico historialMedico, String medicamento, String dosis, String duracion, String instrucciones) {
+    public Receta(long id, HistorialMedico historialMedico, String medicamento, String dosis, String duracion, String instrucciones) {
         this.id = id;
         this.historialMedico = historialMedico;
         this.medicamento = medicamento;
@@ -55,11 +55,11 @@ public class Receta {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

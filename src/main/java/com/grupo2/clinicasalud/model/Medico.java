@@ -17,7 +17,7 @@ public class Medico {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="medico_id")
-    private String id;
+    private long id;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 150, message = "El nombre debe tener entre 2 y 150 caracteres")
@@ -72,7 +72,7 @@ public class Medico {
     )
     private Set<Especialidad> especialidades;
 
-    public Medico(String id, String nombre, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, String email, String apellido, Date fechaCreacion, Genero genero, EstadoCivil estadoCivil) {
+    public Medico(long id, String nombre, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, String email, String apellido, Date fechaCreacion, Genero genero, EstadoCivil estadoCivil) {
         this.id = id;
         this.nombre = nombre;
         this.tipoDocumento = tipoDocumento;
@@ -89,11 +89,11 @@ public class Medico {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

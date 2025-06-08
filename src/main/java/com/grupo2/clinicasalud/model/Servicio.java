@@ -15,7 +15,12 @@ public class Servicio {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="servicio_id")
-    private String id;
+    private long id;
+
+    @NotBlank(message = "La etiqueta es obligatorio")
+    @Size(min = 2, max = 100, message = "La etiqueta debe tener entre 2 y 100 caracteres")
+    @Column(name = "slug")
+    private String slug;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
@@ -30,19 +35,28 @@ public class Servicio {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
 
-    public Servicio(String id, String nombre, String descripcion, Date fechaCreacion) {
+    public Servicio(long id, String slug, String nombre, String descripcion, Date fechaCreacion) {
         this.id = id;
+        this.slug = slug;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getNombre() {
@@ -71,9 +85,9 @@ public class Servicio {
 
     public static List<Servicio> dameServicios(){
         return Arrays.asList(
-                new Servicio("consulta-medica","Consulta Médica", "Atención personalizada para diagnosticar y tratar tus necesidades de salud", new Date()),
-                new Servicio("laboratorio-clinico","Laboratorio Clínico", "Análisis clínicos precisos para un diagnóstico confiable", new Date()),
-                new Servicio("radiologia","Radiología", "Tecnología avanzada para estudios de imagen y diagnóstico", new Date())
+                new Servicio(1, "consulta-medica","Consulta Médica", "Atención personalizada para diagnosticar y tratar tus necesidades de salud", new Date()),
+                new Servicio(2, "laboratorio-clinico","Laboratorio Clínico", "Análisis clínicos precisos para un diagnóstico confiable", new Date()),
+                new Servicio(3, "radiologia","Radiología", "Tecnología avanzada para estudios de imagen y diagnóstico", new Date())
         );
     }
 }

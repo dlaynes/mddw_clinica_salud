@@ -30,7 +30,7 @@ public class HistorialMedico {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="historial_id")
-    private String id;
+    private long id;
 
     @ManyToOne()
     @JoinColumn(name="paciente_id", nullable = false)
@@ -67,7 +67,7 @@ public class HistorialMedico {
     @OneToMany(mappedBy = "historialMedico")
     private List<Receta> recetas;
 
-    public HistorialMedico(String id, Paciente paciente, Medico medico, Servicio servicio, Especialidad especialidad, String notas, String tratamiento, String diagnostico, Date fechaConsulta, List<Receta> recetas) {
+    public HistorialMedico(long id, Paciente paciente, Medico medico, Servicio servicio, Especialidad especialidad, String notas, String tratamiento, String diagnostico, Date fechaConsulta, List<Receta> recetas) {
         this.id = id;
         this.paciente = paciente;
         this.medico = medico;
@@ -84,11 +84,11 @@ public class HistorialMedico {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

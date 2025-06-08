@@ -31,14 +31,14 @@ public class Cita {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="cita_id")
-    private String id;
+    private long id;
 
     @ManyToOne()
     @JoinColumn(name="paciente_id", nullable = false)
     private Paciente paciente;
 
     @ManyToOne()
-    @JoinColumn(name="medico_id", nullable = false)
+    @JoinColumn(name="medico_id")
     Medico medico;
 
     @ManyToOne()
@@ -60,7 +60,7 @@ public class Cita {
     @Column(name = "motivo")
     private String motivo;
 
-    public Cita(String id, Paciente paciente, Medico medico, Especialidad especialidad, Consultorio consultorio, Date fechaHora, EstadoCita estadoCita, String motivo) {
+    public Cita(long id, Paciente paciente, Medico medico, Especialidad especialidad, Consultorio consultorio, Date fechaHora, EstadoCita estadoCita, String motivo) {
         this.id = id;
         this.paciente = paciente;
         this.medico = medico;
@@ -75,11 +75,11 @@ public class Cita {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

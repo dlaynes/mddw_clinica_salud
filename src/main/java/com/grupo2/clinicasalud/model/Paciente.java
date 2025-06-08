@@ -18,7 +18,7 @@ public class Paciente {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="paciente_id")
-    private String id;
+    private long id;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 150, message = "El nombre debe tener entre 2 y 150 caracteres")
@@ -68,7 +68,7 @@ public class Paciente {
     @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
     private List<Cita> citas;
 
-    public Paciente(String id, String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, Date fechaNacimiento, EstadoCivil estadoCivil, Genero genero, String email) {
+    public Paciente(long id, String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, Date fechaNacimiento, EstadoCivil estadoCivil, Genero genero, String email) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -85,11 +85,11 @@ public class Paciente {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

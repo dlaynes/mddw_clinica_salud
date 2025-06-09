@@ -1,17 +1,19 @@
 package com.grupo2.clinicasalud.model.form;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class ReservaCita {
-
+public class ReservaCitaEjemplo {
     private String nombre;
+    private String apellidos;
     private String email;
     private String telefono;
-    private String servicio;
+    private String especialidad;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
+    @DateTimeFormat(pattern = "hh:mm")
     private LocalTime hora;
 
     // Getters and Setters
@@ -21,6 +23,14 @@ public class ReservaCita {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getEmail() {
@@ -39,12 +49,12 @@ public class ReservaCita {
         this.telefono = telefono;
     }
 
-    public String getServicio() {
-        return servicio;
+    public String getEspecialidad() {
+        return especialidad;
     }
 
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 
     public LocalDate getFecha() {
@@ -62,6 +72,5 @@ public class ReservaCita {
     public void setHora(LocalTime hora) {
         this.hora = hora;
     }
-
 
 }

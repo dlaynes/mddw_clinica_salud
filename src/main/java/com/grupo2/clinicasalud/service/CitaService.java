@@ -16,6 +16,10 @@ public class CitaService {
         this.repository = repository;
     }
 
+    public Cita dameCitaPorId(long id){
+        return repository.findById(id).orElse(null);
+    }
+
     public void guardarCita(Cita cita){
         repository.save(cita);
     }

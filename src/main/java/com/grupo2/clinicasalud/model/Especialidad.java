@@ -57,6 +57,8 @@ public class Especialidad {
         this.id = id;
     }
 
+
+
     public Date getFechaCreacion() {
         return fechaCreacion;
     }

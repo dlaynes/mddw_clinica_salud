@@ -3,9 +3,11 @@ package com.grupo2.clinicasalud.service;
 import com.grupo2.clinicasalud.model.Especialidad;
 import com.grupo2.clinicasalud.repository.EspecialidadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EspecialidadService {
     private final EspecialidadRepository repository;
 
@@ -22,7 +24,7 @@ public class EspecialidadService {
         repository.save(e);
     }
 
-    public List<Especialidad> dameCitas(){
+    public List<Especialidad> dameEspecialidades(){
         return repository.findAll();
     }
 

@@ -15,4 +15,14 @@ public enum EstadoCivil {
             default -> "Desconocido";
         };
     }
+
+    public String toText(){
+        return switch (this) {
+            case casado -> "Casado/a";
+            case soltero -> "Soltero/a";
+            case viudo -> "Viudo/a";
+            case divorciado -> "Divorciado/a";
+            default -> "";
+        };
+    };
 }

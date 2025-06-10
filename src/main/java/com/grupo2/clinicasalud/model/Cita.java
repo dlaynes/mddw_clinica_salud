@@ -54,6 +54,7 @@ public class Cita {
     private Date fechaHora;
 
     @Convert(converter = EstadoCitaAttributeConverter.class)
+    @Column(name="estado")
     EstadoCita estadoCita;
 
     @NotBlank(message = "El motivo es obligatorio")

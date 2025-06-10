@@ -14,4 +14,14 @@ public enum TipoDocumento {
             default -> "";
         };
     }
+
+    public String toText(){
+        return switch (this) {
+            case dni -> "DNI";
+            case carnetExtranjeria -> "Carnet extranjería";
+            case pasaporte -> "Pasaporte";
+            default -> "";
+        };
+    };
+
 }

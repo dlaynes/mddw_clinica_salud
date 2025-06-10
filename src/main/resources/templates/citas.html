@@ -22,7 +22,7 @@
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="images/servicios.jpg" class="img-fluid rounded-start" alt="Servicios Clínicos">
+                <img src="/images/servicios.jpg" class="img-fluid rounded-start" alt="Servicios Clínicos">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -35,7 +35,7 @@
 </div>
 
 <div class="container my">
-    <div class="card mb-3">
+    <div class="card mb-3 p-2">
         <div class="row g-0">
             <div class="col-md-7">
                 <h4>Listado de citas</h4>
@@ -58,8 +58,56 @@
             </div>
             <div class="col-md-5">
                 <h4>Agregar / editar citas</h4>
-                <form>
+                <form method="post" th:action="@{/citas/guardar}" th:object="${cita}">
+                    <h3 class="text-center mb-4">Registrar Curso</h3>
 
+                    <input type="hidden" th:field="*{edicion}"/>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre del paciente</label>
+                        <input type="text" th:disabled="${edicion}" class="form-control" id="nombre" th:field="*{nombre}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos del paciente</label>
+                        <input type="text" th:disabled="${edicion}" class="form-control" id="apellidos" th:field="*{apellidos}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genero" class="form-label">Género</label>
+                        <select id="genero" th:disabled="${edicion}" class="form-select" th:field="*{genero}">
+                            <option value="" disabled>Seleccione un valor</option>
+                            <option th:each="gen : ${generos}"
+                                    th:value="${gen}"
+                                    th:text="${gen.toText()}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="telefono" th:disabled="${edicion}" class="form-label">Teléfono</label>
+                        <input type="text" th:disabled="${telefono}" class="form-control" id="telefono" th:field="*{telefono}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" th:disabled="${edicion}" class="form-label">Correo electrónico</label>
+                        <input type="email" th:disabled="${email}" class="form-control" id="email" th:field="*{email}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha Solicitada</label>
+                        <input type="date" class="form-control" id="fecha" th:field="*{fecha}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="motivo" class="form-label">Motivo</label>
+                        <textarea class="form-control" id="motivo" th:field="*{motivo}"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a href="/citas/nueva" class="btn btn-secondary ms-2">Cancelar</a>
+                    </div>
                 </form>
             </div>
         </div>

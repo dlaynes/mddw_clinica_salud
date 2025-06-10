@@ -11,14 +11,34 @@ public class ReservaCitaEjemplo {
     private String email;
     private String telefono;
     private String especialidad;
+    private String motivo;
+    private String genero;
+    private boolean edicion;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
     @DateTimeFormat(pattern = "hh:mm")
     private LocalTime hora;
 
     // Getters and Setters
+    public boolean isEdicion() {
+        return edicion;
+    }
+
+    public void setEdicion(boolean edicion) {
+        this.edicion = edicion;
+    }
+
     public String getNombre() {
         return nombre;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public void setNombre(String nombre) {
@@ -73,4 +93,11 @@ public class ReservaCitaEjemplo {
         this.hora = hora;
     }
 
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
 }

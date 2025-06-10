@@ -20,4 +20,17 @@ public enum EstadoCita {
             default -> "Desconocido";
         };
     }
+
+    public String toText(){
+        return switch (this) {
+            case registrada -> "Registrada";
+            case rechazada -> "Rechazada";
+            case programada -> "Programada";
+            case cancelada -> "Cancelada";
+            case enEspera -> "En espera";
+            case completada -> "Completada";
+            default -> "";
+        };
+    };
+
 }

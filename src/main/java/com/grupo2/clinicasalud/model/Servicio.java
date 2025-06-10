@@ -43,6 +43,10 @@ public class Servicio {
         this.fechaCreacion = fechaCreacion;
     }
 
+    public Servicio(){
+
+    }
+
     public long getId() {
         return id;
     }

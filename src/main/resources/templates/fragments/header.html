@@ -34,6 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link" th:classappend="${requestURI == '/contactenos' ? 'active':''}" th:href="@{contactenos}">Contáctenos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{citas/nueva}">Ejemplo CRUD</a>
+                    </li>
                 </ul>
                 <form class="d-flex ms-3">
                     <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">

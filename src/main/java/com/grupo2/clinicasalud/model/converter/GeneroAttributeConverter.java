@@ -14,7 +14,7 @@ public class GeneroAttributeConverter implements AttributeConverter<Genero, Stri
         return switch(s) {
             case "M" -> Genero.masculino;
             case "F" -> Genero.femenino;
-            case "O" -> Genero.otro;
+            case "" -> Genero.otro;
             default -> throw new IllegalStateException("Unexpected Genero value: " + s);
         };
     }

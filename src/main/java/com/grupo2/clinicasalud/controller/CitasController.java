@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +53,7 @@ public class CitasController {
             return "redirect:/citas/nueva";
         }
         ReservaCitaEjemplo form = new ReservaCitaEjemplo();
+        form.setId(cita.getId());
         form.setApellidos(paciente.getApellido());
         form.setNombre(paciente.getNombre());
         form.setEmail(paciente.getEmail());
@@ -80,8 +82,8 @@ public class CitasController {
         c.setId(1000);
         c.setDescripcion("Consultorio de prueba");
         c.setNombre("Ejemplo");
-        c.setLatitud(-12.131273);
-        c.setLongitud(-76.981304);
+        c.setLatitud(BigDecimal.valueOf(-12.131273));
+        c.setLongitud(BigDecimal.valueOf(-76.981304));
         c.setUbicacion("Surco");
         return c;
     }
@@ -105,8 +107,19 @@ public class CitasController {
                             c.convertToEntityAttribute(citaForm.getGenero())
                     );
                 }
+                Cita cita;
+                long id = citaForm.getId();
+                if(id != 0){
+                    cita = citaService.dameCitaPorId(id);
+                    if(cita == null){
+                        System.out.println("Error al buscar cita: "+id);
+                        cita = new Cita();
+                    }
+                } else {
+                    cita = new Cita();
+                }
+
                 // TODO: actualizar los datos del paciente?
-                Cita cita = new Cita();
                 cita.setEspecialidad(especialidadContainer.get());
                 cita.setPaciente(paciente);
                 cita.setEstadoCita(EstadoCita.registrada);

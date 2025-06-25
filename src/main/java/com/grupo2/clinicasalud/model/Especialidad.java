@@ -15,7 +15,7 @@ public class Especialidad {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="especialidad_id")
+    @Column(name ="especialidad_id", columnDefinition = "BIGINT")
     private long id;
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -24,14 +24,16 @@ public class Especialidad {
     private String nombre;
 
     @NotBlank(message = "La descripción es obligatoria")
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", columnDefinition = "TEXT")
+    @Size(max = 2000)
     private String descripcion;
 
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
 
-    @Column(name = "color")
+    @Column(name = "color", length = 20)
+    @Size(max=20)
     private String color;
 
     @ManyToMany(mappedBy = "especialidades")
@@ -56,8 +58,6 @@ public class Especialidad {
     public void setId(long id) {
         this.id = id;
     }
-
-
 
     public Date getFechaCreacion() {
         return fechaCreacion;

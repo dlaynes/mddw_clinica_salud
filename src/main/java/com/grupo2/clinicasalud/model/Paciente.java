@@ -17,7 +17,7 @@ public class Paciente {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="paciente_id")
+    @Column(name ="paciente_id", columnDefinition = "BIGINT")
     private long id;
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -27,28 +27,28 @@ public class Paciente {
 
     @NotBlank(message = "El apellido es obligatorio")
     @Size(min = 2, max = 150, message = "El apellido debe tener entre 2 y 150 caracteres")
-    @Column(name = "apellido")
+    @Column(name = "apellido", length = 150)
     private String apellido;
 
     @NotBlank(message = "El tipo de documento es obligatorio")
-    @Column(name = "tipo_documento")
+    @Column(name = "tipo_documento", length = 1)
     @Convert(converter = TipoDocumentoAttributeConverter.class)
     private TipoDocumento tipoDocumento;
 
     @NotBlank(message = "El número de documento es obligatorio")
-    @Size(min = 8, max=12, message = "El número de documento debe tener una longitud válida")
-    @Column(name = "numero_documento")
+    @Size(min = 8, max=16, message = "El número de documento debe tener una longitud válida")
+    @Column(name = "numero_documento", length = 16)
     private String numeroDocumento;
 
     @NotBlank(message = "El email es obligatorio")
     @Size(min = 5, max = 150, message = "El email debe tener entre 2 y 150 caracteres")
     @Email
-    @Column(name = "email")
+    @Column(name = "email", length = 150)
     private String email;
 
     @NotBlank(message = "El teléfono es obligatorio")
     @Size(min = 5, max = 25, message = "El teléfono debe tener entre 5 y 25 caracteres")
-    @Column(name = "telefono")
+    @Column(name = "telefono", length = 25)
     private String telefono;
 
     @Column(name = "fecha_nacimiento")
@@ -56,16 +56,16 @@ public class Paciente {
     private Date fechaNacimiento;
 
     @NotBlank(message = "El género es obligatorio")
-    @Column(name = "genero")
+    @Column(name = "genero", length = 1)
     @Convert(converter = GeneroAttributeConverter.class)
     private Genero genero;
 
     @NotBlank(message = "El estado civil es obligatorio")
-    @Column(name = "estado_civil")
+    @Column(name = "estado_civil", length = 1)
     @Convert(converter = EstadoCitaAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
-    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Cita.class, fetch = FetchType.LAZY)
     private List<Cita> citas;
 
     public Paciente(long id, String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, Date fechaNacimiento, EstadoCivil estadoCivil, Genero genero, String email) {

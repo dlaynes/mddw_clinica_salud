@@ -14,11 +14,20 @@ public class ReservaCitaEjemplo {
     private String motivo;
     private String genero;
     private boolean edicion;
+    private long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
     @DateTimeFormat(pattern = "hh:mm")
     private LocalTime hora;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     // Getters and Setters
     public boolean isEdicion() {

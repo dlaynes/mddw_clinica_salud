@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Servicios provistos por la clínica
+
 @Service
 public class ServicioService {
     private final ServicioRepository repository;

@@ -7,39 +7,33 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "recetas")
 
-@SecondaryTables({
-        @SecondaryTable(
-                name = "historial_medico",
-                pkJoinColumns = @PrimaryKeyJoinColumn(name = "historial_id")
-        )
-})
 public class Receta {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="receta_id")
+    @Column(name ="receta_id", columnDefinition = "BIGINT")
     private long id;
 
-    @ManyToOne()
-    @JoinColumn(name = "historial_id")
+    @ManyToOne(targetEntity = HistorialMedico.class)
+    @JoinColumn(name = "historial_id", referencedColumnName = "historial_id")
     HistorialMedico historialMedico;
 
     @NotBlank(message = "El medicamento es obligatorio")
-    @Size(min = 5, max = 100, message = "El medicamento debe tener entre 5 y 100 caracteres")
-    @Column(name = "tratamiento")
+    @Size(min = 5, max = 150, message = "El medicamento debe tener entre 5 y 150 caracteres")
+    @Column(name = "tratamiento", length = 150)
     private String medicamento;
 
     @NotBlank(message = "La dosis es obligatoria")
-    @Size(min = 2, max = 100, message = "La dosis debe tener entre 2 y 100 caracteres")
-    @Column(name = "dosis")
+    @Size(min = 2, max = 150, message = "La dosis debe tener entre 2 y 150 caracteres")
+    @Column(name = "dosis", length = 150)
     private String dosis;
 
     @NotBlank(message = "La duración es obligatoria")
     @Size(min = 2, max = 100, message = "La duración debe tener entre 2 y 100 caracteres")
-    @Column(name = "duracion")
+    @Column(name = "duracion", length = 100)
     private String duracion;
 
-    @Size(min = 5, max = 1000, message = "Las instrucciones deben tener entre 2 y 1000 caracteres")
-    @Column(name = "instrucciones")
+    @Size(min = 5, max = 2000, message = "Las instrucciones deben tener entre 2 y 2000 caracteres")
+    @Column(name = "instrucciones", columnDefinition = "TEXT")
     private String instrucciones;
 
     public Receta(long id, HistorialMedico historialMedico, String medicamento, String dosis, String duracion, String instrucciones) {

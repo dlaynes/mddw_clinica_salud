@@ -18,7 +18,6 @@ public enum Genero {
         return switch (this) {
             case masculino -> "M";
             case femenino -> "F";
-            case otro -> "O";
             default -> "";
         };
     };

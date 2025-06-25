@@ -35,9 +35,9 @@
 </div>
 
 <div class="container my">
-    <div class="card mb-3 p-2">
+    <div class="card mb-3">
         <div class="row g-0">
-            <div class="col-md-7">
+            <div class="col-md-8 p-4">
                 <h4>Listado de citas</h4>
                 <input type="text" id="buscarfilas" class="form-control mb-4 buscarfilas" placeholder="Buscar datos">
                 <br />
@@ -56,12 +56,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4 p-4">
                 <h4>Agregar / editar citas</h4>
                 <form method="post" th:action="@{/citas/guardar}" th:object="${cita}">
-                    <h3 class="text-center mb-4">Registrar Curso</h3>
-
-                    <input type="hidden" th:field="*{edicion}"/>
+                    <input type="hidden" th:field="*{id}"/>
 
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre del paciente</label>
@@ -85,18 +83,23 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="telefono" th:disabled="${edicion}" class="form-label">Teléfono</label>
-                        <input type="text" th:disabled="${telefono}" class="form-control" id="telefono" th:field="*{telefono}" required>
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" th:disabled="${edicion}" class="form-control" id="telefono" th:field="*{telefono}" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" th:disabled="${edicion}" class="form-label">Correo electrónico</label>
-                        <input type="email" th:disabled="${email}" class="form-control" id="email" th:field="*{email}" required>
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" th:disabled="${edicion}" class="form-control" id="email" th:field="*{email}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="fecha" class="form-label">Fecha Solicitada</label>
-                        <input type="date" class="form-control" id="fecha" th:field="*{fecha}" required>
+                        <input type="date" th:disabled="${edicion}" class="form-control" id="fecha" th:field="*{fecha}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="hora">Hora Solicitada (referencial)</label>
+                        <input type="time" th:disabled="${edicion}" id="hora" name="hora" min="8:00" max="21:00" th:field="*{hora}" >
                     </div>
 
                     <div class="mb-3">

@@ -3,6 +3,9 @@ package com.grupo2.clinicasalud.model;
 import com.grupo2.clinicasalud.validator.coordinates.CoordinatesConstraint;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "consultorios")
@@ -10,42 +13,35 @@ public class Consultorio {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="consultorio_id")
+    @Column(name ="consultorio_id", columnDefinition = "BIGINT")
     private long id;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
-    @Column(name = "nombre")
+    @Column(name = "nombre", length = 100)
     private String nombre;
 
     @NotBlank(message = "La descripción es obligatoria")
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", columnDefinition = "TEXT")
+    @Size(max=2000)
     private String descripcion;
 
     @NotBlank(message = "La ubicación es obligatoria")
-    @Column(name = "ubicacion")
+    @Column(name = "ubicacion", columnDefinition = "TEXT")
+    @Size(max=2000)
     private String ubicacion;
 
     @Column(name = "imagen")
+    @Size(min=2, max=255)
     private String imagen;
 
     @CoordinatesConstraint
-    @Column(name = "latitud")
-    private double latitud;
+    @Column(name = "latitud", precision = 11, scale=2)
+    private BigDecimal latitud;
 
     @CoordinatesConstraint
-    @Column(name = "longitud")
-    private double longitud;
-
-    public Consultorio(long id, String nombre, String descripcion, String ubicacion, String imagen, double latitud, double longitud) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.ubicacion = ubicacion;
-        this.imagen = imagen;
-        this.latitud = latitud;
-        this.longitud = longitud;
-    }
+    @Column(name = "longitud", precision = 11, scale=2)
+    private BigDecimal longitud;
 
     public Consultorio(){
 
@@ -91,19 +87,19 @@ public class Consultorio {
         this.imagen = imagen;
     }
 
-    public double getLatitud() {
+    public BigDecimal getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(double latitud) {
+    public void setLatitud(BigDecimal latitud) {
         this.latitud = latitud;
     }
 
-    public double getLongitud() {
+    public BigDecimal getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(double longitud) {
+    public void setLongitud(BigDecimal longitud) {
         this.longitud = longitud;
     }
 

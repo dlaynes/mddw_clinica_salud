@@ -8,63 +8,45 @@ import java.util.List;
 
 @Entity
 @Table(name = "historial_medico")
-@SecondaryTables({
-        @SecondaryTable(
-                name = "pacientes",
-                pkJoinColumns = @PrimaryKeyJoinColumn(name = "paciente_id")
-        ),
-        @SecondaryTable(
-                name = "medicos",
-                pkJoinColumns = @PrimaryKeyJoinColumn(name = "medico_id")
-        ),
-        @SecondaryTable(
-                name = "especialidades",
-                pkJoinColumns = @PrimaryKeyJoinColumn(name = "especialidad_id")
-        ),
-        @SecondaryTable(
-                name = "servicios",
-                pkJoinColumns = @PrimaryKeyJoinColumn(name = "servicio_id")
-        )
-})
 public class HistorialMedico {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="historial_id")
+    @Column(name ="historial_id", columnDefinition = "BIGINT")
     private long id;
 
-    @ManyToOne()
-    @JoinColumn(name="paciente_id", nullable = false)
+    @ManyToOne(targetEntity = Paciente.class)
+    @JoinColumn(name="paciente_id", nullable = false, referencedColumnName = "paciente_id")
     private Paciente paciente;
 
-    @ManyToOne()
-    @JoinColumn(name="medico_id", nullable = false)
+    @ManyToOne(targetEntity = Medico.class)
+    @JoinColumn(name="medico_id", nullable = false, referencedColumnName = "medico_id")
     private Medico medico;
 
-    @ManyToOne()
-    @JoinColumn(name="especialidad_id", nullable = false)
+    @ManyToOne(targetEntity = Especialidad.class)
+    @JoinColumn(name="especialidad_id", nullable = false, referencedColumnName = "especialidad_id")
     private Especialidad especialidad;
 
-    @ManyToOne()
-    @JoinColumn(name="servicio_id")
+    @ManyToOne(targetEntity = Servicio.class)
+    @JoinColumn(name="servicio_id", referencedColumnName = "servicio_id")
     private Servicio servicio;
 
     @Column(name = "fecha_consulta")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaConsulta;
 
-    @Size(min = 5, max = 1000, message = "El diagnóstico debe tener entre 2 y 1000 caracteres")
-    @Column(name = "diagnostico")
+    @Size(min = 5, max = 2000, message = "El diagnóstico debe tener entre 2 y 1000 caracteres")
+    @Column(name = "diagnostico", columnDefinition = "TEXT")
     private String diagnostico;
 
-    @Size(min = 5, max = 1000, message = "El tratamiento debe tener entre 2 y 1000 caracteres")
-    @Column(name = "tratamiento")
+    @Size(min = 5, max = 2000, message = "El tratamiento debe tener entre 2 y 1000 caracteres")
+    @Column(name = "tratamiento", columnDefinition = "TEXT")
     private String tratamiento;
 
-    @Size(min = 5, max = 1000, message = "Las notas deben tener entre 2 y 1000 caracteres")
-    @Column(name = "notas")
+    @Size(min = 5, max = 2000, message = "Las notas deben tener entre 2 y 1000 caracteres")
+    @Column(name = "notas", columnDefinition = "TEXT")
     private String notas;
 
-    @OneToMany(mappedBy = "historialMedico")
+    @OneToMany(targetEntity = Receta.class)
     private List<Receta> recetas;
 
     public HistorialMedico(long id, Paciente paciente, Medico medico, Servicio servicio, Especialidad especialidad, String notas, String tratamiento, String diagnostico, Date fechaConsulta, List<Receta> recetas) {

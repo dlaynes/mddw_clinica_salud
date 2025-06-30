@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -64,7 +65,10 @@ public class Medico {
     @Convert(converter = EstadoCitaAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
-    @ManyToMany()
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "medico")
+    private List<Cita> citas;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "especialidades_medicos",
             joinColumns = @JoinColumn(name = "especialidad_id"),
@@ -175,5 +179,13 @@ public class Medico {
 
     public void setEspecialidades(Set<Especialidad> especialidades) {
         this.especialidades = especialidades;
+    }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
     }
 }

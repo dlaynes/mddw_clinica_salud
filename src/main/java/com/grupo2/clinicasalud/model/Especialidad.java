@@ -36,8 +36,11 @@ public class Especialidad {
     @Size(max=20)
     private String color;
 
-    @ManyToMany(mappedBy = "especialidades")
+    @ManyToMany(mappedBy = "especialidades", fetch = FetchType.LAZY)
     private Set<Medico> medicos;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "especialidad")
+    private List<Cita> citas;
 
     public Especialidad(long id, String nombre, String descripcion, Date fechaCreacion, String color){
         this.id = id;
@@ -97,6 +100,14 @@ public class Especialidad {
 
     public void setMedicos(Set<Medico> medicos) {
         this.medicos = medicos;
+    }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
     }
 
     public static List<Especialidad> dameEspecialidades(){

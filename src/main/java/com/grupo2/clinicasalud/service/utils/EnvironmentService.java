@@ -14,12 +14,16 @@ public class EnvironmentService {
     private ServletWebServerApplicationContext webServerAppCtxt;
 
     public String getHostname() {
+        return "localhost";
+        /*
+        // TODO: this starts a new server instance
         try {
             return InetAddress.getLocalHost().getHostName();
         } catch(Exception e){
             System.err.println("Could not determine hostname: " + e.getMessage());
             return "localhost";
         }
+        */
     }
 
     public String getUrl() {

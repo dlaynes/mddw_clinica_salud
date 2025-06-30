@@ -17,9 +17,6 @@
 <!-- Header -->
 <div th:replace="~{fragments/header :: header}"></div>
 
-<!-- Carrusel -->
-<div th:replace="~{fragments/header :: carrusel}"></div>
-
 <!-- Hero Section -->
 <section class="bg-light text-center py-5">
     <div class="container">
@@ -32,8 +29,8 @@
 
 <!-- Formulario de Registro -->
 <section id="reservas" class="container my-5">
-    <form method="post" th:action="@{/usuario/guardar}" th:object="${usuario}">
-        <h3 class="text-center mb-4">Registrar Usuario</h3>
+    <form method="post" th:action="@{/auth/registro}" th:object="${usuario}">
+        <h3 class="text-center mb-4">Crear una cuenta</h3>
 
         <input type="hidden" th:field="*{id_usuario}"/>
 

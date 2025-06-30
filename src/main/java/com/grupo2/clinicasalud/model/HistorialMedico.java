@@ -14,20 +14,20 @@ public class HistorialMedico {
     @Column(name ="historial_id", columnDefinition = "BIGINT")
     private long id;
 
-    @ManyToOne(targetEntity = Paciente.class)
-    @JoinColumn(name="paciente_id", nullable = false, referencedColumnName = "paciente_id")
+    @ManyToOne()
+    @JoinColumn(name="paciente_id", nullable = false)
     private Paciente paciente;
 
-    @ManyToOne(targetEntity = Medico.class)
-    @JoinColumn(name="medico_id", nullable = false, referencedColumnName = "medico_id")
+    @ManyToOne()
+    @JoinColumn(name="medico_id", nullable = false)
     private Medico medico;
 
-    @ManyToOne(targetEntity = Especialidad.class)
-    @JoinColumn(name="especialidad_id", nullable = false, referencedColumnName = "especialidad_id")
+    @ManyToOne()
+    @JoinColumn(name="especialidad_id", nullable = false)
     private Especialidad especialidad;
 
-    @ManyToOne(targetEntity = Servicio.class)
-    @JoinColumn(name="servicio_id", referencedColumnName = "servicio_id")
+    @ManyToOne()
+    @JoinColumn(name="servicio_id")
     private Servicio servicio;
 
     @Column(name = "fecha_consulta")
@@ -46,25 +46,8 @@ public class HistorialMedico {
     @Column(name = "notas", columnDefinition = "TEXT")
     private String notas;
 
-    @OneToMany(targetEntity = Receta.class)
+    @OneToMany(mappedBy = "historialMedico", fetch = FetchType.LAZY)
     private List<Receta> recetas;
-
-    public HistorialMedico(long id, Paciente paciente, Medico medico, Servicio servicio, Especialidad especialidad, String notas, String tratamiento, String diagnostico, Date fechaConsulta, List<Receta> recetas) {
-        this.id = id;
-        this.paciente = paciente;
-        this.medico = medico;
-        this.servicio = servicio;
-        this.especialidad = especialidad;
-        this.notas = notas;
-        this.tratamiento = tratamiento;
-        this.diagnostico = diagnostico;
-        this.fechaConsulta = fechaConsulta;
-        this.recetas = recetas;
-    }
-
-    public HistorialMedico(){
-
-    }
 
     public long getId() {
         return id;

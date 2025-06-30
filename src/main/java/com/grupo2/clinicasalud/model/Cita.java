@@ -16,20 +16,20 @@ public class Cita {
     @Column(name ="cita_id", columnDefinition = "BIGINT")
     private long id;
 
-    @ManyToOne(targetEntity = Paciente.class)
-    @JoinColumn(name="paciente_id", nullable = false, referencedColumnName = "paciente_id")
+    @ManyToOne()
+    @JoinColumn(name="paciente_id", nullable = false)
     private Paciente paciente;
 
-    @ManyToOne(targetEntity = Medico.class)
-    @JoinColumn(name="medico_id", referencedColumnName = "medico_id")
+    @ManyToOne()
+    @JoinColumn(name="medico_id")
     Medico medico;
 
-    @ManyToOne(targetEntity = Especialidad.class)
-    @JoinColumn(name="especialidad_id", nullable = false, referencedColumnName = "especialidad_id")
+    @ManyToOne()
+    @JoinColumn(name="especialidad_id", nullable = false)
     Especialidad especialidad;
 
-    @ManyToOne(targetEntity = Consultorio.class)
-    @JoinColumn(name="consultorio_id", nullable = false, referencedColumnName = "consultorio_id")
+    @ManyToOne()
+    @JoinColumn(name="consultorio_id", nullable = false)
     Consultorio consultorio;
 
     @Column(name = "fecha_hora")

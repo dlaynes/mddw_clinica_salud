@@ -13,8 +13,8 @@ public class Receta {
     @Column(name ="receta_id", columnDefinition = "BIGINT")
     private long id;
 
-    @ManyToOne(targetEntity = HistorialMedico.class)
-    @JoinColumn(name = "historial_id", referencedColumnName = "historial_id")
+    @ManyToOne()
+    @JoinColumn(name = "historial_id")
     HistorialMedico historialMedico;
 
     @NotBlank(message = "El medicamento es obligatorio")

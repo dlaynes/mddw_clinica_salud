@@ -10,11 +10,14 @@ public class Rol {
     @Column(name = "rol_id", columnDefinition = "BIGINT")
     private long id;
 
-    @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false, unique = true)
-    private TipoRol nombre;
+    private String nombre;
 
-    public Rol(TipoRol rol){
+    public Rol(){
+
+    }
+
+    public Rol(String rol){
         this.nombre = rol;
     }
 
@@ -26,11 +29,11 @@ public class Rol {
         this.id = id;
     }
 
-    public TipoRol getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(TipoRol nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 }

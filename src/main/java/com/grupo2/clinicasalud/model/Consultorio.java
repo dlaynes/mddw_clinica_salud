@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "consultorios")
@@ -43,9 +44,8 @@ public class Consultorio {
     @Column(name = "longitud", precision = 11, scale=2)
     private BigDecimal longitud;
 
-    public Consultorio(){
-
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "consultorio")
+    private List<Cita> citas;
 
     public long getId() {
         return id;
@@ -103,4 +103,11 @@ public class Consultorio {
         this.longitud = longitud;
     }
 
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
 }

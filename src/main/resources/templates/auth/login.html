@@ -17,9 +17,6 @@
 <!-- Header -->
 <div th:replace="~{fragments/header :: header}"></div>
 
-<!-- Carrusel -->
-<div th:replace="~{fragments/header :: carrusel}"></div>
-
 <!-- Hero Section -->
 <section class="bg-light text-center py-5">
     <div class="container">
@@ -35,7 +32,7 @@
     <div class="login-card p-5">
         <div class="text-center mb-4">
             <div class="mb-3"></div>
-            <h1 class="h3 brand-logo fw-bold mb-2">UTP+ CLASS</h1>
+            <h1 class="h3 brand-logo fw-bold mb-2">INICIAR SESIÓN</h1>
             <p class="text-muted"></p>
         </div>
 
@@ -52,7 +49,7 @@
         </div>
 
         <!-- Formulario -->
-        <form method="post" th:action="@{/enviar_login}">
+        <form method="post" th:action="@{/auth/do_login}">
             <div class="mb-4">
                 <label for="username" class="form-label fw-semibold">
                     <i class="bi bi-person-circle text-primary me-2"></i>Usuario

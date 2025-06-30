@@ -65,7 +65,7 @@ public class Paciente {
     @Convert(converter = EstadoCitaAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
-    @OneToMany(targetEntity = Cita.class, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
     private List<Cita> citas;
 
     public Paciente(long id, String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, Date fechaNacimiento, EstadoCivil estadoCivil, Genero genero, String email) {

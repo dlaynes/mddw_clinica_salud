@@ -69,16 +69,16 @@ public class ClinicaSaludSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/dashboard").authenticated()
-                //        .requestMatchers("/dashboard/users/**").hasRole("Admin")
-                //        .requestMatchers("/dashboard/settings").hasAnyRole("Cliente", "Doctor")
-                        .requestMatchers("/contacto", "/nosotros", "/especialidades", "/", "/servicios", "/auth/registro").permitAll()
+                        .requestMatchers("/dashboard/index").hasAnyAuthority("Admin", "Medico", "Mantenimiento", "Cliente")
+                //        .requestMatchers("/dashboard/users/**").hasAnyAuthority("Admin", "Mantenimiento")
+                //        .requestMatchers("/dashboard/settings/**").hasAnyRole("Cliente", "Doctor")
+                        .anyRequest().permitAll()
                 );
         http.formLogin(form -> form
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/auth/do_login")
-                .defaultSuccessUrl("/dashboard", true)
-                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/dashboard/index", true)
+                .failureUrl("/auth/login?error=true")
                 .permitAll());
         http.logout(logout -> logout
                 .logoutUrl("/auth/logout")

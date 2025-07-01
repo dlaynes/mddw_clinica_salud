@@ -20,7 +20,7 @@ public enum TipoDocumento {
             case dni -> "DNI";
             case carnetExtranjeria -> "Carnet extranjería";
             case pasaporte -> "Pasaporte";
-            default -> "";
+            default -> "n/d";
         };
     };
 

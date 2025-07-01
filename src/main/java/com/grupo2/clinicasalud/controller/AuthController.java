@@ -1,9 +1,13 @@
 package com.grupo2.clinicasalud.controller;
 
+import com.grupo2.clinicasalud.model.Paciente;
 import com.grupo2.clinicasalud.model.Rol;
 import com.grupo2.clinicasalud.model.Usuario;
+import com.grupo2.clinicasalud.model.form.RegistroForm;
+import com.grupo2.clinicasalud.repository.PacienteRepository;
 import com.grupo2.clinicasalud.repository.RolRepository;
 import com.grupo2.clinicasalud.repository.UsuarioRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,65 +26,71 @@ public class AuthController {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
+    private PacienteRepository pacienteRepository;
+
+    @Autowired
     private RolRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
+    public String loginPage(Model model, @RequestParam(required = false) String register) {
+        if(register != null){
+           model.addAttribute("successText", "Su cuenta ha sido creada satisfactoriamente. Ya puede ingresar al sistema");
+        }
         return "auth/login";
     }
 
     @GetMapping("/registro")
     public String registerPage(Model model) {
-        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("usuario", new RegistroForm());
         return "auth/registro";
     }
 
     @PostMapping("/registro")
-    public String registerUser(@ModelAttribute Usuario usuario,
-                               @RequestParam String confirmPassword,
-                               @RequestParam String roleType,
+    public String registerUser(@Valid @ModelAttribute RegistroForm registroForm,
                                RedirectAttributes redirectAttributes) {
 
         // Validaciones
-        if (!usuario.getPassword().equals(confirmPassword)) {
+        if (!registroForm.getPassword().equals(registroForm.getPasswordConfirm())) {
             redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden");
             return "redirect:/auth/registro";
         }
 
-        if (usuarioRepository.existsByUsername(usuario.getUsername())) {
-            redirectAttributes.addFlashAttribute("error", "El nombre de usuario ya existe");
-            return "redirect:/auth/registro";
-        }
+        String email = registroForm.getEmail().toLowerCase();
 
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+        if (usuarioRepository.existsByEmail(email)) {
             redirectAttributes.addFlashAttribute("error", "El email ya está registrado");
             return "redirect:/auth/registro";
         }
 
-        // Encriptar contraseña
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        Usuario usuario = new Usuario();
+        usuario.setEmail(email);
+        usuario.setPassword(passwordEncoder.encode(registroForm.getPassword()));
 
         // Asignar rol
         Set<Rol> roles = new HashSet<>();
-        switch (roleType) {
-            case "cliente":
-                Rol clienteRol = roleRepository.findByNombre("Cliente")
-                        .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                roles.add(clienteRol);
-            default:
-                 Rol defaultRol = roleRepository.findByNombre("Visitante")
-                        .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
-                roles.add(defaultRol);
-        }
-
+        Rol clienteRol = roleRepository.findByNombre("Cliente")
+                .orElseThrow(() -> new RuntimeException("Error: Rol Cliente no encontrado."));
+        roles.add(clienteRol);
         usuario.setRoles(roles);
+
+        Paciente paciente = new Paciente();
+        paciente.setNombre(registroForm.getNombre());
+        paciente.setApellido(registroForm.getApellidos());
+        paciente.setEmail(registroForm.getEmail());
+        paciente.setTelefono(registroForm.getTelefono());
+        pacienteRepository.save(paciente);
+
+        usuario.setPaciente(paciente);
         usuarioRepository.save(usuario);
 
+        paciente.setUsuario(usuario);
+        pacienteRepository.save(paciente);
+
         redirectAttributes.addFlashAttribute("success", "Usuario registrado exitosamente");
-        return "redirect:/login";
+        return "redirect:/auth/login?register=success";
     }
 
 }

@@ -1,6 +1,7 @@
 package com.grupo2.clinicasalud.model;
 
 import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
+import com.grupo2.clinicasalud.model.converter.EstadoCivilAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.GeneroAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.TipoDocumentoAttributeConverter;
 import jakarta.persistence.*;
@@ -62,11 +63,15 @@ public class Paciente {
 
     @NotBlank(message = "El estado civil es obligatorio")
     @Column(name = "estado_civil", length = 1)
-    @Convert(converter = EstadoCitaAttributeConverter.class)
+    @Convert(converter = EstadoCivilAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
     private List<Cita> citas;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "paciente")
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     public Paciente(long id, String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, Date fechaNacimiento, EstadoCivil estadoCivil, Genero genero, String email) {
         this.id = id;
@@ -171,5 +176,13 @@ public class Paciente {
 
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

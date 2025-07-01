@@ -10,7 +10,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByEmail(String email); //Aquí era el error no encontraba directamente al Usuario y se tuvo que colocar toda la ruta
 
-    Boolean existsByUsername(String username);
-    Optional<Usuario> findByUsername(String username);
 }
 

@@ -76,18 +76,9 @@ public class Medico {
     )
     private Set<Especialidad> especialidades;
 
-    public Medico(long id, String nombre, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, String email, String apellido, Date fechaCreacion, Genero genero, EstadoCivil estadoCivil) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
-        this.telefono = telefono;
-        this.email = email;
-        this.apellido = apellido;
-        this.fechaCreacion = fechaCreacion;
-        this.genero = genero;
-        this.estadoCivil = estadoCivil;
-    }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "medico")
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     public Medico(){
 
@@ -187,5 +178,13 @@ public class Medico {
 
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

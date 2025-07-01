@@ -24,14 +24,9 @@ public class Usuario implements UserDetails {
     @Column(name = "usuario_id", columnDefinition = "BIGINT")
     private long id;
 
-    @NotBlank(message = "El nombre de usuario es obligatorio")
-    @Size(min = 4, max = 20, message = "El nombre de usuario debe tener entre 4 y 20 caracteres")
-    @Column(unique = true)
-    private String username;
-
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Formato de email inválido")
-    @Size(max=150)
+    @Size(max=150, message = "El correo electrónico no puede tener más de 150 caracteres")
     @Column(name="email", length = 150, nullable = false)
     private String email;
 
@@ -54,6 +49,14 @@ public class Usuario implements UserDetails {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="paciente_id")
+    private Paciente paciente;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="medico_id")
+    private Medico medico;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -97,11 +100,11 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     public void setUsername(String username){
-        this.username = username;
+        this.email = username;
     }
 
     @Override
@@ -124,4 +127,27 @@ public class Usuario implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
 }

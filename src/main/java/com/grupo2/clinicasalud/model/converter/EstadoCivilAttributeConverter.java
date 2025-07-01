@@ -6,7 +6,7 @@ import jakarta.persistence.AttributeConverter;
 public class EstadoCivilAttributeConverter implements AttributeConverter<EstadoCivil,String> {
     @Override
     public String convertToDatabaseColumn(EstadoCivil estadoCivil) {
-        return estadoCivil.toString();
+        return estadoCivil != null ? estadoCivil.toString() : null;
     }
 
     @Override
@@ -16,7 +16,7 @@ public class EstadoCivilAttributeConverter implements AttributeConverter<EstadoC
             case "C" -> EstadoCivil.casado;
             case "V" -> EstadoCivil.viudo;
             case "D" -> EstadoCivil.divorciado;
-            default -> throw new IllegalStateException("Unexpected EstadoCivil value: " + s);
+            default -> null;
         };
     }
 }

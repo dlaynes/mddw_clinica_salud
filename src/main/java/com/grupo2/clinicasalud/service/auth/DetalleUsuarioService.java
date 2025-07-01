@@ -18,6 +18,6 @@ public class DetalleUsuarioService implements UserDetailsService {
     // Preferimos el uso de correo, pero en una aplicación más avanzada los datos deberán estar encriptados
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return usuarioRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User with ID " + username + " not found"));
+        return usuarioRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found"));
     }
 }

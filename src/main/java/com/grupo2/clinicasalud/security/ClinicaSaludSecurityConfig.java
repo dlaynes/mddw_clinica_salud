@@ -76,6 +76,7 @@ public class ClinicaSaludSecurityConfig {
                 );
         http.formLogin(form -> form
                 .loginPage("/auth/login")
+                .usernameParameter("email")
                 .loginProcessingUrl("/auth/do_login")
                 .defaultSuccessUrl("/dashboard/index", true)
                 .failureUrl("/auth/login?error=true")

@@ -12,7 +12,7 @@ public enum EstadoCivil {
             case soltero -> "S";
             case viudo -> "V";
             case divorciado -> "D";
-            default -> "Desconocido";
+            default -> "";
         };
     }
 
@@ -22,7 +22,7 @@ public enum EstadoCivil {
             case soltero -> "Soltero/a";
             case viudo -> "Viudo/a";
             case divorciado -> "Divorciado/a";
-            default -> "";
+            default -> "n/d";
         };
     };
 }

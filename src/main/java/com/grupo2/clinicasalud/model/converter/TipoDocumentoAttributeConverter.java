@@ -6,7 +6,7 @@ import jakarta.persistence.AttributeConverter;
 public class TipoDocumentoAttributeConverter implements AttributeConverter<TipoDocumento, String> {
     @Override
     public String convertToDatabaseColumn(TipoDocumento tipoDocumento) {
-        return tipoDocumento.toString();
+        return tipoDocumento != null ? tipoDocumento.toString() : null;
     }
 
     @Override
@@ -15,7 +15,7 @@ public class TipoDocumentoAttributeConverter implements AttributeConverter<TipoD
             case "D" -> TipoDocumento.dni;
             case "P" -> TipoDocumento.pasaporte;
             case "E" -> TipoDocumento.carnetExtranjeria;
-            default -> throw new IllegalStateException("Unexpected TipoDocumento value: " + s);
+            default -> null;
         };
     }
 }

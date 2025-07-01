@@ -8,7 +8,7 @@ import jakarta.persistence.Converter;
 public class EstadoCitaAttributeConverter implements AttributeConverter<EstadoCita,String> {
     @Override
     public String convertToDatabaseColumn(EstadoCita e) {
-        return e.toString();
+        return e != null ? e.toString() : null;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class EstadoCitaAttributeConverter implements AttributeConverter<EstadoCi
             case "Completada" -> EstadoCita.completada;
             case "En espera" -> EstadoCita.enEspera;
             case "Programada" -> EstadoCita.programada;
-            default -> throw new IllegalStateException("Unexpected EstadoCita value: " + e);
+            default -> null;
         };
     }
 }

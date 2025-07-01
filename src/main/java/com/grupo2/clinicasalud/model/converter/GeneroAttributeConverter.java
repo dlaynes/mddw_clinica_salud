@@ -6,7 +6,7 @@ import jakarta.persistence.AttributeConverter;
 public class GeneroAttributeConverter implements AttributeConverter<Genero, String> {
     @Override
     public String convertToDatabaseColumn(Genero genero) {
-        return genero.toString();
+        return genero != null ? genero.toString() : null;
     }
 
     @Override
@@ -15,7 +15,7 @@ public class GeneroAttributeConverter implements AttributeConverter<Genero, Stri
             case "M" -> Genero.masculino;
             case "F" -> Genero.femenino;
             case "" -> Genero.otro;
-            default -> throw new IllegalStateException("Unexpected Genero value: " + s);
+            default -> null;
         };
     }
 }

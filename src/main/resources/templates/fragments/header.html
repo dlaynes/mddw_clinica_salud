@@ -32,13 +32,16 @@
                         <a class="nav-link" th:classappend="${requestURI == '/nosotros' ? 'active':''}" th:href="@{/nosotros}">Nosotros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:classappend="${requestURI == '/contactenos' ? 'active':''}" th:href="@{contactenos}">Contáctenos</a>
+                        <a class="nav-link" th:classappend="${requestURI == '/contactenos' ? 'active':''}" th:href="@{/contactenos}">Contáctenos</a>
                     </li>
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" th:href="@{auth/login}">Iniciar sesión</a>
+                        <a class="nav-link" th:classappend="${requestURI == '/auth/login' ? 'active':''}" th:href="@{/auth/login}">Iniciar sesión</a>
                     </li>
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" th:href="@{auth/registro}">Crear una cuenta</a>
+                        <a class="nav-link" th:classappend="${requestURI == '/auth/registro' ? 'active':''}" th:href="@{/auth/registro}">Crear una cuenta</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/dashboard/index}">Panel de control</a>
                     </li>
                 </ul>
                 <form class="d-flex ms-3">

@@ -17,14 +17,12 @@ import java.util.Set;
 @Configuration
 public class UserInitializer {
 
-    private BCryptPasswordEncoder passwordEncoder;
-
     @Bean
     public CommandLineRunner initUsers(RolRepository rolRepository, UsuarioRepository userRepository){
         return args -> {
             if(userRepository.findByEmail("admin@test.com").isEmpty()){
 
-                passwordEncoder = new BCryptPasswordEncoder();
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
                 Optional<Rol> rol = rolRepository.findByNombre("Admin");
                 if(rol.isEmpty()){
@@ -32,8 +30,7 @@ public class UserInitializer {
                 }
                 Usuario adm = new Usuario();
                 adm.setEmail("admin@test.com");
-                adm.setUsername("adm_clinica");
-                adm.setPassword(passwordEncoder.encode(("admin123")));
+                adm.setPassword(passwordEncoder.encode("admin123"));
                 Set<Rol> roles = new HashSet<>();
                 roles.add(rol.get());
                 adm.setRoles(roles);

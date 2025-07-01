@@ -32,12 +32,17 @@
     <form method="post" th:action="@{/auth/registro}" th:object="${usuario}">
         <h3 class="text-center mb-4">Crear una cuenta</h3>
 
-        <input type="hidden" th:field="*{id_usuario}"/>
+        <!-- Alertas -->
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <strong>Error:</strong> <span th:text="${param.error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
+        </div>
 
         <div class="mb-3">
-            <label for="username" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="username" th:field="*{username}">
-            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></div>
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}">
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></div>
         </div>
 
         <div class="mb-3">
@@ -47,32 +52,40 @@
         </div>
 
         <div class="mb-3">
+            <label for="password" class="form-label">Confirmar contraseña</label>
+            <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}" placeholder="Minimo 8 caracteres, mayúsculas y minúsculas, un número y un carácter especial">
+            <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="text-danger"></div>
+        </div>
+
+        <p class="alert alert-info mt-3">Recuerde usar el nombre del paciente al momento de crear una cuenta. No se aceptan trámites a nombre de terceras personas en el portal</p>
+
+        <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
             <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></div>
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}">
-            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"></div>
+            <label for="nombre" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" th:field="*{apellidos}">
+            <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="text-danger"></div>
         </div>
 
         <div class="mb-3">
-            <label for="celular" class="form-label">Celular</label>
-            <input type="text" class="form-control" id="celular" th:field="*{celular}">
-            <div th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}" class="text-danger"></div>
+            <label for="telefono" class="form-label">Celular/Teléfono</label>
+            <input type="text" class="form-control" id="telefono" th:field="*{telefono}">
+            <div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-danger"></div>
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a href="/usuario/nuevo" class="btn btn-secondary ms-2">Cancelar</a>
+            <button type="submit" class="btn btn-success">Crear una cuenta</button>
+            <a href="@{/auth/login}" class="btn btn-secondary ms-2">Cancelar</a>
         </div>
     </form>
 
 
     <!-- Enlaces adicionales -->
-    <div class="text-center">
+    <div class="text-center mt-4">
         <div class="mb-3">
             <p class="mb-1 text-muted">¿Ya tienes una cuenta?</p>
             <a href="@{/auth/login}" class="btn btn-outline-primary">

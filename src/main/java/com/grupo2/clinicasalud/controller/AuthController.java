@@ -81,6 +81,7 @@ public class AuthController {
         paciente.setApellido(registroForm.getApellidos());
         paciente.setEmail(registroForm.getEmail());
         paciente.setTelefono(registroForm.getTelefono());
+        // Es necesario que el registro del paciente tenga un ID antes de asociarlo al usuario actual
         pacienteRepository.save(paciente);
 
         usuario.setPaciente(paciente);
@@ -89,7 +90,7 @@ public class AuthController {
         paciente.setUsuario(usuario);
         pacienteRepository.save(paciente);
 
-        redirectAttributes.addFlashAttribute("success", "Usuario registrado exitosamente");
+        // redirectAttributes.addFlashAttribute("success", "Usuario registrado exitosamente");
         return "redirect:/auth/login?register=success";
     }
 

@@ -15,7 +15,8 @@ public class DetalleUsuarioService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Preferimos el uso de correo, pero en una aplicación más avanzada los datos deberán estar encriptados
+    // Preferimos el uso de correo para no obligar al visitante a pensar en un nombre de cuenta,
+    // pero en una aplicación más avanzada los datos deberán estar encriptados para que nadie acceda al correo
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found"));

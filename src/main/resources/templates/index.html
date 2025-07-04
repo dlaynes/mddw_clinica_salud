@@ -117,11 +117,11 @@
             <!-- Columna derecha -->
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="servicio" name="servicio" required th:field="*{servicio}">
-                        <option value="" disabled selected>Seleccione un servicio</option>
-                        <option th:each="servicio : ${servicios}" th:value="${servicio.id}" th:text="${servicio.nombre}"></option>
+                    <select class="form-select" id="especialidad" name="especialidad" required th:field="*{especialidad}">
+                        <option value="" disabled selected>Seleccione una especialidad</option>
+                        <option th:each="especialidad : ${especialidades}" th:value="${especialidad.id}" th:text="${especialidad.nombre}"></option>
                     </select>
-                    <label for="servicio">Servicio</label>
+                    <label for="especialidad">Especialidad</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="date" class="form-control" id="fecha" name="fecha" required th:field="*{fecha}">

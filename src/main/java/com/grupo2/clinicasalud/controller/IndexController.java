@@ -51,8 +51,6 @@ public class IndexController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final List<ReservaCita> reservas = new ArrayList<>();
-
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
@@ -60,12 +58,9 @@ public class IndexController {
 
     @GetMapping("/")
     private String indice(Model model) {
-        List<Servicio> servicios = Servicio.dameServicios();
         List<Especialidad> especialidades = especialidadRepository.findAll();
         model.addAttribute("especialidades", especialidades);
-        model.addAttribute("servicios", servicios);
         model.addAttribute("reserva", new ReservaCita());
-        model.addAttribute("reservas", reservas);
         return "index";
     }
 

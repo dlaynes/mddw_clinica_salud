@@ -117,7 +117,7 @@
             <!-- Columna derecha -->
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="especialidad" name="especialidad" required th:field="*{especialidad}">
+                    <select class="form-select" id="especialidad" name="especialidad" required th:field="*{especialidad_id}">
                         <option value="" disabled selected>Seleccione una especialidad</option>
                         <option th:each="especialidad : ${especialidades}" th:value="${especialidad.id}" th:text="${especialidad.nombre}"></option>
                     </select>
@@ -135,35 +135,6 @@
         </div>
         <button type="submit" class="btn btn-primary w-100">Reservar</button>
     </form>
-
-    <!-- Lista de Reservas -->
-    <div class="mt-5">
-        <h3 class="text-center text-secondary">Reservas Realizadas</h3>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-primary text-center">
-                <tr>
-                    <th>NOMBRE Y APELIIDOS</th>
-                    <th>CORREO ELECTRONICO</th>
-                    <th>TELEFONO</th>
-                    <th>SERVICIO</th>
-                    <th>FECHA</th>
-                    <th>HORA</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reserva : ${reservas}">
-                    <td th:text="${reserva.nombre}"></td>
-                    <td th:text="${reserva.email}"></td>
-                    <td th:text="${reserva.telefono}"></td>
-                    <td th:text="${reserva.servicio}"></td>
-                    <td th:text="${reserva.fecha}"></td>
-                    <td th:text="${reserva.hora}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 </section>
 <!-- Footer -->
 <div th:replace="~{fragments/footer :: footer}"></div>

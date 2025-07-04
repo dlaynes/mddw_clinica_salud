@@ -30,6 +30,14 @@
     </div>
 </section>
 
+<div class="container my" th:if="${successText}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>
+        <span th:text="${successText}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
+    </div>
+</div>
+
 <!-- CARD -->
 <div class="container my">
     <div class="card mb-3">
@@ -102,7 +110,11 @@
             <div class="col-md-6">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required th:field="*{nombre}">
-                    <label for="nombre">Nombre Completo</label>
+                    <label for="nombre">Nombres</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ingresa tu apellido" required th:field="*{apellidos}">
+                    <label for="apellidos">Apellidos</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu email" required th:field="*{email}">
@@ -117,19 +129,23 @@
             <!-- Columna derecha -->
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="especialidad" name="especialidad" required th:field="*{especialidad_id}">
+                    <select class="form-select" id="especialidad_id" name="especialidad_id" required th:field="*{especialidad_id}">
                         <option value="" disabled selected>Seleccione una especialidad</option>
                         <option th:each="especialidad : ${especialidades}" th:value="${especialidad.id}" th:text="${especialidad.nombre}"></option>
                     </select>
-                    <label for="especialidad">Especialidad</label>
+                    <label for="especialidad_id">Especialidad</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="date" class="form-control" id="fecha" name="fecha" required th:field="*{fecha}">
-                    <label for="fecha">Fecha de la Cita</label>
+                    <label for="fecha">Fecha preferida de la Cita</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="time" class="form-control" id="hora" name="hora" required th:field="*{hora}">
-                    <label for="hora">Hora de la Cita</label>
+                    <label for="hora">Hora preferida de la Cita</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" name="motivo" id="motivo" th:field="*{motivo}"></textarea>
+                    <label for="motivo" style="z-index: 0;">Motivo de la cita</label>
                 </div>
             </div>
         </div>

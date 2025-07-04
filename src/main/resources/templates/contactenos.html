@@ -100,6 +100,13 @@
 <!-- Formulario de Citas -->
 <section id="contacto" class="container my-5">
     <div class="form-container">
+    <!-- Alertas -->
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.success}">
+        <i class="bi bi-check-circle me-2"></i>
+        <span>Su consulta fue enviada satisfactoriamente. Muy pronto nos pondremos en contacto</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
+    </div>
+
     <form class="p-5 border rounded shadow-lg bg-light" th:action="@{/contactenos}" th:object="${contacto}" method="post">
         <h3 class="text-center mb-4"><i class="bi bi-person-plus me-2"></i>Escríbenos tu consulta</h3>
         <div class="row g-4">

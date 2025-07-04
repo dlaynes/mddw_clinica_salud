@@ -37,7 +37,7 @@ public class Consulta {
     @Size(min=2, max=2000)
     private String comentario;
 
-    @Column(name= "fecha_creacion")
+    @Column(name= "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
     public long getId() {

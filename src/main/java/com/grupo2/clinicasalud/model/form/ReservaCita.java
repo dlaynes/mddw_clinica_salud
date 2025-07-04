@@ -1,9 +1,7 @@
 package com.grupo2.clinicasalud.model.form;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,16 +29,23 @@ public class ReservaCita {
     @Column(name = "telefono", length = 25)
     private String telefono;
 
-    @NotBlank(message = "Se debe seleccionar una fecha aproximada")
-    private LocalDate fecha;
+    @NotNull(message = "Se debe seleccionar una fecha aproximada")
+    @Pattern(
+            regexp = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\\d{2}",
+            message = "Se debe indicar una fecha válida"
+    )
+    private String fecha;
 
-    @NotBlank(message = "Se debe seleccionar una hora aproximada")
-    private LocalTime hora;
+    @NotNull(message = "Se debe seleccionar una hora aproximada")
+    @Pattern(
+            regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
+            message = "Se debe indicar una hora válida"
+    )
+    private String hora;
 
-    @NotBlank(message = "Se debe seleccionar una especialidad")
+    @NotNull(message = "Se debe seleccionar una especialidad")
     private Long especialidad_id;
 
-    @NotBlank(message = "El motivo de la cita es obligatorio")
     @Column(name = "motivo")
     @Size(min=2, max=2000)
     private String motivo;
@@ -70,19 +75,19 @@ public class ReservaCita {
         this.telefono = telefono;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public LocalTime getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 

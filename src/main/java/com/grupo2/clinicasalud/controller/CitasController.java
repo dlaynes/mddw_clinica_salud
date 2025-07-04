@@ -89,7 +89,7 @@ public class CitasController {
     }
 
     @PostMapping("/guardar")
-    public String guardarCita(@Valid @ModelAttribute ReservaCitaEjemplo citaForm) {
+    public String guardarCita(@ModelAttribute ReservaCitaEjemplo citaForm) {
         List<Especialidad> especialidades = Especialidad.dameEspecialidades();
         Optional<Especialidad> especialidadContainer = especialidades.stream().filter(especialidad1 -> {
             return String.valueOf( especialidad1.getId()).equals(citaForm.getEspecialidad());

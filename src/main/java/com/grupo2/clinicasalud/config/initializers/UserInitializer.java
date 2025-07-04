@@ -4,7 +4,6 @@ import com.grupo2.clinicasalud.model.Rol;
 import com.grupo2.clinicasalud.model.Usuario;
 import com.grupo2.clinicasalud.repository.RolRepository;
 import com.grupo2.clinicasalud.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

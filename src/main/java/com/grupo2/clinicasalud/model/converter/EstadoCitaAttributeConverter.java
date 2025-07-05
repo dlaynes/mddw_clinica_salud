@@ -13,6 +13,8 @@ public class EstadoCitaAttributeConverter implements AttributeConverter<EstadoCi
 
     @Override
     public EstadoCita convertToEntityAttribute(String e) {
+        if(e == null) return null;
+
         return switch (e){
             case "Registrada" -> EstadoCita.registrada;
             case "Rechazada" -> EstadoCita.rechazada;

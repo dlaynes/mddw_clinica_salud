@@ -1,6 +1,7 @@
 package com.grupo2.clinicasalud.service;
 
 import com.grupo2.clinicasalud.model.Cita;
+import com.grupo2.clinicasalud.model.EstadoCita;
 import com.grupo2.clinicasalud.model.Medico;
 import com.grupo2.clinicasalud.model.Paciente;
 import com.grupo2.clinicasalud.repository.CitaRepository;
@@ -47,11 +48,11 @@ public class CitaService {
 
 
     public List<Cita> dameCitasDePaciente(Paciente paciente){
-        return repository.findByPacienteId(paciente.getId());
+        return repository.findByPacienteIdOrderByFechaHoraDesc(paciente.getId());
     }
 
     public List<Cita> dameCitasDeMedico(Medico medico){
-        return repository.findByMedicoId(medico.getId());
+        return repository.findByMedicoIdOrderByFechaHoraDesc(medico.getId());
     }
 
     public long countCitasBetween(LocalDateTime start, LocalDateTime end) {
@@ -60,6 +61,10 @@ public class CitaService {
 
     public List<Cita> findCitasBetween(LocalDateTime start, LocalDateTime end) {
         return repository.findByFechaHoraBetweenOrderByFechaHoraAsc(start, end);
+    }
+
+    public long countCitasByEstado(EstadoCita estadoCita){
+        return repository.countByEstadoCita(estadoCita);
     }
 
 

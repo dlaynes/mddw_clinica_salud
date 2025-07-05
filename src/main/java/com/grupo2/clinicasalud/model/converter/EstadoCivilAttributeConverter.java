@@ -11,6 +11,8 @@ public class EstadoCivilAttributeConverter implements AttributeConverter<EstadoC
 
     @Override
     public EstadoCivil convertToEntityAttribute(String s) {
+        if(s == null) return null;
+
         return switch (s) {
             case "S" -> EstadoCivil.soltero;
             case "C" -> EstadoCivil.casado;

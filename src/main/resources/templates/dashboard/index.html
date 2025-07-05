@@ -111,7 +111,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="modalUnoLabel">Citas medicas</h5>
+                    <h5 class="modal-title" id="modalUnoLabel">Citas médicas</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body text-center">
@@ -161,7 +161,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-info text-white">
-                    <h5 class="modal-title" id="modalTresLabel">SConsultorios Modernos</h5>
+                    <h5 class="modal-title" id="modalTresLabel">Consultorios Modernos</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body text-center">
@@ -230,8 +230,8 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h6 class="text-muted">Consultorios</h6>
-                            <h3 th:text="${totalConsultorios}">8</h3>
+                            <h6 class="text-muted">Citas por confirmar</h6>
+                            <h3 th:text="${citasPendientes}">8</h3>
                         </div>
                         <div class="text-warning">
                             <i class="bi bi-building card-icon"></i>
@@ -247,7 +247,7 @@
     <div class="row g-4">
         <!-- Tarjeta de Citas -->
         <div class="col-md-6 col-lg-3">
-            <a th:href="@{/citas}" class="text-decoration-none">
+            <a th:href="@{/dashboard/citas}" class="text-decoration-none">
                 <div class="card dashboard-card text-center text-white bg-primary">
                     <div class="card-body">
                         <i class="bi bi-calendar-check card-icon"></i>
@@ -260,7 +260,7 @@
 
         <!-- Tarjeta de Pacientes -->
         <div class="col-md-6 col-lg-3">
-            <a th:href="@{/pacientes}" class="text-decoration-none">
+            <a th:href="@{/dashboard/pacientes}" class="text-decoration-none">
                 <div class="card dashboard-card text-center text-white bg-success">
                     <div class="card-body">
                         <i class="bi bi-people card-icon"></i>
@@ -273,7 +273,7 @@
 
         <!-- Tarjeta de Médicos -->
         <div class="col-md-6 col-lg-3">
-            <a th:href="@{/medicos}" class="text-decoration-none">
+            <a th:href="@{/dashboard/medicos}" class="text-decoration-none">
                 <div class="card dashboard-card text-center text-white bg-info">
                     <div class="card-body">
                         <i class="bi bi-person-badge card-icon"></i>
@@ -286,12 +286,12 @@
 
         <!-- Tarjeta de Consultorios -->
         <div class="col-md-6 col-lg-3">
-            <a th:href="@{/consultorios}" class="text-decoration-none">
+            <a th:href="@{/dashboard/usuarios}" class="text-decoration-none">
                 <div class="card dashboard-card text-center text-white bg-warning">
                     <div class="card-body">
-                        <i class="bi bi-building card-icon"></i>
-                        <h5 class="card-title">Consultorios</h5>
-                        <p class="card-text">Gestión de espacios médicos</p>
+                        <i class="bi bi-person-gear card-icon"></i>
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text">Gestión de usuarios del portal</p>
                     </div>
                 </div>
             </a>
@@ -315,19 +315,18 @@
                                 <th>Médico</th>
                                 <th>Especialidad</th>
                                 <th>Consultorio</th>
-
-
+                                <th>Estado</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="cita : ${proximasCitas}">
-                                <td th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
-                                <td th:text="${cita.paciente.nombre + ' ' + cita.paciente.apellido}"></td>
-                                <td th:text="'Dr. ' + ${cita.medico.nombre} + ' ' + ${cita.medico.apellido}"></td>
-                                <td th:text="${cita.medico.especialidad.nombre}"></td>
-                                <td th:text="${cita.consultorio.codigo}"></td>
-
-                            </tr>
+                                <tr th:each="cita : ${proximasCitas}">
+                                    <td th:text="${#dates.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                                    <td th:text="${cita.paciente} ? ${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido} : '--'"></td>
+                                    <td th:text="${cita.medico} ? 'Dr. ' + ${cita.medico.nombre} + ' ' + ${cita.medico.apellido} : '--'"></td>
+                                    <td th:text="${cita.especialidad.nombre}"></td>
+                                    <td th:text="${cita.consultorio.nombre}"></td>
+                                    <td th:text="${cita.estadoCita}"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

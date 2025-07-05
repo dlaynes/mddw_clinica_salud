@@ -11,6 +11,8 @@ public class GeneroAttributeConverter implements AttributeConverter<Genero, Stri
 
     @Override
     public Genero convertToEntityAttribute(String s) {
+        if(s == null) return null;
+
         return switch(s) {
             case "M" -> Genero.masculino;
             case "F" -> Genero.femenino;

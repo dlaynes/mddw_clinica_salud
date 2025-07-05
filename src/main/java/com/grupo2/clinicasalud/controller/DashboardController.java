@@ -1,11 +1,18 @@
 package com.grupo2.clinicasalud.controller;
 
+import com.grupo2.clinicasalud.model.EstadoCita;
+import com.grupo2.clinicasalud.model.Usuario;
 import com.grupo2.clinicasalud.service.CitaService;
 import com.grupo2.clinicasalud.service.ConsultorioService;
 import com.grupo2.clinicasalud.service.MedicoService;
 import com.grupo2.clinicasalud.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -27,21 +37,30 @@ public class DashboardController {
     private PacienteService pacienteService;
 
     @Autowired
-    private ConsultorioService consultorioService;
-
-    @Autowired
     private MedicoService medicoService;
 
     @GetMapping("/index")
-    public String index(Model model){
+    public String index(Model model, @AuthenticationPrincipal Usuario user){
+        if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Admin"))){
+            return indexAdmin(model);
+        }
+        if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Medico"))){
+            return indexMedicos(model);
+        }
+        if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Cliente"))){
+            return indexPacientes(model);
+        }
+        throw new RuntimeException("Unknown role");
+    }
 
+    private String indexAdmin(Model model){
         LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
 
         model.addAttribute("citasHoy", citaService.countCitasBetween(startOfDay, endOfDay));
         model.addAttribute("totalPacientes", pacienteService.countPacientes());
         model.addAttribute("totalMedicos", medicoService.countMedicos());
-        model.addAttribute("totalConsultorios", consultorioService.countConsultorios());
+        model.addAttribute("citasPendientes", citaService.countCitasByEstado(EstadoCita.registrada));
 
         // Obtener próximas citas (hoy + 7 días)
         LocalDateTime endOfWeek = endOfDay.plusDays(7);
@@ -49,4 +68,14 @@ public class DashboardController {
 
         return "dashboard/index";
     }
+
+    private String indexMedicos(Model model){
+        return "dashboard/index_medicos";
+    }
+
+    private String indexPacientes(Model model){
+        return "dashboard/index_pacientes";
+    }
+
+
 }

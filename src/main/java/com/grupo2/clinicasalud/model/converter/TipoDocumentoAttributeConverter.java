@@ -11,6 +11,8 @@ public class TipoDocumentoAttributeConverter implements AttributeConverter<TipoD
 
     @Override
     public TipoDocumento convertToEntityAttribute(String s) {
+        if(s == null) return null;
+
         return switch(s){
             case "D" -> TipoDocumento.dni;
             case "P" -> TipoDocumento.pasaporte;

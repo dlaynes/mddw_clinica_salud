@@ -22,16 +22,15 @@ import java.time.LocalTime;
 @Controller
 @RequestMapping("/citas")
 public class CitasController {
-    private final CitaService citaService;
-    private final PacienteService pacienteService;
-    private final ConsultorioService consultorioService;
 
     @Autowired
-    public CitasController(CitaService citaService, PacienteService pacienteService, ConsultorioService consultorioService){
-        this.citaService = citaService;
-        this.consultorioService = consultorioService;
-        this.pacienteService = pacienteService;
-    }
+    private CitaService citaService;
+
+    @Autowired
+    private PacienteService pacienteService;
+
+    @Autowired
+    private ConsultorioService consultorioService;
 
     @GetMapping("/nueva")
     public String nuevaCita(Model model){

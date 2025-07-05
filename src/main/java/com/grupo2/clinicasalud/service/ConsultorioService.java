@@ -34,4 +34,8 @@ public class ConsultorioService {
         repository.deleteById(c.getId());
     }
 
+    public long countConsultorios() {
+        return repository.count();
+    }
+
 }

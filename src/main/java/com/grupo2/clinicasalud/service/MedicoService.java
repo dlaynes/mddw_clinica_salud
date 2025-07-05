@@ -1,36 +1,46 @@
 package com.grupo2.clinicasalud.service;
 
+import com.grupo2.clinicasalud.model.Especialidad;
 import com.grupo2.clinicasalud.model.Medico;
 import com.grupo2.clinicasalud.repository.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MedicoService {
-    MedicoRepository repository;
-
     @Autowired
+    private MedicoRepository medicoRepository;
+
     public MedicoService(MedicoRepository repository){
-        this.repository = repository;
+        this.medicoRepository = repository;
     }
 
-    public boolean existeConsultorioPorId(long id) { return repository.existsById(id); }
+    public boolean existeMedicoPorId(long id) { return medicoRepository.existsById(id); }
 
-    public Medico dameConsultorioPorId(long id){
-        return repository.findById(id).orElse(null);
+    public Medico dameMedicoPorId(long id){
+        return medicoRepository.findById(id).orElse(null);
     }
 
-    public void guardarConsultorio(Medico o){
-        repository.save(o);
+    public List<Medico> dameMedicosPorEspecialidad(Especialidad especialidad){
+        return medicoRepository.dameMedicosPorEspecialidad(especialidad.getId());
+    }
+
+    public void guardarMedico(Medico o){
+        medicoRepository.save(o);
     }
 
     public List<Medico> dameMedicos(){
-        return repository.findAll();
+        return medicoRepository.findAll();
     }
 
     public void eliminarMedico(Medico o){
-        repository.deleteById(o.getId());
+        medicoRepository.deleteById(o.getId());
+    }
+
+    public long countMedicos() {
+        return medicoRepository.count();
     }
 }

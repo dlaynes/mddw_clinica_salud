@@ -2,6 +2,7 @@ package com.grupo2.clinicasalud.model.form;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,9 +32,10 @@ public class ReservaCita {
 
     @NotNull(message = "Se debe seleccionar una fecha aproximada")
     @Pattern(
-            regexp = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\\d{2}",
+            regexp = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(20)\\d{2}",
             message = "Se debe indicar una fecha válida"
     )
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private String fecha;
 
     @NotNull(message = "Se debe seleccionar una hora aproximada")

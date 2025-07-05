@@ -28,8 +28,8 @@ public class EspecialidadService {
         return repository.findAll();
     }
 
-    public void eliminarEspecialidad(Especialidad e){
-        repository.deleteById(e.getId());
+    public void eliminarEspecialidad(Long id){
+        repository.deleteById(id);
     }
 
 }

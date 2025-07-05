@@ -3,16 +3,10 @@ package com.grupo2.clinicasalud.controller;
 import com.grupo2.clinicasalud.model.EstadoCita;
 import com.grupo2.clinicasalud.model.Usuario;
 import com.grupo2.clinicasalud.service.CitaService;
-import com.grupo2.clinicasalud.service.ConsultorioService;
 import com.grupo2.clinicasalud.service.MedicoService;
 import com.grupo2.clinicasalud.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/dashboard")
-@Configuration
 public class DashboardController {
 
     @Autowired
@@ -76,6 +66,5 @@ public class DashboardController {
     private String indexPacientes(Model model){
         return "dashboard/index_pacientes";
     }
-
 
 }

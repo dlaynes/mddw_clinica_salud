@@ -66,8 +66,13 @@ public class ClinicaSaludSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/dashboard/index").hasAnyAuthority("Admin", "Medico", "Mantenimiento", "Cliente")
                                 .requestMatchers("/dashboard/especialidades/**").hasAuthority("Admin")
-                //        .requestMatchers("/dashboard/users/**").hasAnyAuthority("Admin", "Mantenimiento")
-                //        .requestMatchers("/dashboard/settings/**").hasAnyRole("Cliente", "Doctor")
+                                .requestMatchers("/dashboard/servicios/**").hasAuthority("Admin")
+                                .requestMatchers("/dashboard/medicos/**").hasAuthority("Admin")
+                                .requestMatchers("/dashboard/consultas/**").hasAuthority("Admin")
+                                .requestMatchers("/dashboard/usuarios/**").hasAuthority("Admin")
+                                .requestMatchers("/dashboard/citas/**").hasAuthority("Admin")
+                                .requestMatchers("/dashboard/med/**").hasAuthority("Medico")
+                                .requestMatchers("/dashboard/cliente/**").hasAuthority("Cliente")
                         .anyRequest().permitAll()
                 );
         http.formLogin(form -> form

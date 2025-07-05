@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Salud - Sistema de Gestión</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <style>
+        .dashboard-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 100%;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .welcome-section {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            border-left: 4px solid;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<!-- Barra de navegación -->
+<div th:replace="~{fragments/dashboard/nav :: nav}"></div>
+
+<div layout:fragment="content">
+    <h2>Lista de Servicios</h2>
+
+    <a th:href="@{/dashboard/servicios/nuevo}" class="btn btn-primary mb-3">Nuevo Servicio</a>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.errorDelete}">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <strong>Error:</strong> Hubo un problema al borrar el servicio.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
+    </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.success}">
+        <i class="bi bi-check-circle me-2"></i>
+        Se guardó el servicio exitosamente.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
+    </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.successDelete}">
+        <i class="bi bi-check-circle me-2"></i>
+        Fue borrado el servicio exitosamente.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Slug</th>
+                <th>Descripción</th>
+                <th>Fecha de Creación</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="servicio : ${servicios}">
+                <td th:text="${servicio.id}"></td>
+                <td th:text="${servicio.nombre}"></td>
+                <td th:text="${servicio.slug}"></td>
+                <td th:text="${servicio.descripcion}"></td>
+                <td th:text="${servicio.fechaCreacion}"></td>
+                <td>
+                    <a th:href="@{/dashboard/servicios/editar/{id}(id=${servicio.id})}" class="btn btn-sm btn-warning">Editar</a>
+                    <a th:href="@{/dashboard/servicios/eliminar/{id}(id=${servicio.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro que desea borrar el servicio ${servicio.nombre}?')">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

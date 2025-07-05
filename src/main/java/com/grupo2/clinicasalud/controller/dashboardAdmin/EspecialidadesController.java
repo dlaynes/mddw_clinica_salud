@@ -15,6 +15,7 @@ public class EspecialidadesController {
     @Autowired
     private EspecialidadService especialidadesService;
 
+    // Mejora: agregar una columna # de médicos, que funcione como enlace al CRUD de médicos
     @GetMapping
     public String lista(Model model){
         model.addAttribute("especialidades", especialidadesService.dameEspecialidades());

@@ -30,7 +30,7 @@ public class ServicioService {
         return repository.findAll();
     }
 
-    public void eliminarServicio(Servicio e){
-        repository.deleteById(e.getId());
+    public void eliminarServicio(Long id){
+        repository.deleteById(id);
     }
 }

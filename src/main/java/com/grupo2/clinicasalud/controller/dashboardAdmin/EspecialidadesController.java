@@ -2,14 +2,16 @@ package com.grupo2.clinicasalud.controller.dashboardAdmin;
 
 import com.grupo2.clinicasalud.model.Especialidad;
 import com.grupo2.clinicasalud.service.EspecialidadService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/dashboard/especialidades")
+@RequestMapping("/dashboard/admin/especialidades")
 public class EspecialidadesController {
 
     @Autowired
@@ -19,31 +21,36 @@ public class EspecialidadesController {
     @GetMapping
     public String lista(Model model){
         model.addAttribute("especialidades", especialidadesService.dameEspecialidades());
-        return "dashboard/especialidades/index";
+        return "dashboard/admin/especialidades/index";
     }
 
     @GetMapping("/nuevo")
     public String nuevo(Model model){
         Especialidad especialidad = new Especialidad();
         model.addAttribute("especialidad", especialidad);
-        return "dashboard/especialidades/editar";
+        return "dashboard/admin/especialidades/editar";
     }
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model){
         Especialidad especialidad = especialidadesService.dameEspecialidadPorId(id);
         if(especialidad == null){
-            return "redirect:/dashboard/especialidades";
+            return "redirect:/dashboard/admin/especialidades";
         }
         model.addAttribute("especialidad", especialidad);
-        return "dashboard/especialidades/editar";
+        return "dashboard/admin/especialidades/editar";
     }
 
     @PostMapping("/editar")
-    public String guardar(@ModelAttribute("especialidad") Especialidad especialidad, RedirectAttributes redirectAttributes){
+    public String guardar(@Valid @ModelAttribute("especialidad") Especialidad especialidad, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("especialidad", especialidad);
+            return "dashboard/admin/servicios/editar";
+        }
+
         redirectAttributes.addFlashAttribute("success", "Se ha guardado la especialidad");
         especialidadesService.guardarEspecialidad(especialidad);
-        return "redirect:/dashboard/especialidades";
+        return "redirect:/dashboard/admin/especialidades";
     }
 
     @GetMapping("/eliminar/{id}")
@@ -54,6 +61,6 @@ public class EspecialidadesController {
         } catch(Exception e){
             redirectAttributes.addFlashAttribute("errorDelete", "No se pudo borrar la especialidad");
         }
-        return "redirect:/dashboard/especialidades";
+        return "redirect:/dashboard/admin/especialidades";
     }
 }

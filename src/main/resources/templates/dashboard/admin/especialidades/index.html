@@ -44,23 +44,23 @@
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
 <div layout:fragment="content">
-    <h2>Lista de Servicios</h2>
+    <h2>Lista de Especialidades</h2>
 
-    <a th:href="@{/dashboard/servicios/nuevo}" class="btn btn-primary mb-3">Nuevo Servicio</a>
+    <a th:href="@{/dashboard/admin/especialidades/nuevo}" class="btn btn-primary mb-3">Nueva Especialidad</a>
 
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.errorDelete}">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorDelete}">
         <i class="bi bi-exclamation-triangle me-2"></i>
-        <strong>Error:</strong> Hubo un problema al borrar el servicio.
+        <strong>Error:</strong> Hubo un problema al borrar la especialidad.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
     </div>
-    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.success}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
         <i class="bi bi-check-circle me-2"></i>
-        Se guardó el servicio exitosamente.
+        Se guardó la especialidad exitosamente.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
     </div>
-    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.successDelete}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successDelete}">
         <i class="bi bi-check-circle me-2"></i>
-        Fue borrado el servicio exitosamente.
+        Fue borrada la especialidad exitosamente.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
     </div>
 
@@ -70,22 +70,22 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Slug</th>
+                <th>Color</th>
                 <th>Descripción</th>
                 <th>Fecha de Creación</th>
                 <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="servicio : ${servicios}">
-                <td th:text="${servicio.id}"></td>
-                <td th:text="${servicio.nombre}"></td>
-                <td th:text="${servicio.slug}"></td>
-                <td th:text="${servicio.descripcion}"></td>
-                <td th:text="${servicio.fechaCreacion}"></td>
+            <tr th:each="especialidad : ${especialidades}">
+                <td th:text="${especialidad.id}"></td>
+                <td th:text="${especialidad.nombre}"></td>
+                <td th:text="${especialidad.color}"></td>
+                <td th:text="${especialidad.descripcion}"></td>
+                <td th:text="${especialidad.fechaCreacion}"></td>
                 <td>
-                    <a th:href="@{/dashboard/servicios/editar/{id}(id=${servicio.id})}" class="btn btn-sm btn-warning">Editar</a>
-                    <a th:href="@{/dashboard/servicios/eliminar/{id}(id=${servicio.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro que desea borrar el servicio ${servicio.nombre}?')">Eliminar</a>
+                    <a th:href="@{/dashboard/admin/especialidades/editar/{id}(id=${especialidad.id})}" class="btn btn-sm btn-warning">Editar</a>
+                    <a th:href="@{/dashboard/admin/especialidades/eliminar/{id}(id=${especialidad.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro que desea borrar la especialidad ${especialidad.nombre}?')">Eliminar</a>
                 </td>
             </tr>
             </tbody>

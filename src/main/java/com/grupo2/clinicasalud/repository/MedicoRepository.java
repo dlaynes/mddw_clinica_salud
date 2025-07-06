@@ -13,6 +13,8 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
     Optional<Medico> findByEmail(String email);
 
+    Optional<Medico> findByUsuarioId(Long id);
+
     @Query(value = "SELECT m.* FROM medicos m " +
         "JOIN especialidades_medicos em ON m.medico_id=em.medico_id " +
             "WHERE em.especialidad_id=:especialidadId", nativeQuery = true)

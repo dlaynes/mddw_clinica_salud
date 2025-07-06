@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Salud - Sistema de Gestión</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <style>
+        .dashboard-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 100%;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .welcome-section {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            border-left: 4px solid;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<!-- Barra de navegación -->
+<div th:replace="~{fragments/dashboard/nav :: nav}"></div>
+
+<div layout:fragment="content">
+    <div class="card-header-custom d-flex justify-content-between align-items-center flex-wrap">
+        <h2 class="mb-0">
+            <i class="bi bi-people me-2"></i>Lista de Usuarios Registrados
+        </h2>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+            <small class="text-white-50">
+                Total: <span id="totalUsuarios">0</span> usuarios
+            </small>
+        </div>
+    </div>
+
+    <a th:href="@{/dashboard/admin/usuarios/nuevo}" class="btn btn-primary mb-3">Nuevo Usuario</a>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorDelete}">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <strong>Error:</strong> Hubo un problema al borrar el usuario.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
+    </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+        <i class="bi bi-check-circle me-2"></i>
+        Se guardó el usuario exitosamente.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
+    </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successDelete}">
+        <i class="bi bi-check-circle me-2"></i>
+        Fue borrado el usuario exitosamente.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
+    </div>
+
+    <!-- Barra de búsqueda y filtros -->
+    <div class="p-3 border-bottom bg-light">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-6">
+                <div class="input-group input-group-sm">
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                    <input type="text"
+                           class="form-control"
+                           id="searchInput"
+                           placeholder="Buscar por nombre, username, email o celular..."
+                           onkeyup="filtrarTabla()">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select form-select-sm" id="filtroRol" onchange="filtrarTabla()">
+                    <option value="">Todos los roles</option>
+                    <option value="Admin">Administradores</option>
+                    <option value="Medico">Médicos</option>
+                    <option value="Cliente">Pacientes</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select form-select-sm" id="registrosPorPagina" onchange="cambiarRegistrosPorPagina()">
+                    <option value="5">5 por página</option>
+                    <option value="10" selected>10 por página</option>
+                    <option value="20">20 por página</option>
+                    <option value="50">50 por página</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped" id="tablaUsuarios">
+            <thead class="table-header-custom text-white">
+            <tr>
+                <th onclick="ordenarTabla(0)">ID <i class="bi bi-arrow-down-up ms-1 sort-icon"></i></th>
+                <th onclick="ordenarTabla(1)">Email <i class="bi bi-arrow-down-up ms-1 sort-icon"></i></th>
+                <th>Roles</th>
+                <th onclick="ordenarTabla(3)">Fecha de Creación <i class="bi bi-arrow-down-up ms-1 sort-icon"></i></th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody id="tablaUsuariosBody">
+            <tr th:each="usuario : ${usuarios}" class="align-middle usuario-row">
+                <td class="text-center fw-bold" th:text="${usuario.id}"></td>
+                <td class="text-truncate email-cell" th:text="${usuario.email}"></td>
+                <td class="roles-cell">
+                    <div class="d-flex flex-wrap gap-1" th:if="${usuario.roles}">
+                        <span th:each="rol : ${usuario.roles}"
+                          th:text="${rol.nombre}"
+                          class="badge badge-compact role-badge"
+                          th:classappend="${rol.nombre.equals('Admin')} ? 'bg-danger' :
+                                         (${rol.nombre.equals('Medico')} ? 'bg-warning text-dark' : 'bg-info')"
+                          th:attr="data-role=${rol.nombre}">
+                        </span>
+                    </div>
+                </td>
+                <td th:text="${usuario.fechaRegistro}"></td>
+                <td>
+                    <a th:href="@{/dashboard/admin/servicios/editar/{id}(id=${usuario.id})}" class="btn btn-sm btn-warning">Editar</a>
+                    <a th:href="@{/dashboard/admin/servicios/eliminar/{id}(id=${usuario.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro que desea borrar al usuario ${usuario.email}?')">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="p-3 bg-light border-top">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <small class="text-muted">
+                    Mostrando <span id="mostrandoDesde">1</span> a <span id="mostrandoHasta">10</span>
+                    de <span id="totalFiltrados">0</span> registros
+                    <span id="totalOriginal" style="display: none;"> (filtrado de <span id="totalCompleto">0</span> registros totales)</span>
+                </small>
+            </div>
+            <div class="col-md-6">
+                <nav aria-label="Paginación de usuarios">
+                    <ul class="pagination pagination-sm justify-content-end mb-0" id="paginacion">
+                        <!-- La paginación se genera dinámicamente -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <div class="text-center p-4 d-none" id="noResultados">
+        <i class="bi bi-search display-4 text-muted"></i>
+        <h5 class="mt-3 text-muted">No se encontraron usuarios</h5>
+        <p class="text-muted">Intenta ajustar los filtros de búsqueda</p>
+    </div>
+
+
+</div>
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+    // Variables globales para la tabla
+    let paginaActual = 1;
+    let registrosPorPagina = 10;
+    let datosOriginales = [];
+    let datosFiltrados = [];
+    let ordenActual = { columna: null, direccion: null };
+
+    // Inicializar tooltips y cargar datos
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Cargar datos de la tabla
+        cargarDatosTabla();
+        actualizarTabla();
+    });
+
+    // Función para cargar los datos de la tabla
+    function cargarDatosTabla() {
+        const filas = document.querySelectorAll('#tablaUsuariosBody .usuario-row');
+        datosOriginales = [];
+
+        filas.forEach(fila => {
+            const datos = {
+                id: fila.children[0].textContent.trim(),
+                email: fila.children[1].textContent.trim(),
+                roles: Array.from(fila.querySelectorAll('.role-badge')).map(badge => badge.getAttribute('data-role')),
+                elemento: fila
+            };
+            datosOriginales.push(datos);
+        });
+
+        datosFiltrados = [...datosOriginales];
+        document.getElementById('totalUsuarios').textContent = datosOriginales.length;
+    }
+
+    // Función de filtrado
+    function filtrarTabla() {
+        const busqueda = document.getElementById('searchInput').value.toLowerCase();
+        const filtroRol = document.getElementById('filtroRol').value;
+
+        datosFiltrados = datosOriginales.filter(usuario => {
+            // Filtro por texto de búsqueda
+            const coincideTexto = busqueda === '' ||
+                usuario.email.toLowerCase().includes(busqueda);
+
+            // Filtro por rol
+            const coincideRol = filtroRol === '' || usuario.roles.includes(filtroRol);
+
+            console.log("Coincide?", coincideRol, filtroRol, coincideTexto, busqueda);
+
+            return coincideTexto && coincideRol;
+        });
+
+        paginaActual = 1; // Resetear a la primera página
+        actualizarTabla();
+    }
+
+    // Función para cambiar registros por página
+    function cambiarRegistrosPorPagina() {
+        registrosPorPagina = parseInt(document.getElementById('registrosPorPagina').value);
+        paginaActual = 1;
+        actualizarTabla();
+    }
+
+    // Función para ordenar la tabla
+    function ordenarTabla(columna) {
+        const columnas = ['id', 'username', 'nombre', 'email'];
+        const nombreColumna = columnas[columna];
+
+        if (ordenActual.columna === columna) {
+            // Cambiar dirección si es la misma columna
+            ordenActual.direccion = ordenActual.direccion === 'asc' ? 'desc' : 'asc';
+        } else {
+            // Nueva columna, ordenar ascendente
+            ordenActual.columna = columna;
+            ordenActual.direccion = 'asc';
+        }
+
+        datosFiltrados.sort((a, b) => {
+            let valorA = a[nombreColumna];
+            let valorB = b[nombreColumna];
+
+            // Convertir a número si es ID
+            if (nombreColumna === 'id') {
+                valorA = parseInt(valorA);
+                valorB = parseInt(valorB);
+            }
+
+            if (ordenActual.direccion === 'asc') {
+                return valorA > valorB ? 1 : -1;
+            } else {
+                return valorA < valorB ? 1 : -1;
+            }
+        });
+
+        actualizarIconosOrden();
+        actualizarTabla();
+    }
+
+    // Función para actualizar iconos de ordenamiento
+    function actualizarIconosOrden() {
+        // Resetear todos los iconos
+        document.querySelectorAll('.table-header-custom th').forEach(th => {
+            th.classList.remove('sort-asc', 'sort-desc');
+        });
+
+        // Aplicar clase al encabezado actual
+        if (ordenActual.columna !== null) {
+            const th = document.querySelectorAll('.table-header-custom th')[ordenActual.columna];
+            th.classList.add(ordenActual.direccion === 'asc' ? 'sort-asc' : 'sort-desc');
+        }
+    }
+
+    // Función principal para actualizar la tabla
+    function actualizarTabla() {
+        const tbody = document.getElementById('tablaUsuariosBody');
+        const noResultados = document.getElementById('noResultados');
+
+        // Ocultar todas las filas primero
+        datosOriginales.forEach(usuario => {
+            usuario.elemento.style.display = 'none';
+        });
+
+        if (datosFiltrados.length === 0) {
+            // Mostrar mensaje de no resultados
+            noResultados.classList.remove('d-none');
+            actualizarInfoPaginacion(0, 0, 0);
+            document.getElementById('paginacion').innerHTML = '';
+            return;
+        } else {
+            noResultados.classList.add('d-none');
+        }
+
+        // Calcular índices de paginación
+        const inicio = (paginaActual - 1) * registrosPorPagina;
+        const fin = Math.min(inicio + registrosPorPagina, datosFiltrados.length);
+        const totalPaginas = Math.ceil(datosFiltrados.length / registrosPorPagina);
+
+        // Mostrar solo las filas de la página actual
+        for (let i = inicio; i < fin; i++) {
+            datosFiltrados[i].elemento.style.display = '';
+        }
+
+        // Actualizar información de paginación
+        actualizarInfoPaginacion(inicio + 1, fin, datosFiltrados.length);
+
+        // Generar botones de paginación
+        generarPaginacion(totalPaginas);
+    }
+
+    // Función para actualizar información de paginación
+    function actualizarInfoPaginacion(desde, hasta, total) {
+        document.getElementById('mostrandoDesde').textContent = desde;
+        document.getElementById('mostrandoHasta').textContent = hasta;
+        document.getElementById('totalFiltrados').textContent = total;
+
+        // Mostrar información de filtrado si es necesario
+        const totalOriginal = document.getElementById('totalOriginal');
+        const totalCompleto = document.getElementById('totalCompleto');
+
+        if (total < datosOriginales.length) {
+            totalOriginal.style.display = 'inline';
+            totalCompleto.textContent = datosOriginales.length;
+        } else {
+            totalOriginal.style.display = 'none';
+        }
+    }
+
+    // Función para generar botones de paginación
+    function generarPaginacion(totalPaginas) {
+        const paginacion = document.getElementById('paginacion');
+        paginacion.innerHTML = '';
+
+        if (totalPaginas <= 1) return;
+
+        // Botón anterior
+        const anterior = document.createElement('li');
+        anterior.className = `page-item ${paginaActual === 1 ? 'disabled' : ''}`;
+        anterior.innerHTML = `<a class="page-link" href="#" onclick="cambiarPagina(${paginaActual - 1})" aria-label="Anterior">
+            <i class="bi bi-chevron-left"></i>
+        </a>`;
+        paginacion.appendChild(anterior);
+
+        // Números de página
+        const maxBotones = 5;
+        let inicio = Math.max(1, paginaActual - Math.floor(maxBotones / 2));
+        let fin = Math.min(totalPaginas, inicio + maxBotones - 1);
+
+        if (fin - inicio < maxBotones - 1) {
+            inicio = Math.max(1, fin - maxBotones + 1);
+        }
+
+        for (let i = inicio; i <= fin; i++) {
+            const boton = document.createElement('li');
+            boton.className = `page-item ${i === paginaActual ? 'active' : ''}`;
+            boton.innerHTML = `<a class="page-link" href="#" onclick="cambiarPagina(${i})">${i}</a>`;
+            paginacion.appendChild(boton);
+        }
+
+        // Botón siguiente
+        const siguiente = document.createElement('li');
+        siguiente.className = `page-item ${paginaActual === totalPaginas ? 'disabled' : ''}`;
+        siguiente.innerHTML = `<a class="page-link" href="#" onclick="cambiarPagina(${paginaActual + 1})" aria-label="Siguiente">
+            <i class="bi bi-chevron-right"></i>
+        </a>`;
+        paginacion.appendChild(siguiente);
+    }
+
+    // Función para cambiar de página
+    function cambiarPagina(nuevaPagina) {
+        const totalPaginas = Math.ceil(datosFiltrados.length / registrosPorPagina);
+
+        if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
+            paginaActual = nuevaPagina;
+            actualizarTabla();
+        }
+
+        // Prevenir el comportamiento por defecto del enlace
+        return false;
+    }
+</script>
+
+</body>
+</html>

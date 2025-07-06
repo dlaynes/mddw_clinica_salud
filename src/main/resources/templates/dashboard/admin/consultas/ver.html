@@ -45,29 +45,36 @@
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
 <div layout:fragment="content">
-    <h2 th:text="${servicio.id != null} ? 'Editar Servicio' : 'Nuevo Servicio'"></h2>
+    <h2>Detalle de la consulta</h2>
 
-    <form th:action="@{/dashboard/servicios/guardar}" th:object="${servicio}" method="post">
-        <input type="hidden" th:field="*{id}">
-
+    <div>
         <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" th:field="*{nombre}" class="form-control" required>
+            <strong class="form-label">Nombre: </strong>
+            <span th:text="${consulta.nombreCompleto}">--</span>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Slug (etiqueta)</label>
-            <input type="text" th:field="*{slug}" class="form-control" required>
+            <strong class="form-label">E-mail: </strong>
+            <span th:text="${consulta.email}">--</span>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+            <strong class="form-label">Teléfono: </strong>
+            <span th:text="${consulta.telefono}">--</span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a th:href="@{/dashboard/servicios}" class="btn btn-secondary">Cancelar</a>
-    </form>
+        <div class="mb-3">
+            <strong class="form-label">Comentario: </strong>
+            <span th:text="${consulta.comentario}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Fecha de creación: </strong>
+            <span th:text="${consulta.fechaCreacion}">--</span>
+        </div>
+
+        <a th:href="@{/dashboard/admin/consultas}" class="btn btn-secondary">Volver</a>
+    </div>
 </div>
 <!-- Footer -->
 <div th:replace="~{fragments/footer :: footer}"></div>

@@ -2,14 +2,16 @@ package com.grupo2.clinicasalud.controller.dashboardAdmin;
 
 import com.grupo2.clinicasalud.model.Servicio;
 import com.grupo2.clinicasalud.service.ServicioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/dashboard/servicios")
+@RequestMapping("/dashboard/admin/servicios")
 public class ServiciosController {
 
     @Autowired
@@ -18,31 +20,36 @@ public class ServiciosController {
     @GetMapping
     public String lista(Model model){
         model.addAttribute("servicios", servicioService.dameServicios());
-        return "dashboard/servicios/index";
+        return "dashboard/admin/servicios/index";
     }
 
     @GetMapping("/nuevo")
     public String nuevo(Model model){
         Servicio servicio = new Servicio();
         model.addAttribute("servicio", servicio);
-        return "dashboard/servicios/editar";
+        return "dashboard/admin/servicios/editar";
     }
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model){
         Servicio servicio = servicioService.dameServicioPorId(id);
         if(servicio == null){
-            return "redirect:/dashboard/servicios";
+            return "redirect:/dashboard/admin/servicios";
         }
         model.addAttribute("servicio", servicio);
-        return "dashboard/servicios/editar";
+        return "dashboard/admin/servicios/editar";
     }
 
     @PostMapping("/editar")
-    public String guardar(@ModelAttribute("servicio") Servicio servicio, RedirectAttributes redirectAttributes){
+    public String guardar(@Valid @ModelAttribute("servicio") Servicio servicio, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("servicio", servicio);
+            return "dashboard/admin/servicios/editar";
+        }
+
         redirectAttributes.addFlashAttribute("success", "Se ha guardado el servicio");
         servicioService.guardarServicio(servicio);
-        return "redirect:/dashboard/servicios";
+        return "redirect:/dashboard/admin/servicios";
     }
 
     @GetMapping("/eliminar/{id}")
@@ -53,6 +60,6 @@ public class ServiciosController {
         } catch(Exception e){
             redirectAttributes.addFlashAttribute("errorDelete", "No se pudo borrar el servicio");
         }
-        return "redirect:/dashboard/servicios";
+        return "redirect:/dashboard/admin/servicios";
     }
 }

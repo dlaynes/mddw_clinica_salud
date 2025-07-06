@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/dashboard/consultas")
+@RequestMapping("/dashboard/admin/consultas")
 public class ConsultasController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class ConsultasController {
     @GetMapping
     public String lista(Model model){
         model.addAttribute("consultas", consultaService.dameConsultas());
-        return "dashboard/consultas/index";
+        return "dashboard/admin/consultas/index";
     }
 
     @GetMapping("/ver/{id}")
@@ -31,7 +31,7 @@ public class ConsultasController {
             return "redirect:/dashboard/consultas";
         }
         model.addAttribute("consulta", consulta);
-        return "dashboard/consultas/ver";
+        return "dashboard/admin/consultas/ver";
     }
 
     // Mejora: envio de respuestas

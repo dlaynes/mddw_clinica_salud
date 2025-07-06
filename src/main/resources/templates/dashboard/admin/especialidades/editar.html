@@ -47,26 +47,29 @@
 <div layout:fragment="content">
     <h2 th:text="${especialidad.id != null} ? 'Editar Especialidad' : 'Nueva Especialidad'"></h2>
 
-    <form th:action="@{/dashboard/especialidades/guardar}" th:object="${especialidad}" method="post">
+    <form th:action="@{/dashboard/admin/especialidades/guardar}" th:object="${especialidad}" method="post">
         <input type="hidden" th:field="*{id}">
 
         <div class="mb-3">
             <label class="form-label">Nombre</label>
             <input type="text" th:field="*{nombre}" class="form-control" required>
+            <small th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger" th:errors="*{nombre}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Color (clase)</label>
             <input type="text" th:field="*{color}" class="form-control" required>
+            <small th:if="${#fields.hasErrors('color')}" th:errorclass="text-danger" th:errors="*{color}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Descripción</label>
             <textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+            <small th:if="${#fields.hasErrors('descripcion')}" th:errorclass="text-danger" th:errors="*{descripcion}"></small>
         </div>
 
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a th:href="@{/dashboard/especialidades}" class="btn btn-secondary">Cancelar</a>
+        <a th:href="@{/dashboard/admin/especialidades}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 <!-- Footer -->

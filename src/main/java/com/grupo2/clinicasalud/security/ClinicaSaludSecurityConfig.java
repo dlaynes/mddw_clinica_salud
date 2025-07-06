@@ -67,12 +67,7 @@ public class ClinicaSaludSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/dashboard/index").hasAnyAuthority("Admin", "Medico", "Cliente")
                         // Páginas de administradores
-                                .requestMatchers("/dashboard/especialidades/**").hasAuthority("Admin")
-                                .requestMatchers("/dashboard/servicios/**").hasAuthority("Admin")
-                                .requestMatchers("/dashboard/medicos/**").hasAuthority("Admin")
-                                .requestMatchers("/dashboard/consultas/**").hasAuthority("Admin")
-                                .requestMatchers("/dashboard/usuarios/**").hasAuthority("Admin")
-                                .requestMatchers("/dashboard/citas/**").hasAuthority("Admin")
+                                .requestMatchers("/dashboard/admin/**").hasAuthority("Admin")
                         // Páginas de Médicos
                                 .requestMatchers("/dashboard/med/**").hasAuthority("Medico")
                         // Páginas de Clientes

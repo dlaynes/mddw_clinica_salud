@@ -39,7 +39,7 @@ public class ServiciosController {
     }
 
     @PostMapping("/editar")
-    public String guardar(@ModelAttribute("especialidad") Servicio servicio, RedirectAttributes redirectAttributes){
+    public String guardar(@ModelAttribute("servicio") Servicio servicio, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("success", "Se ha guardado el servicio");
         servicioService.guardarServicio(servicio);
         return "redirect:/dashboard/servicios";

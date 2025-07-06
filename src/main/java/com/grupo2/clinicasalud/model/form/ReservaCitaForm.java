@@ -4,10 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-public class ReservaCita {
+public class ReservaCitaForm {
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 150, message = "El nombre debe tener entre 2 y 150 caracteres")
@@ -21,7 +18,7 @@ public class ReservaCita {
 
     @NotBlank(message = "El email es obligatorio")
     @Size(min = 5, max = 150, message = "El email debe tener entre 2 y 150 caracteres")
-    @Email
+    @Email(message = "El email indicado no es válido")
     @Column(name = "email", length = 150)
     private String email;
 

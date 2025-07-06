@@ -101,31 +101,36 @@
 <section id="contacto" class="container my-5">
     <div class="form-container">
     <!-- Alertas -->
-    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${param.success}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successText}">
         <i class="bi bi-check-circle me-2"></i>
-        <span>Su consulta fue enviada satisfactoriamente. Muy pronto nos pondremos en contacto</span>
+        <span th:text="successText"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
     </div>
 
     <form class="p-5 border rounded shadow-lg bg-light" th:action="@{/contactenos}" th:object="${contacto}" method="post">
         <h3 class="text-center mb-4"><i class="bi bi-person-plus me-2"></i>Escríbenos tu consulta</h3>
+
         <div class="row g-4">
             <div class="col-md-12">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="nombreCompleto" placeholder="Ingresa tu nombre" required th:field="*{nombreCompleto}">
                     <label for="nombreCompleto">Nombre Completo *</label>
+                    <small th:if="${#fields.hasErrors('nombreCompleto')}" th:errorclass="text-danger" th:errors="*{nombreCompleto}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="email" placeholder="Ingresa tu email" required th:field="*{email}">
                     <label for="email">Correo Electrónico *</label>
+                    <small th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="*{email}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu número de teléfono" th:field="*{telefono}">
                     <label for="telefono">Teléfono</label>
+                    <small th:if="${#fields.hasErrors('telefono')}" th:errorclass="text-danger" th:errors="*{telefono}"></small>
                 </div>
                 <div class="mb-3">
-                    <textarea class="form-control" id="comentario" name="comentario" placeholder="Ingrese su consulta *" rows="5" th:field="*{comentario}"></textarea>
+                    <textarea class="form-control" id="comentario" placeholder="Ingrese su consulta *" rows="5" th:field="*{comentario}"></textarea>
                     <label for="comentario" class="visually-hidden">Ingrese su consulta *</label>
+                    <small th:if="${#fields.hasErrors('comentario')}" th:errorclass="text-danger" th:errors="*{comentario}"></small>
                 </div>
             </div>
 

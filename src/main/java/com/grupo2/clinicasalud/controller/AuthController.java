@@ -3,6 +3,7 @@ package com.grupo2.clinicasalud.controller;
 import com.grupo2.clinicasalud.model.Paciente;
 import com.grupo2.clinicasalud.model.Rol;
 import com.grupo2.clinicasalud.model.Usuario;
+import com.grupo2.clinicasalud.model.form.LoginForm;
 import com.grupo2.clinicasalud.model.form.RegistroForm;
 import com.grupo2.clinicasalud.repository.PacienteRepository;
 import com.grupo2.clinicasalud.repository.RolRepository;
@@ -37,10 +38,14 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String loginPage(Model model, @RequestParam(required = false) String register) {
+    public String loginPage(Model model, @RequestParam(required = false) String register, @RequestParam(required = false) String error) {
         if(register != null){
            model.addAttribute("successText", "Su cuenta ha sido creada satisfactoriamente. Ya puede ingresar al sistema");
         }
+        if(error != null){
+            model.addAttribute("loginError", "Error");
+        }
+        model.addAttribute("login", new LoginForm());
         return "auth/login";
     }
 
@@ -52,7 +57,7 @@ public class AuthController {
 
     @Transactional
     @PostMapping("/registro")
-    public String registerUser(@ModelAttribute RegistroForm registroForm, BindingResult bindingResult,
+    public String registerUser(@Valid @ModelAttribute("usuario") RegistroForm registroForm, BindingResult bindingResult,
                                RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             return "redirect:/auth/registro";
@@ -60,14 +65,14 @@ public class AuthController {
 
         // Validaciones
         if (!registroForm.getPassword().equals(registroForm.getPasswordConfirm())) {
-            redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden");
+            redirectAttributes.addFlashAttribute("param.error", "Las contraseñas no coinciden");
             return "redirect:/auth/registro";
         }
 
         String email = registroForm.getEmail().toLowerCase();
 
         if (usuarioRepository.existsByEmail(email)) {
-            redirectAttributes.addFlashAttribute("error", "El email ya está registrado");
+            redirectAttributes.addFlashAttribute("param.error", "El email ya está registrado");
             return "redirect:/auth/registro";
         }
 
@@ -96,8 +101,8 @@ public class AuthController {
         paciente.setUsuario(usuario);
         pacienteRepository.save(paciente);
 
-        // redirectAttributes.addFlashAttribute("success", "Usuario registrado exitosamente");
-        return "redirect:/auth/login?register=success";
+        redirectAttributes.addFlashAttribute("param:success", "Usuario registrado exitosamente");
+        return "redirect:/auth/login";
     }
 
 }

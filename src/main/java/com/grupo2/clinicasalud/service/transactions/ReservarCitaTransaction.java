@@ -1,7 +1,7 @@
 package com.grupo2.clinicasalud.service.transactions;
 
 import com.grupo2.clinicasalud.model.*;
-import com.grupo2.clinicasalud.model.form.ReservaCita;
+import com.grupo2.clinicasalud.model.form.ReservaCitaForm;
 import com.grupo2.clinicasalud.repository.*;
 import com.grupo2.clinicasalud.security.utils.PasswordGen;
 import jakarta.transaction.Transactional;
@@ -22,13 +22,14 @@ public class ReservarCitaTransaction {
 
     @Transactional
     public void guardarCita(
-            ReservaCita reservaCita,
+            ReservaCitaForm reservaCitaForm,
             Especialidad especialidad,
             CitaRepository citaRepository,
             PacienteRepository pacienteRepository,
             UsuarioRepository usuarioRepository,
             RolRepository roleRepository,
             ConsultorioRepository consultorioRepository,
+            String password,
             PasswordEncoder passwordEncoder
             ){
 
@@ -38,8 +39,7 @@ public class ReservarCitaTransaction {
         }
 
         Usuario usuario = new Usuario();
-        usuario.setEmail(reservaCita.getEmail());
-        String password = PasswordGen.generatePasPassword(16);
+        usuario.setEmail(reservaCitaForm.getEmail());
         String encodedPassword = passwordEncoder.encode(password);
 
         // TO DO: enviar un correo con la información. Luego pedirle al usuario que cambie su contraseña
@@ -55,19 +55,19 @@ public class ReservarCitaTransaction {
         // TO DO: enviar un correo con la información. Luego pedirle al usuario que cambie su contraseña
 
         Paciente paciente = new Paciente();
-        paciente.setNombre(reservaCita.getNombre());
-        paciente.setApellido(reservaCita.getApellidos());
-        paciente.setEmail(reservaCita.getEmail());
-        paciente.setTelefono(reservaCita.getTelefono());
+        paciente.setNombre(reservaCitaForm.getNombre());
+        paciente.setApellido(reservaCitaForm.getApellidos());
+        paciente.setEmail(reservaCitaForm.getEmail());
+        paciente.setTelefono(reservaCitaForm.getTelefono());
         paciente.setUsuario(usuario);
         pacienteRepository.save(paciente);
 
         Cita cita = new Cita();
         cita.setEstadoCita(EstadoCita.registrada);
         cita.setEspecialidad(especialidad);
-        cita.setMotivo(reservaCita.getMotivo());
-        LocalDate localDate = LocalDate.parse(reservaCita.getFecha());
-        LocalTime localTime = LocalTime.parse(reservaCita.getHora());
+        cita.setMotivo(reservaCitaForm.getMotivo());
+        LocalDate localDate = LocalDate.parse(reservaCitaForm.getFecha());
+        LocalTime localTime = LocalTime.parse(reservaCitaForm.getHora());
         Instant instant = localTime.atDate(localDate)
                 .atZone(ZoneId.systemDefault()).toInstant();
         cita.setFechaHora(Date.from(instant));

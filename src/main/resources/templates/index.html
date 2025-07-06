@@ -30,14 +30,6 @@
     </div>
 </section>
 
-<div class="container my" th:if="${successText}">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle me-2"></i>
-        <span th:text="${successText}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
-    </div>
-</div>
-
 <!-- CARD -->
 <div class="container my">
     <div class="card mb-3">
@@ -102,8 +94,17 @@
 </div>
 
 <!-- Formulario de Reservas -->
-<section id="reservas" class="container my-5">
+<section id="reservarCita" class="container my-5">
     <h2 class="text-center mb-4 text-primary">Reserva tu Cita Médica</h2>
+
+    <div class="container my" th:if="${citaError}">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            <span th:text="${citaError}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
+        </div>
+    </div>
+
     <form th:action="@{/guardarReserva}" method="post" class="p-5 border rounded shadow-lg bg-light" th:object="${reserva}">
         <div class="row g-4">
             <!-- Columna izquierda -->
@@ -111,18 +112,22 @@
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required th:field="*{nombre}">
                     <label for="nombre">Nombres</label>
+                    <small th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger" th:errors="*{nombre}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ingresa tu apellido" required th:field="*{apellidos}">
                     <label for="apellidos">Apellidos</label>
+                    <small th:if="${#fields.hasErrors('apellidos')}" th:errorclass="text-danger" th:errors="*{apellidos}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu email" required th:field="*{email}">
                     <label for="email">Correo Electrónico</label>
+                    <small th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="*{email}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu número de teléfono" required th:field="*{telefono}">
                     <label for="telefono">Teléfono</label>
+                    <small th:if="${#fields.hasErrors('telefono')}" th:errorclass="text-danger" th:errors="*{telefono}"></small>
                 </div>
             </div>
 
@@ -134,18 +139,22 @@
                         <option th:each="especialidad : ${especialidades}" th:value="${especialidad.id}" th:text="${especialidad.nombre}"></option>
                     </select>
                     <label for="especialidad_id">Especialidad</label>
+                    <small th:if="${#fields.hasErrors('especialidad_id')}" th:errorclass="text-danger" th:errors="*{especialidad_id}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="date" class="form-control" id="fecha" name="fecha" required th:field="*{fecha}">
                     <label for="fecha">Fecha preferida de la Cita</label>
+                    <small th:if="${#fields.hasErrors('fecha')}" th:errorclass="text-danger" th:errors="*{fecha}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="time" class="form-control" id="hora" name="hora" required th:field="*{hora}">
                     <label for="hora">Hora preferida de la Cita</label>
+                    <small th:if="${#fields.hasErrors('hora')}" th:errorclass="text-danger" th:errors="*{hora}"></small>
                 </div>
                 <div class="form-floating mb-3">
                     <textarea class="form-control" name="motivo" id="motivo" th:field="*{motivo}"></textarea>
                     <label for="motivo" style="z-index: 0;">Motivo de la cita</label>
+                    <small th:if="${#fields.hasErrors('motivo')}" th:errorclass="text-danger" th:errors="*{motivo}"></small>
                 </div>
             </div>
         </div>

@@ -25,8 +25,8 @@ public class Usuario implements UserDetails {
     private long id;
 
     @NotBlank(message = "El email es obligatorio")
-    @Email(message = "Formato de email inválido")
-    @Size(max=150, message = "El correo electrónico no puede tener más de 150 caracteres")
+    @Email(message = "El email no es válido")
+    @Size(max=150, message = "El email no puede tener más de 150 caracteres")
     @Column(name="email", length = 150, nullable = false)
     private String email;
 

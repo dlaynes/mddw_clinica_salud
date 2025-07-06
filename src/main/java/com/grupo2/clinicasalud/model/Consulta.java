@@ -22,7 +22,7 @@ public class Consulta {
     private String nombreCompleto;
 
     @NotBlank(message = "El email es obligatorio")
-    @Size(min = 5, max = 150, message = "El email debe tener entre 2 y 150 caracteres")
+    @Size(min = 5, max = 150, message = "El email debe tener entre 5 y 150 caracteres")
     @Email
     @Column(name = "email", length = 150)
     private String email;
@@ -34,7 +34,7 @@ public class Consulta {
 
     @NotBlank(message = "El contenido de la consulta es obligatorio")
     @Column(name = "comentario", columnDefinition="TEXT")
-    @Size(min=2, max=2000)
+    @Size(min=2, max=2000, message = "El comentario debe tener entre 2 y 2000 caracteres")
     private String comentario;
 
     @Column(name= "fecha_creacion", nullable = false)

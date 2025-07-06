@@ -61,10 +61,12 @@ public class ClinicaSaludSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // En proyectos normales se debe habilitar el crsf check, pero para facilitar la programación lo deshabilitamos
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/dashboard/index").hasAnyAuthority("Admin", "Medico", "Mantenimiento", "Cliente")
+                        .requestMatchers("/dashboard/index").hasAnyAuthority("Admin", "Medico", "Cliente")
+                        // Páginas de administradores
                                 .requestMatchers("/dashboard/especialidades/**").hasAuthority("Admin")
                                 .requestMatchers("/dashboard/servicios/**").hasAuthority("Admin")
                                 .requestMatchers("/dashboard/medicos/**").hasAuthority("Admin")
@@ -75,6 +77,7 @@ public class ClinicaSaludSecurityConfig {
                                 .requestMatchers("/dashboard/med/**").hasAuthority("Medico")
                         // Páginas de Clientes
                                 .requestMatchers("/dashboard/cliente/**").hasAuthority("Cliente")
+                        // Otros servicios
                         .anyRequest().permitAll()
                 );
         http.formLogin(form -> form
@@ -90,6 +93,5 @@ public class ClinicaSaludSecurityConfig {
                 .permitAll());
         return http.build();
     }
-
 
 }

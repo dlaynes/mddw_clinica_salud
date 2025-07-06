@@ -42,7 +42,7 @@ public class Medico {
 
     @NotBlank(message = "El email es obligatorio")
     @Size(min = 5, max = 150, message = "El email debe tener entre 2 y 150 caracteres")
-    @Email
+    @Email(message = "El email indicado no es válido")
     @Column(name = "email", length = 150)
     private String email;
 

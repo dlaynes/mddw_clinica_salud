@@ -1,21 +1,25 @@
 package com.grupo2.clinicasalud.controller;
 
 import com.grupo2.clinicasalud.model.*;
-import com.grupo2.clinicasalud.model.form.ReservaCita;
+import com.grupo2.clinicasalud.model.form.ReservaCitaForm;
 import com.grupo2.clinicasalud.repository.*;
+import com.grupo2.clinicasalud.security.utils.PasswordGen;
 import com.grupo2.clinicasalud.service.transactions.ReservarCitaTransaction;
 import jakarta.servlet.http.HttpServletRequest;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.*;
 
@@ -30,9 +34,6 @@ public class IndexController {
 
     @Autowired
     private ServicioRepository servicioRepository;
-
-    @Autowired
-    private ConsultaRepository consultaRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -52,49 +53,71 @@ public class IndexController {
     @Autowired
     private ReservarCitaTransaction reservaCitaTransacion;
 
-    @ModelAttribute("requestURI")
-    public String requestURI(final HttpServletRequest request) {
-        return request.getRequestURI();
-    }
 
     @GetMapping("/")
-    private String indice(Model model, @RequestParam(required = false) String success) {
-        List<Especialidad> especialidades = especialidadRepository.findAll();
-        model.addAttribute("especialidades", especialidades);
-        model.addAttribute("reserva", new ReservaCita());
-        if(success != null){
-            // TO DO: enviar correo
-            model.addAttribute("successText", "Se ha registrado su solicitud, y lo estaremos contactando pronto");
+    private String indice(Model model, HttpServletRequest request) {
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if(inputFlashMap != null){
+            String citaError = (String) inputFlashMap.get("citaError");
+            if(citaError != null){
+                model.addAttribute("citaError", citaError);
+            }
         }
+
+        List<Especialidad> especialidades = especialidadRepository.findAll();
+        List<Servicio> servicios = servicioRepository.findAll();
+        model.addAttribute("especialidades", especialidades);
+        model.addAttribute("servicios", servicios);
+        model.addAttribute("reserva", new ReservaCitaForm());
+
         return "index";
     }
 
     @PostMapping("/guardarReserva")
-    public String guardarReserva(@ModelAttribute ReservaCita reserva, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String guardarReserva(@Valid @ModelAttribute("reserva") ReservaCitaForm reserva, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
-            return "redirect:/";
+            return "redirect:/#reservarCita";
         }
-
         Optional<Especialidad> especialidadContainer = especialidadRepository.findById(reserva.getEspecialidad_id());
         if(especialidadContainer.isEmpty()){
-            redirectAttributes.addFlashAttribute("error", "Se debe seleccionar una especialidad válida");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("citaError", "Se debe seleccionar una especialidad válida");
+            return "redirect:/#reservarCita";
         }
         Optional<Usuario> usuarioContainer = usuarioRepository.findByEmail(reserva.getEmail());
 
         if(usuarioContainer.isEmpty()){
+            String password = PasswordGen.generatePasPassword(16);
             reservaCitaTransacion.guardarCita(
                     reserva, especialidadContainer.get(),
-                    citaRepository, pacienteRepository, usuarioRepository, roleRepository, consultorioRepository, passwordEncoder);
+                    citaRepository, pacienteRepository, usuarioRepository, roleRepository, consultorioRepository,
+                    password, passwordEncoder);
 
-            redirectAttributes.addFlashAttribute("success", "Se ha registrado su cita satisfactoriamente");
-            return "redirect:/?success=true";
+            redirectAttributes.addFlashAttribute("registroEmail", reserva.getEmail());
+            redirectAttributes.addFlashAttribute("registroPassword", password);
+            return "redirect:/cita-creada";
 
         } else {
-            redirectAttributes.addFlashAttribute("error", "Ya existe un paciente con el correo indicado. Por favor utilice uno nuevo");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("citaError", "Ya existe un paciente con el correo indicado. Por favor utilice uno nuevo");
+            return "redirect:/#reservarCita";
         }
     }
+
+    @GetMapping("/cita-creada")
+    public String reservaCreada(HttpServletRequest request, Model model){
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        do {
+            if(inputFlashMap == null) break;
+            String registroEmail = (String) inputFlashMap.get("registroEmail");
+            String registroPassword = (String) inputFlashMap.get("registroPassword");
+            if(registroEmail == null || registroPassword == null) break;
+
+            model.addAttribute("registroEmail", registroEmail);
+            model.addAttribute("registroPassword", registroPassword);
+            return "cita_creada";
+        } while (false);
+        return "redirect:/";
+    }
+
 
     @GetMapping("/especialidades")
     private String especialidades(Model model) {
@@ -124,23 +147,4 @@ public class IndexController {
     private String terminos(){
         return "terminos-y-condiciones";
     }
-
-    @GetMapping("/contactenos")
-    private String contactenos(Model model){
-        Consulta contacto = new Consulta();
-        model.addAttribute("contacto", contacto);
-        return "contactenos";
-    }
-
-    @PostMapping("/contactenos")
-    private String contactenosForm(@ModelAttribute Consulta consulta, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        if(bindingResult.hasErrors()){
-            return "redirect:/contactenos";
-        }
-        consulta.setFechaCreacion(new Date());
-        consultaRepository.save(consulta);
-        redirectAttributes.addFlashAttribute("success", "Su consulta fue enviada satisfactoriamente. Muy pronto nos pondremos en contacto");
-        return "redirect:/contactenos?success=true";
-    }
-
 }

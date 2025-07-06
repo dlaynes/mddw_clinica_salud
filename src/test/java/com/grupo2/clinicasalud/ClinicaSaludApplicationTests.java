@@ -1,10 +1,10 @@
-package com.grupo2.happypets;
+package com.grupo2.clinicasalud;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HappypetsApplicationTests {
+class ClinicaSaludApplicationTests {
 
 	@Test
 	void contextLoads() {

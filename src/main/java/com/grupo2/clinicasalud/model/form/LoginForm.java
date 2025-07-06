@@ -10,8 +10,8 @@ public class LoginForm {
     private String password;
 
     @NotBlank(message = "El email es obligatorio")
-    @Email(message = "Formato de email inválido")
-    @Size(max=150, message = "El correo electrónico no puede tener más de 150 caracteres")
+    @Email(message = "El email indicado no es válido")
+    @Size(max=150, message = "El email no puede tener más de 150 caracteres")
     private String email;
 
     private boolean remember;
@@ -30,5 +30,13 @@ public class LoginForm {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

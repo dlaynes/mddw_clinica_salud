@@ -34,7 +34,7 @@ public class DashboardController {
         if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Admin"))){
             return indexAdmin(model);
         }
-        if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Medico"))){
+        if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Doctor"))){
             return indexMedicos(model);
         }
         if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Cliente"))){

@@ -50,29 +50,29 @@
                 <span class="text-white"><i class="bi bi-person-circle"></i> Admin</span>
             </div>
         </div>
-        <div class="collapse navbar-collapse" id="navbarNavMedicos"  sec:authorize="hasAuthority('Medico') && !hasAuthority('Perfil') && !hasAuthority('Admin')">
+        <div class="collapse navbar-collapse" id="navbarNavMedicos"  sec:authorize="hasAuthority('Doctor') && !hasAuthority('Cliente') && !hasAuthority('Admin')">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link active" th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/med/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
+                    <a class="nav-link" th:href="@{/dashboard/doctor/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/med/pacientes}"><i class="bi bi-people"></i> Pacientes</a>
+                    <a class="nav-link" th:href="@{/dashboard/doctor/pacientes}"><i class="bi bi-people"></i> Pacientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/med/agenda}"><i class="bi bi-people"></i> Agenda</a>
+                    <a class="nav-link" th:href="@{/dashboard/doctor/agenda}"><i class="bi bi-people"></i> Agenda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/med/perfil}"><i class="bi bi-person-badge"></i> Perfil</a>
+                    <a class="nav-link" th:href="@{/dashboard/doctor/perfil}"><i class="bi bi-person-badge"></i> Perfil</a>
                 </li>
             </ul>
             <div class="ms-3">
                 <span class="text-white"><i class="bi bi-person-circle"></i> Nombre Médico</span>
             </div>
         </div>
-        <div class="collapse navbar-collapse" id="navbarNavClientes"  sec:authorize="hasAuthority('Cliente') && !hasAuthority('Medico') && !hasAuthority('Admin')">
+        <div class="collapse navbar-collapse" id="navbarNavClientes"  sec:authorize="hasAuthority('Cliente') && !hasAuthority('Doctor') && !hasAuthority('Admin')">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link active" th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
@@ -85,7 +85,7 @@
                 </li>
             </ul>
             <div class="ms-3">
-                <span class="text-white"><i class="bi bi-person-circle"></i> Nombre Médico</span>
+                <span class="text-white"><i class="bi bi-person-circle"></i> Nombre Cliente</span>
             </div>
         </div>
     </div>

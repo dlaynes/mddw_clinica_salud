@@ -69,7 +69,7 @@ public class ClinicaSaludSecurityConfig {
                         // Páginas de administradores
                                 .requestMatchers("/dashboard/admin/**").hasAuthority("Admin")
                         // Páginas de Médicos
-                                .requestMatchers("/dashboard/med/**").hasAuthority("Medico")
+                                .requestMatchers("/dashboard/doctor/**").hasAuthority("Doctor")
                         // Páginas de Clientes
                                 .requestMatchers("/dashboard/cliente/**").hasAuthority("Cliente")
                         // Otros servicios

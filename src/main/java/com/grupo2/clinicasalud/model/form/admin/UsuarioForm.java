@@ -46,8 +46,8 @@ public class UsuarioForm {
     private String nombre;
 
     @Size(min = 2, max = 150, message = "El apellido debe tener entre 2 y 150 caracteres")
-    @Column(name = "apellidos")
-    private String apellidos;
+    @Column(name = "apellido")
+    private String apellido;
 
     @Size(min = 5, max = 25, message = "El teléfono debe tener entre 5 y 25 caracteres")
     @Column(name = "telefono", length = 25)
@@ -101,12 +101,12 @@ public class UsuarioForm {
         this.nombre = nombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellido(String apellidos) {
+        this.apellido = apellidos;
     }
 
     public String getTelefono() {

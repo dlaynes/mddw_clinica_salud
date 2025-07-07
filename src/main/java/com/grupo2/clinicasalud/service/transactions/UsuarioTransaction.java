@@ -79,7 +79,7 @@ public class UsuarioTransaction {
         Paciente paciente = new Paciente();
         paciente.setEmail(usuarioForm.getEmail());
         paciente.setNombre(usuarioForm.getNombre());
-        paciente.setEmail(usuarioForm.getApellidos());
+        paciente.setApellido(usuarioForm.getApellido());
         paciente.setTelefono(usuarioForm.getTelefono());
         return paciente;
     }
@@ -88,7 +88,7 @@ public class UsuarioTransaction {
         Medico medico = new Medico();
         medico.setEmail(usuarioForm.getEmail());
         medico.setNombre(usuarioForm.getNombre());
-        medico.setEmail(usuarioForm.getApellidos());
+        medico.setApellido(usuarioForm.getApellido());
         medico.setTelefono(usuarioForm.getTelefono());
         return medico;
     }

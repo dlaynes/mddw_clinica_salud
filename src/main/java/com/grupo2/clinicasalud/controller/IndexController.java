@@ -55,15 +55,7 @@ public class IndexController {
 
 
     @GetMapping("/")
-    private String indice(Model model, HttpServletRequest request) {
-        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        if(inputFlashMap != null){
-            String citaError = (String) inputFlashMap.get("citaError");
-            if(citaError != null){
-                model.addAttribute("citaError", citaError);
-            }
-        }
-
+    private String indice(Model model) {
         List<Especialidad> especialidades = especialidadRepository.findAll();
         List<Servicio> servicios = servicioRepository.findAll();
         model.addAttribute("especialidades", especialidades);
@@ -73,15 +65,26 @@ public class IndexController {
         return "index";
     }
 
-    @PostMapping("/guardarReserva")
-    public String guardarReserva(@Valid @ModelAttribute("reserva") ReservaCitaForm reserva, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    @PostMapping("/")
+    public String guardarReserva(@Valid @ModelAttribute("reserva") ReservaCitaForm reserva, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         if(bindingResult.hasErrors()){
-            return "redirect:/#reservarCita";
+            redirectAttributes.addFlashAttribute("citaError", "Debe llenar correctamente los datos");
+            List<Especialidad> especialidades = especialidadRepository.findAll();
+            List<Servicio> servicios = servicioRepository.findAll();
+            model.addAttribute("especialidades", especialidades);
+            model.addAttribute("servicios", servicios);
+            model.addAttribute("reserva", reserva);
+            return "index";
         }
         Optional<Especialidad> especialidadContainer = especialidadRepository.findById(reserva.getEspecialidad_id());
         if(especialidadContainer.isEmpty()){
             redirectAttributes.addFlashAttribute("citaError", "Se debe seleccionar una especialidad válida");
-            return "redirect:/#reservarCita";
+            List<Especialidad> especialidades = especialidadRepository.findAll();
+            List<Servicio> servicios = servicioRepository.findAll();
+            model.addAttribute("especialidades", especialidades);
+            model.addAttribute("servicios", servicios);
+            model.addAttribute("reserva", reserva);
+            return "index";
         }
         Optional<Usuario> usuarioContainer = usuarioRepository.findByEmail(reserva.getEmail());
 
@@ -97,8 +100,13 @@ public class IndexController {
             return "redirect:/cita-creada";
 
         } else {
-            redirectAttributes.addFlashAttribute("citaError", "Ya existe un paciente con el correo indicado. Por favor utilice uno nuevo");
-            return "redirect:/#reservarCita";
+            redirectAttributes.addFlashAttribute("citaError", "Ya existe un paciente con el correo indicado. Por favor utilice un correo nuevo o ingrese a su cuenta");
+            List<Especialidad> especialidades = especialidadRepository.findAll();
+            List<Servicio> servicios = servicioRepository.findAll();
+            model.addAttribute("especialidades", especialidades);
+            model.addAttribute("servicios", servicios);
+            model.addAttribute("reserva", reserva);
+            return "index";
         }
     }
 
@@ -117,7 +125,6 @@ public class IndexController {
         } while (false);
         return "redirect:/";
     }
-
 
     @GetMapping("/especialidades")
     private String especialidades(Model model) {

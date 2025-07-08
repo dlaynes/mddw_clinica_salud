@@ -29,6 +29,9 @@ public class UserInitializer {
                 }
                 Usuario adm = new Usuario();
                 adm.setEmail("admin@test.com");
+
+                // No usar esta contraseña en páginas web en línea
+                // Don't use this password in any active website
                 adm.setPassword(passwordEncoder.encode("Cl1n1c4$alUd"));
                 Set<Rol> roles = new HashSet<>();
                 roles.add(rol.get());

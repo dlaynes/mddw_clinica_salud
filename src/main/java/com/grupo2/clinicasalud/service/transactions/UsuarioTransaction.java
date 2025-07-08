@@ -12,13 +12,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UsuarioTransaction {
 
-    @Transactional
     public void guardarUsuario(UsuarioForm usuarioForm,
                                PasswordEncoder passwordEncoder,
                                UsuarioRepository usuarioRepository,
@@ -43,7 +43,7 @@ public class UsuarioTransaction {
         Medico medico = null;
 
         if(usuario.getId() == 0){
-            usuarioRepository.saveAndFlush(usuario);
+            usuarioRepository.save(usuario);
             Set<Rol> roles = usuario.getRoles();
 
             if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Cliente"))){
@@ -72,13 +72,13 @@ public class UsuarioTransaction {
         }
         if(paciente != null){
             paciente.setUsuario(usuario);
-            pacienteRepository.saveAndFlush(paciente);
+            pacienteRepository.save(paciente);
 
             usuario.setPaciente(paciente);
         }
         if(medico != null){
             medico.setUsuario(usuario);
-            medicoRepository.saveAndFlush(medico);
+            medicoRepository.save(medico);
 
             usuario.setMedico(medico);
         }
@@ -93,6 +93,7 @@ public class UsuarioTransaction {
         paciente.setNombre(usuarioForm.getNombre());
         paciente.setApellido(usuarioForm.getApellido());
         paciente.setTelefono(usuarioForm.getTelefono());
+        paciente.setFechaRegistro(new Date());
         return paciente;
     }
 
@@ -102,6 +103,7 @@ public class UsuarioTransaction {
         medico.setNombre(usuarioForm.getNombre());
         medico.setApellido(usuarioForm.getApellido());
         medico.setTelefono(usuarioForm.getTelefono());
+        medico.setFechaCreacion(new Date());
         return medico;
     }
 

@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -73,18 +74,9 @@ public class Paciente {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    public Paciente(long id, String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String telefono, Date fechaNacimiento, EstadoCivil estadoCivil, Genero genero, String email) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-        this.estadoCivil = estadoCivil;
-        this.genero = genero;
-        this.email = email;
-    }
+    @Column(name="fecha_registro")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaRegistro;
 
     public Paciente(){
 
@@ -184,5 +176,13 @@ public class Paciente {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 }

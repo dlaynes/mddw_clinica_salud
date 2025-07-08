@@ -111,12 +111,13 @@
                 <b>Usuario: </b><span class="text-danger" th:text="${registroEmail}">--</span><br />
                 <b>Contraseña: </b><span class="text-danger" th:text="${registroPassword}">--</span>
             </p>
-            Es <strong>importante</strong> que conserve estos datos para revisar el momento en el que la cita sea confirmada.
+            Es <strong>importante</strong> que guarde y conserve estos datos para revisar el momento en el que la cita sea confirmada.
+            <br />Al finalizar, haga clic en el botón de iniciar sesión.
         </div>
 
         <div class="d-grid gap-2">
-            <a th:href="@{/auth/login}" class="btn btn-secondary">
-                <i class="bi bi-x-circle me-1"></i>Iniciar sesión
+            <a th:href="@{/auth/login}" class="btn btn-primary">
+                Iniciar sesión
             </a>
         </div>
 

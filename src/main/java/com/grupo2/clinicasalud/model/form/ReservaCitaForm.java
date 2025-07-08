@@ -28,11 +28,6 @@ public class ReservaCitaForm {
     private String telefono;
 
     @NotNull(message = "Se debe seleccionar una fecha aproximada")
-    @Pattern(
-            regexp = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(20)\\d{2}",
-            message = "Se debe indicar una fecha válida"
-    )
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private String fecha;
 
     @NotNull(message = "Se debe seleccionar una hora aproximada")

@@ -20,7 +20,6 @@ import java.util.Set;
 @Service
 public class ReservarCitaTransaction {
 
-    @Transactional
     public void guardarCita(
             ReservaCitaForm reservaCitaForm,
             Especialidad especialidad,
@@ -50,7 +49,7 @@ public class ReservarCitaTransaction {
                 .orElseThrow(() -> new RuntimeException("Error: Rol Cliente no encontrado."));
         roles.add(clienteRol);
         usuario.setRoles(roles);
-        usuarioRepository.saveAndFlush(usuario);
+        usuarioRepository.save(usuario);
 
         // TO DO: enviar un correo con la información. Luego pedirle al usuario que cambie su contraseña
 
@@ -60,7 +59,8 @@ public class ReservarCitaTransaction {
         paciente.setEmail(reservaCitaForm.getEmail());
         paciente.setTelefono(reservaCitaForm.getTelefono());
         paciente.setUsuario(usuario);
-        pacienteRepository.saveAndFlush(paciente);
+        paciente.setFechaRegistro(new Date());
+        pacienteRepository.save(paciente);
 
         Cita cita = new Cita();
         cita.setEstadoCita(EstadoCita.registrada);
@@ -73,6 +73,7 @@ public class ReservarCitaTransaction {
         cita.setFechaHora(Date.from(instant));
         cita.setPaciente(paciente);
         cita.setConsultorio(consultorioOptional.get());
+        cita.setFechaRegistro(new Date());
         citaRepository.save(cita);
     }
 }

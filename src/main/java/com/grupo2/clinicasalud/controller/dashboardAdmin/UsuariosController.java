@@ -84,6 +84,19 @@ public class UsuariosController {
             return "dashboard/admin/usuarios/editar";
         }
 
+        // evitar que 2 usuarios compartan el mismo email
+        Optional<Usuario> usuarioAnt = usuarioRepository.findByEmail(usuarioForm.getEmail());
+        if(!usuarioAnt.isEmpty()){
+            Long id = usuarioForm.getId();
+            if(id == null || (usuarioAnt.get().getId() != id)){
+                model.addAttribute("errorUsuario", "Ya existe un usuario con el mismo e-mail");
+                model.addAttribute("usuarioId", usuarioForm.getId());
+                model.addAttribute("roles", rolRepository.findAll());
+                model.addAttribute("usuarioForm", usuarioForm);
+                return "dashboard/admin/usuarios/editar";
+            }
+        }
+
         try {
             usuarioTransaction.guardarUsuario(usuarioForm, passwordEncoder, usuarioRepository, pacienteRepository, medicoRepository);
             redirectAttributes.addFlashAttribute("success", "Se han guardado los datos del usuario");

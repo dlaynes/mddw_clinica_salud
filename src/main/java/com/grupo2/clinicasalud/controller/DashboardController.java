@@ -29,6 +29,11 @@ public class DashboardController {
     @Autowired
     private MedicoService medicoService;
 
+    @GetMapping
+    public String redirect(){
+        return "redirect:/dashboard/index";
+    }
+
     @GetMapping("/index")
     public String index(Model model, @AuthenticationPrincipal Usuario user){
         if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Admin"))){
@@ -40,7 +45,7 @@ public class DashboardController {
         if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Cliente"))){
             return indexPacientes(model);
         }
-        throw new RuntimeException("Unknown role");
+        throw new RuntimeException("Unknown or unused role");
     }
 
     private String indexAdmin(Model model){

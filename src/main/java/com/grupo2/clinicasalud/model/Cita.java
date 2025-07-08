@@ -45,6 +45,10 @@ public class Cita {
     @Size(max=2000)
     private String motivo;
 
+    @Column(name="fecha_registro")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaRegistro;
+
     public Cita(){
 
     }
@@ -111,5 +115,13 @@ public class Cita {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 }

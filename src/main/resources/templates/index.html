@@ -98,14 +98,22 @@
     <h2 class="text-center mb-4 text-primary">Reserva tu Cita Médica</h2>
 
     <div class="container my" th:if="${citaError}">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle me-2"></i>
             <span th:text="${citaError}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
         </div>
     </div>
 
-    <form th:action="@{/guardarReserva}" method="post" class="p-5 border rounded shadow-lg bg-light" th:object="${reserva}">
+    <form th:action="@{/}" method="post" class="p-5 border rounded shadow-lg bg-light" th:object="${reserva}">
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
+        </div>
+
         <div class="row g-4">
             <!-- Columna izquierda -->
             <div class="col-md-6">

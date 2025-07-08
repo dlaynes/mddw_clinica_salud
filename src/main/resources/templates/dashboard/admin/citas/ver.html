@@ -40,39 +40,50 @@
     </style>
 </head>
 <body>
+
 <!-- Barra de navegación -->
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
 <div layout:fragment="content">
-    <h2>Consultas de los clientes de la Clínica Salud</h2>
+    <h2>Detalle de la cita</h2>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Comentario</th>
-                <th>Fecha de Creación</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="consulta : ${consultas}">
-                <td th:text="${consulta.id}"></td>
-                <td th:text="${consulta.nombreCompleto}"></td>
-                <td th:text="${consulta.email}"></td>
-                <td th:text="${consulta.telefono}"></td>
-                <td th:text="${#strings.abbreviate(consulta.comentario, 10)}"></td>
-                <td th:text="${consulta.fechaCreacion}"></td>
-                <td>
-                    <a th:href="@{/dashboard/admin/consultas/ver/{id}(id=${consulta.id})}" class="btn btn-sm btn-warning">Ver</a>
-                 </td>
-            </tr>
-            </tbody>
-        </table>
+    <div>
+        <div class="mb-3">
+            <strong class="form-label">Paciente: </strong>
+            <span th:text="${cita.paciente} ? ${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido} : '--'"></span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Médico: </strong>
+            <span th:text="${cita.medico} ? ${cita.medico.nombre} + ' ' + ${cita.medico.apellido} : '--'"></span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Especialidad: </strong>
+            <span th:text="${cita.especialidad.nombre}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Consultorio: </strong>
+            <span th:text="${cita.consultorio.nombre}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Fecha (sugerida o definida): </strong>
+            <span th:text="${cita.fechaHora}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Estado: </strong>
+            <span th:text="${cita.estadoCita}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Fecha de creación: </strong>
+            <span th:text="${cita.fechaRegistro}">--</span>
+        </div>
+
+        <a th:href="@{/dashboard/admin/citas}" class="btn btn-secondary">Volver</a>
     </div>
 </div>
 <!-- Footer -->

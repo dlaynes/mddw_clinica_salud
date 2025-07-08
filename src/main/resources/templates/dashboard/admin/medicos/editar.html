@@ -45,7 +45,7 @@
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
 <div>
-    <h2 th:text="${usuarioId != null} ? 'Editar Medico' : 'Nuevo Medico'"></h2>
+    <h2 th:text="${medico.id != null} ? 'Editar Medico' : 'Nuevo Medico'"></h2>
 
     <div th:if="${errorMedico}" class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-2"></i>
@@ -54,7 +54,15 @@
     </div>
 
     <form th:action="@{/dashboard/admin/medicos/editar}" th:object="${medico}" method="post">
-        <input type="hidden" id="id" th:field="${id}">
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
+        </div>
+
+        <input type="hidden" id="id" th:field="*{id}">
 
         <div class="mb-3">
             <label class="form-label" for="nombre">Nombre</label>
@@ -75,10 +83,16 @@
         </div>
 
         <div class="mb-3">
+            <label class="form-label" for="telefono">Teléfono</label>
+            <input type="text" id="telefono" th:field="*{telefono}" class="form-control" required>
+            <small th:if="${#fields.hasErrors('telefono')}" th:errorclass="text-danger" th:errors="*{telefono}"></small>
+        </div>
+
+        <div class="mb-3">
             <label for="estadoCivil" class="form-label">Estado Civil</label>
             <select id="estadoCivil" th:field="*{estadoCivil}" class="form-control" required>
                 <option value="">Seleccione un estado Civil</option>
-                <option th:each="estCiv : ${estadosCiviles}" th:value="${estCiv}" th:text="${estCiv.toText()}"></option>
+                <option th:each="estCiv : ${estadosCiviles}" th:value="${estCiv.name()}" th:text="${estCiv.toText()}"></option>
             </select>
             <small th:if="${#fields.hasErrors('estadoCivil')}" th:errorclass="text-danger" th:errors="*{estadoCivil}"></small>
         </div>
@@ -87,7 +101,7 @@
             <label for="genero" class="form-label">Género</label>
             <select id="genero" th:field="*{genero}" class="form-control" required>
                 <option value="">Seleccione un género</option>
-                <option th:each="gen : ${generos}" th:value="${gen}" th:text="${gen.toText()}"></option>
+                <option th:each="gen : ${generos}" th:value="${gen.name()}" th:text="${gen.toText()}"></option>
             </select>
             <small th:if="${#fields.hasErrors('genero')}" th:errorclass="text-danger" th:errors="*{genero}"></small>
         </div>
@@ -96,7 +110,7 @@
             <label for="tipoDocumento" class="form-label">Tipo de documento</label>
             <select id="tipoDocumento" th:field="*{tipoDocumento}" class="form-control" required>
                 <option value="">Seleccione un tipo de documento</option>
-                <option th:each="tipDoc : ${tiposDocumento}" th:value="${tipDoc}" th:text="${tipDoc.toText()}"></option>
+                <option th:each="tipDoc : ${tiposDocumento}" th:value="${tipDoc.name()}" th:text="${tipDoc.toText()}"></option>
             </select>
             <small th:if="${#fields.hasErrors('tipoDocumento')}" th:errorclass="text-danger" th:errors="*{tipoDocumento}"></small>
         </div>

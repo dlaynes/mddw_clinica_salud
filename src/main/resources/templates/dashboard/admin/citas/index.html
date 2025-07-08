@@ -46,30 +46,38 @@
 <div layout:fragment="content">
     <h2>Consultas de los clientes de la Clínica Salud</h2>
 
+    <!--
+    <td th:text="${#dates.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+
+
+    -->
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Comentario</th>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Especialidad</th>
+                <th>Fecha</th>
+                <th>Estado</th>
                 <th>Fecha de Creación</th>
                 <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="consulta : ${consultas}">
-                <td th:text="${consulta.id}"></td>
-                <td th:text="${consulta.nombreCompleto}"></td>
-                <td th:text="${consulta.email}"></td>
-                <td th:text="${consulta.telefono}"></td>
-                <td th:text="${#strings.abbreviate(consulta.comentario, 10)}"></td>
-                <td th:text="${consulta.fechaCreacion}"></td>
+            <tr th:each="cita : ${citas}">
+                <td th:text="${cita.id}"></td>
+                <td th:text="${cita.paciente} ? ${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido} : '--'"></td>
+                <td th:text="${cita.medico} ? 'Dr. ' + ${cita.medico.nombre} + ' ' + ${cita.medico.apellido} : '--'"></td>
+                <td th:text="${cita.especialidad.nombre}"></td>
+                <td th:text="${#dates.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${cita.estadoCita}"></td>
+                <td th:text="${#dates.format(cita.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></td>
                 <td>
-                    <a th:href="@{/dashboard/admin/consultas/ver/{id}(id=${consulta.id})}" class="btn btn-sm btn-warning">Ver</a>
-                 </td>
+                    <a th:href="@{/dashboard/admin/citas/ver/{id}(id=${cita.id})}" class="btn btn-sm btn-warning">Ver</a>
+                </td>
             </tr>
             </tbody>
         </table>

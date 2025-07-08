@@ -28,7 +28,7 @@ public class ConsultasController {
     public String ver(@PathVariable Long id, Model model){
         Consulta consulta = consultaService.dameConsultaPorId(id);
         if(consulta == null){
-            return "redirect:/dashboard/consultas";
+            return "redirect:/dashboard/admin/consultas";
         }
         model.addAttribute("consulta", consulta);
         return "dashboard/admin/consultas/ver";

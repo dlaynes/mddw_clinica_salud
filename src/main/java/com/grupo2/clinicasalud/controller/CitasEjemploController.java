@@ -1,12 +1,11 @@
 package com.grupo2.clinicasalud.controller;
 
 import com.grupo2.clinicasalud.model.*;
-import com.grupo2.clinicasalud.model.converter.GeneroAttributeConverter;
+
 import com.grupo2.clinicasalud.model.form.ReservaCitaEjemplo;
 import com.grupo2.clinicasalud.service.CitaService;
 import com.grupo2.clinicasalud.service.ConsultorioService;
 import com.grupo2.clinicasalud.service.PacienteService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,7 @@ import java.time.LocalTime;
 
 @Controller
 @RequestMapping("/citas")
-public class CitasController {
+public class CitasEjemploController {
 
     @Autowired
     private CitaService citaService;
@@ -97,14 +96,16 @@ public class CitasController {
             if(especialidadContainer.isPresent()){
                 Paciente paciente = pacienteService.damePacientePorEmail(citaForm.getEmail());
                 if (paciente == null){
-                    GeneroAttributeConverter c = new GeneroAttributeConverter();
+
+                    /*
                     paciente = nuevoPaciente(
                             citaForm.getNombre(),
                             citaForm.getApellidos(),
                             citaForm.getEmail(),
                             citaForm.getTelefono(),
-                            c.convertToEntityAttribute(citaForm.getGenero())
+                            citaForm.getGenero()
                     );
+                    */
                 }
                 Cita cita;
                 long id = citaForm.getId();

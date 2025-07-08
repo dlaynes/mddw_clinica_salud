@@ -1,11 +1,13 @@
 package com.grupo2.clinicasalud.model;
 
 import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
+import com.grupo2.clinicasalud.model.converter.EstadoCivilAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.GeneroAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.TipoDocumentoAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
@@ -30,7 +32,7 @@ public class Medico {
     @Column(name = "apellido", length = 150)
     private String apellido;
 
-    @NotBlank(message = "El tipo de documento es obligatorio")
+    @NotNull(message = "El tipo de documento es obligatorio")
     @Column(name = "tipo_documento", length = 1)
     @Convert(converter = TipoDocumentoAttributeConverter.class)
     private TipoDocumento tipoDocumento;
@@ -55,14 +57,14 @@ public class Medico {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
 
-    @NotBlank(message = "El género es obligatorio")
+    @NotNull(message = "El género es obligatorio")
     @Column(name = "genero", length = 1)
     @Convert(converter = GeneroAttributeConverter.class)
     private Genero genero;
 
-    @NotBlank(message = "El estado civil es obligatorio")
+    @NotNull(message = "El estado civil es obligatorio")
     @Column(name = "estado_civil", length = 1)
-    @Convert(converter = EstadoCitaAttributeConverter.class)
+    @Convert(converter = EstadoCivilAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "medico")

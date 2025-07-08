@@ -128,7 +128,7 @@
                           th:text="${rol.nombre}"
                           class="badge badge-compact role-badge"
                           th:classappend="${rol.nombre.equals('Admin')} ? 'bg-danger' :
-                                         (${rol.nombre.equals('Medico')} ? 'bg-warning text-dark' : 'bg-info')"
+                                         (${rol.nombre.equals('Doctor')} ? 'bg-warning text-dark' : 'bg-info')"
                           th:attr="data-role=${rol.nombre}">
                         </span>
                     </div>

@@ -29,7 +29,7 @@ public class UserInitializer {
                 }
                 Usuario adm = new Usuario();
                 adm.setEmail("admin@test.com");
-                adm.setPassword(passwordEncoder.encode("admin123"));
+                adm.setPassword(passwordEncoder.encode("Cl1n1c4$alUd"));
                 Set<Rol> roles = new HashSet<>();
                 roles.add(rol.get());
                 adm.setRoles(roles);

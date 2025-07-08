@@ -81,7 +81,8 @@ public class ClinicaSaludSecurityConfig {
                 .loginProcessingUrl("/auth/do_login")
                 .defaultSuccessUrl("/dashboard/index", true)
                 .failureUrl("/auth/login?error=true")
-                .permitAll());
+                .permitAll())
+                .rememberMe(rememberMe -> rememberMe.key("clinicaSaludSecret"));
         http.logout(logout -> logout
                 .logoutUrl("/auth/logout")
                 .logoutSuccessUrl("/auth/login?logout=true")

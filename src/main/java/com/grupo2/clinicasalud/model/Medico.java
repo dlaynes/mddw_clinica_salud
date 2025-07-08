@@ -71,8 +71,8 @@ public class Medico {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "especialidades_medicos",
-            joinColumns = @JoinColumn(name = "especialidad_id"),
-            inverseJoinColumns = @JoinColumn(name = "medico_id")
+            joinColumns = @JoinColumn(name = "medico_id"),
+            inverseJoinColumns = @JoinColumn(name = "especialidad_id")
     )
     private Set<Especialidad> especialidades;
 

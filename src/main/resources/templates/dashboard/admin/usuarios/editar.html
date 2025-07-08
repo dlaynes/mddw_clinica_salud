@@ -44,11 +44,17 @@
 <!-- Barra de navegación -->
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
-<div layout:fragment="content">
+<div>
     <h2 th:text="${usuarioId != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h2>
 
-    <form th:action="@{/dashboard/admin/especialidades/guardar}" th:object="${usuarioForm}" method="post">
-        <input type="hidden" th:text="${usuarioId}">
+    <div th:if="${errorUsuario}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <strong>Error:</strong> <span th:text="${errorUsuario}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
+    </div>
+
+    <form th:action="@{/dashboard/admin/usuarios/editar}" th:object="${usuarioForm}" method="post">
+        <input type="hidden" id="id" name="id" th:text="${usuarioId}">
 
         <div class="mb-3">
             <label class="form-label">Email</label>
@@ -76,10 +82,10 @@
             <div class="border rounded p-3" style="background-color: #f8f9fa;">
                 <div th:each="rol : ${roles}" class="form-check">
                     <input class="form-check-input"
-                           type="checkbox"
-                           th:field="*{roles}"
-                           th:value="${rol.id}"
-                           th:id="${'rol_' + rol.id}" />
+                        type="checkbox"
+                        th:field="*{roles}"
+                        th:value="${rol.id}"
+                        th:id="${'rol_' + rol.id}" />
 
                     <label class="form-check-label" th:for="${'rol_' + rol.id}">
                         <span th:switch="${rol.nombre}">
@@ -93,10 +99,10 @@
                                 <i class="bi bi-person-fill text-info me-1"></i>Paciente
                             </span>
                             <span th:case="'Mantenimiento'">
-                                <i class="bi bi-person me-1"></i>Mantenimiento (N/U)
+                                <i class="bi bi-person me-1"></i>Mantenimiento (Desactivado)
                             </span>
                            <span th:case="'Visitante'">
-                                <i class="bi bi-person me-1"></i>Visitante (N/U)
+                                <i class="bi bi-person me-1"></i>Visitante (Desactivado)
                             </span>
                             <span th:case="*">
                                 <i class="bi bi-person me-1"></i>Otro

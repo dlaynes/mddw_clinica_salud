@@ -24,7 +24,12 @@ public class UsuarioTransaction {
                                UsuarioRepository usuarioRepository,
                                PacienteRepository pacienteRepository,
                                MedicoRepository medicoRepository){
+
+        Long usuarioFormId = usuarioForm.getId();
         Usuario usuario = new Usuario();
+        if(usuarioFormId != null){
+            usuario.setId(usuarioFormId);
+        }
         usuario.setEmail(usuarioForm.getEmail());
         String password = usuarioForm.getPassword();
 
@@ -38,20 +43,21 @@ public class UsuarioTransaction {
         Medico medico = null;
 
         if(usuario.getId() == 0){
-            usuario = usuarioRepository.save(usuario);
+            usuarioRepository.saveAndFlush(usuario);
             Set<Rol> roles = usuario.getRoles();
 
-            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Medico"))){
+            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Cliente"))){
                 paciente = crearPaciente(usuarioForm);
             }
-            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Cliente"))){
+            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Doctor"))){
                 medico = crearMedico(usuarioForm);
             }
         } else {
+            usuarioRepository.save(usuario);
             Set<Rol> roles = usuario.getRoles();
 
             // Creamos las cuentas si no existen. De otra manera, las dejamos en el sistema
-            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Medico"))){
+            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Doctor"))){
                 Optional<Medico> medicoOpt = medicoRepository.findByUsuarioId(usuario.getId());
                 if(medicoOpt.isEmpty()){
                     medico = crearMedico(usuarioForm);
@@ -66,13 +72,17 @@ public class UsuarioTransaction {
         }
         if(paciente != null){
             paciente.setUsuario(usuario);
-            pacienteRepository.save(paciente);
+            pacienteRepository.saveAndFlush(paciente);
+
+            usuario.setPaciente(paciente);
         }
         if(medico != null){
             medico.setUsuario(usuario);
-            medicoRepository.save(medico);
-        }
+            medicoRepository.saveAndFlush(medico);
 
+            usuario.setMedico(medico);
+        }
+        usuarioRepository.save(usuario);
     }
 
     private Paciente crearPaciente(UsuarioForm usuarioForm){

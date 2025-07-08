@@ -50,7 +50,7 @@ public class ReservarCitaTransaction {
                 .orElseThrow(() -> new RuntimeException("Error: Rol Cliente no encontrado."));
         roles.add(clienteRol);
         usuario.setRoles(roles);
-        usuarioRepository.save(usuario);
+        usuarioRepository.saveAndFlush(usuario);
 
         // TO DO: enviar un correo con la información. Luego pedirle al usuario que cambie su contraseña
 
@@ -60,7 +60,7 @@ public class ReservarCitaTransaction {
         paciente.setEmail(reservaCitaForm.getEmail());
         paciente.setTelefono(reservaCitaForm.getTelefono());
         paciente.setUsuario(usuario);
-        pacienteRepository.save(paciente);
+        pacienteRepository.saveAndFlush(paciente);
 
         Cita cita = new Cita();
         cita.setEstadoCita(EstadoCita.registrada);

@@ -3,12 +3,13 @@ package com.grupo2.clinicasalud.controller.dashboardAdmin;
 import com.grupo2.clinicasalud.model.*;
 import com.grupo2.clinicasalud.model.form.admin.UsuarioForm;
 import com.grupo2.clinicasalud.repository.PacienteRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -41,6 +42,32 @@ public class PacientesController {
         model.addAttribute("paciente", paciente);
 
         return "dashboard/admin/pacientes/editar";
+    }
+
+    @PostMapping("/editar")
+    public String guardar(@Valid @ModelAttribute("paciente") Paciente paciente, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("generos", Genero.values());
+            model.addAttribute("tiposDocumento", TipoDocumento.values());
+            model.addAttribute("estadosCiviles", EstadoCivil.values());
+            model.addAttribute("medico", paciente);
+            return "dashboard/admin/pacientes/editar";
+        }
+        pacienteRepository.save(paciente);
+        redirectAttributes.addFlashAttribute("success", "Se han guardado los datos del médico");
+        return "redirect:/dashboard/admin/pacientes";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String borrar(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        try {
+            pacienteRepository.deleteById(id);
+            redirectAttributes.addFlashAttribute("successDelete", "Se ha borrado el paciente exitosamente");
+        } catch(Exception e){
+            System.out.println("ERROR BORRAR PACIENTE: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorDelete", "No se pudo borrar al paciente");
+        }
+        return "redirect:/dashboard/admin/pacientes";
     }
 
 }

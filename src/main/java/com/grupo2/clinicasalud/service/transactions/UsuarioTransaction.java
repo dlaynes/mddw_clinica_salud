@@ -82,7 +82,9 @@ public class UsuarioTransaction {
 
             usuario.setMedico(medico);
         }
-        usuarioRepository.save(usuario);
+        if(paciente != null || medico != null){
+            usuarioRepository.save(usuario);
+        }
     }
 
     private Paciente crearPaciente(UsuarioForm usuarioForm){

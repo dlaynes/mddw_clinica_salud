@@ -38,12 +38,15 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String loginPage(Model model, @RequestParam(required = false) String register, @RequestParam(required = false) String error) {
+    public String loginPage(Model model, @RequestParam(required = false) String register, @RequestParam(required = false) String error, @RequestParam(required = false) String logout) {
         if(register != null){
            model.addAttribute("successText", "Su cuenta ha sido creada satisfactoriamente. Ya puede ingresar al sistema");
         }
         if(error != null){
             model.addAttribute("loginError", "Error");
+        }
+        if(logout != null){
+            model.addAttribute("logoutText", "Sesión cerrada");
         }
         model.addAttribute("login", new LoginForm());
         return "auth/login";

@@ -45,6 +45,9 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/dashboard/admin/consultas}"><i class="bi bi-building"></i> Consultas</a>
                 </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/auth/logout}">Cerrar sesión</a>
+                </li>
             </ul>
             <div class="ms-3">
                 <span class="text-white"><i class="bi bi-person-circle"></i> Admin</span>
@@ -67,6 +70,9 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/dashboard/doctor/perfil}"><i class="bi bi-person-badge"></i> Perfil</a>
                 </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/auth/logout}">Cerrar sesión</a>
+                </li>
             </ul>
             <div class="ms-3">
                 <span class="text-white"><i class="bi bi-person-circle"></i> Nombre Médico</span>
@@ -82,6 +88,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/dashboard/cliente/perfil}"><i class="bi bi-person-badge"></i> Perfil</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/auth/logout}">Cerrar sesión</a>
                 </li>
             </ul>
             <div class="ms-3">

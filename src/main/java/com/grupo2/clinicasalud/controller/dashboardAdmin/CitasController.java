@@ -64,8 +64,15 @@ public class CitasController {
             model.addAttribute("cita", cita);
             return "dashboard/admin/citas/asignar";
         }
-        cita.setEstadoCita(EstadoCita.programada);
-        citaRepository.save(cita);
+        Optional<Cita> citaRealOpt = citaRepository.findById(cita.getId());
+        if(citaRealOpt.isEmpty()){
+            return "redirect:/dashboard/admin/citas";
+        }
+        Cita citaReal = citaRealOpt.get();
+        citaReal.setFechaHora(cita.getFechaHora());
+        citaReal.setMedico(cita.getMedico());
+        citaReal.setEstadoCita(EstadoCita.programada);
+        citaRepository.save(citaReal);
 
         attributes.addFlashAttribute("asignarSuccess", "Se habilitó la cita");
         return "redirect:/dashboard/admin/citas";

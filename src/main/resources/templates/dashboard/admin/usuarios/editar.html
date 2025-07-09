@@ -54,7 +54,7 @@
     </div>
 
     <form th:action="@{/dashboard/admin/usuarios/editar}" th:object="${usuarioForm}" method="post">
-        <input type="hidden" id="id" name="id" th:text="${usuarioId}">
+        <input type="hidden" id="id" name="id" th:value="${usuarioId}" />
 
         <div class="mb-3">
             <label class="form-label">Email</label>
@@ -117,19 +117,19 @@
 
         <div class="mb-3">
             <label class="form-label">Nombre (Solo para nuevas cuentas de Paciente o Médico)</label>
-            <input type="text" th:field="*{nombre}" class="form-control" required>
+            <input type="text" th:field="*{nombre}" class="form-control">
             <small th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger" th:errors="*{nombre}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Apellido (Solo para nuevas cuentas de Paciente o Médico)</label>
-            <input type="text" th:field="*{apellido}" class="form-control" required>
+            <input type="text" th:field="*{apellido}" class="form-control">
             <small th:if="${#fields.hasErrors('apellido')}" th:errorclass="text-danger" th:errors="*{apellido}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Teléfono (Solo para nuevas cuentas de Paciente o Médico)</label>
-            <input type="text" th:field="*{telefono}" class="form-control" required>
+            <input type="text" th:field="*{telefono}" class="form-control">
             <small th:if="${#fields.hasErrors('telefono')}" th:errorclass="text-danger" th:errors="*{telefono}"></small>
         </div>
 

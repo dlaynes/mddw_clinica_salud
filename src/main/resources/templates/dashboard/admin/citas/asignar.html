@@ -66,7 +66,7 @@
 
                 <div class="mb-3">
                     <strong class="form-label">Especialidad: </strong>
-                    <input type="hidden" id="especialidad_id" name="especialidad_id" th:value="${cita.especialidad.id}" />
+                    <input type="hidden" id="especialidad"  th:field="*{especialidad}" />
                     <span th:text="${cita.especialidad.nombre}">--</span>
                 </div>
 
@@ -93,14 +93,20 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="fechaHora">Fecha Real (programada)</label>
-                    <input type="datetime-local" id="fechaHora" th:field="*{fechaHora}" class="form-control" required step="300">
+                    <input type="datetime-local" id="fechaHora" th:field="*{fechaHora}" class="form-control" required>
                     <small th:if="${#fields.hasErrors('fechaHora')}" th:errorclass="text-danger" th:errors="*{fechaHora}"></small>
                 </div>
+
+                <input type="hidden" id="id" th:field="*{id}" />
+                <input type="hidden" id="consultorio" th:field="*{consultorio}" />
+                <input type="hidden" id="paciente" th:field="*{paciente}" />
+                <input type="hidden" id="estadoCita" th:field="*{estadoCita}" />
+                <input type="hidden" id="motivo" th:field="*{motivo}" />
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+
+                <a th:href="@{/dashboard/admin/citas}" class="btn btn-secondary">Volver</a>
             </form>
-
-            <button type="submit" class="btn btn-primary">Guardar</button>
-
-            <a th:href="@{/dashboard/admin/citas}" class="btn btn-secondary">Volver</a>
         </div>
         <div class="col-md-8">
             <div id="calendario" style="margin-left: 50px; margin-right: 50px">

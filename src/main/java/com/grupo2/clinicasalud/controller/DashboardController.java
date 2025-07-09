@@ -65,6 +65,11 @@ public class DashboardController {
     }
 
     private String indexMedicos(Model model){
+
+        model.addAttribute("citasHoy", 0);
+        model.addAttribute("totalPacientes", 0);
+        model.addAttribute("citasPendientes",0);
+
         return "dashboard/index_medicos";
     }
 

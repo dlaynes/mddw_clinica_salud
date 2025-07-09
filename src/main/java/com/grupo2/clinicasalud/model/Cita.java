@@ -5,6 +5,7 @@ import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -39,6 +40,7 @@ public class Cita {
     // En la práctica debería haber 2 campos de fecha extra: fechaDeseada y fechaDeAtencion + duración
     @Column(name = "fecha_hora")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date fechaHora;
 
     @Convert(converter = EstadoCitaAttributeConverter.class)

@@ -65,7 +65,7 @@ public class ClinicaSaludSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/dashboard/index").hasAnyAuthority("Admin", "Medico", "Cliente")
+                        .requestMatchers("/dashboard/index").hasAnyAuthority("Admin", "Doctor", "Cliente")
                         // Páginas de administradores
                                 .requestMatchers("/dashboard/admin/**").hasAuthority("Admin")
                         // Páginas de Médicos

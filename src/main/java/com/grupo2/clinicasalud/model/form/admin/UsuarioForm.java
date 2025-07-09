@@ -2,10 +2,7 @@ package com.grupo2.clinicasalud.model.form.admin;
 
 import com.grupo2.clinicasalud.model.Rol;
 import com.grupo2.clinicasalud.validator.passwordmatch.PasswordMatchContraint;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,13 +28,13 @@ public class UsuarioForm {
 
     private Set<Rol> roles = new HashSet<>();
 
-    @Size(min = 2, max = 150, message = "El nombre debe tener entre 2 y 150 caracteres")
+    @Size(max = 150, message = "El nombre debe tener menos de 150 caracteres")
     private String nombre;
 
-    @Size(min = 2, max = 150, message = "El apellido debe tener entre 2 y 150 caracteres")
+    @Size(max = 150, message = "El apellido debe tener menos de 150 caracteres")
     private String apellido;
 
-    @Size(min = 5, max = 25, message = "El teléfono debe tener entre 5 y 25 caracteres")
+    @Size(max = 25, message = "El teléfono debe tener menos de 25 caracteres")
     private String telefono;
 
     public Long getId() {

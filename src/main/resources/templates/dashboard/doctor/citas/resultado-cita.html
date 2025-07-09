@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Salud - Sistema de Gestión</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <style>
+        .dashboard-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 100%;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .welcome-section {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            border-left: 4px solid;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<div th:replace="~{fragments/dashboard/nav :: nav}"></div>
+
+<div>
+    <h2>Llenar historial médico de una cita</h2>
+
+    <form th:action="@{/dashboard/doctor/citas/resultadoCita/{id}(id=${cita.id})}" th:object="${historial}" method="post">
+        <input type="hidden" id="id" th:field="*{id}" />
+
+        <div class="mb-3">
+            <strong class="form-label">Paciente: </strong>
+            <span th:text="${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Especialidad de la cita: </strong>
+            <span th:text="${cita.especialidad.nombre}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Consultorio: </strong>
+            <span th:text="${cita.consultorio.nombre}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Fecha programada: </strong>
+            <span th:text="${cita.fechaHora}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <strong class="form-label">Motivo: </strong>
+            <span th:text="${cita.motivo}">--</span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="fechaConsulta">Fecha término de la consulta</label>
+            <input type="datetime-local" id="fechaConsulta" th:field="*{fechaConsulta}" class="form-control" required>
+            <small th:if="${#fields.hasErrors('fechaConsulta')}" th:errorclass="text-danger" th:errors="*{fechaConsulta}"></small>
+        </div>
+
+        <div class="mb-3">
+            <label for="servicio" class="form-label">Servicios prestados</label>
+            <select id="servicio" th:field="*{servicio}" class="form-control" required>
+                <option value="">Seleccione un servicio</option>
+                <option th:each="serv : ${servicios}" th:value="${serv.id}" th:text="${serv.nombre}"></option>
+            </select>
+            <small th:if="${#fields.hasErrors('servicio')}" th:errorclass="text-danger" th:errors="*{servicio}"></small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="diagnostico">Diagnóstico (Privado para la clínica)</label>
+            <textarea id="diagnostico" th:field="*{diagnostico}" class="form-control"></textarea>
+            <small th:if="${#fields.hasErrors('diagnostico')}" th:errorclass="text-danger" th:errors="*{diagnostico}"></small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="notas">Notas (Privado para la clínica)</label>
+            <textarea id="notas" th:field="*{notas}" class="form-control"></textarea>
+            <small th:if="${#fields.hasErrors('notas')}" th:errorclass="text-danger" th:errors="*{notas}"></small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="tratamiento">Tratamiento (Para el paciente)</label>
+            <textarea id="tratamiento" th:field="*{tratamiento}" class="form-control"></textarea>
+            <small th:if="${#fields.hasErrors('tratamiento')}" th:errorclass="text-danger" th:errors="*{tratamiento}"></small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Historial Médico</button>
+        <a th:href="@{/dashboard/doctor/citas}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+<!-- Footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

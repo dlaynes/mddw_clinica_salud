@@ -2,6 +2,7 @@ package com.grupo2.clinicasalud.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -31,18 +32,19 @@ public class HistorialMedico {
     private Servicio servicio;
 
     @Column(name = "fecha_consulta")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaConsulta;
 
-    @Size(min = 5, max = 2000, message = "El diagnóstico debe tener entre 2 y 1000 caracteres")
+    @Size(min = 5, max = 2000, message = "El diagnóstico debe tener entre 5 y 2000 caracteres")
     @Column(name = "diagnostico", columnDefinition = "TEXT")
     private String diagnostico;
 
-    @Size(min = 5, max = 2000, message = "El tratamiento debe tener entre 2 y 1000 caracteres")
+    @Size(min = 5, max = 2000, message = "El tratamiento debe tener entre 5 y 2000 caracteres")
     @Column(name = "tratamiento", columnDefinition = "TEXT")
     private String tratamiento;
 
-    @Size(min = 5, max = 2000, message = "Las notas deben tener entre 2 y 1000 caracteres")
+    @Size(min = 5, max = 2000, message = "Las notas deben tener entre 5 y 5000 caracteres")
     @Column(name = "notas", columnDefinition = "TEXT")
     private String notas;
 

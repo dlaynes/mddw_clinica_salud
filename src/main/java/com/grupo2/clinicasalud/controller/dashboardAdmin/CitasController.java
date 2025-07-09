@@ -78,7 +78,7 @@ public class CitasController {
         return "redirect:/dashboard/admin/citas";
     }
 
-    // Se habilita una cita cuando el paciente ha llegado al consultorio
+    // Se habilita una cita cuando el paciente ha llegado al consultorio y está haciendo cola
     @GetMapping("/enEspera/{id}")
     public String enEspera(@PathVariable Long id, RedirectAttributes attributes){
         Optional<Cita> citaOpt = citaRepository.findOneByIdAndEstadoCita(id, EstadoCita.programada);
@@ -89,7 +89,7 @@ public class CitasController {
         cita.setEstadoCita(EstadoCita.enEspera);
         citaRepository.save(cita);
 
-        attributes.addFlashAttribute("enEsperaSuccess", "Se habilitó la cita");
+        attributes.addFlashAttribute("enEsperaSuccess", "Se habilitó la cita, para que el cliente pueda ser atendido");
         return "redirect:/dashboard/admin/citas";
     }
 

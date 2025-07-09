@@ -101,7 +101,7 @@
                     <a th:href="@{/dashboard/admin/citas/enEspera/{id}(id=${cita.id})}" class="btn btn-sm btn-success"
                        th:if="${cita.estadoCita.name() == 'programada'}">En consultorio</a>
                     <a th:href="@{/dashboard/admin/citas/cancelar/{id}(id=${cita.id})}" class="btn btn-sm btn-warning"
-                       th:if="${cita.estadoCita.name() == 'programada' || cita.estadoCita().name() == 'enEspera'}"
+                       th:if="${cita.estadoCita.name() == 'programada' || cita.estadoCita.name() == 'enEspera'}"
                        onclick="return confirm('¿Está seguro de que desea cancelar la cita?')">Cancelar</a>
                 </td>
             </tr>

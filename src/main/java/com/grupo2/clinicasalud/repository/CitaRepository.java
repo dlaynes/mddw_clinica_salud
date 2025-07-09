@@ -18,6 +18,8 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     Optional<Cita> findOneByIdAndPacienteId(Long citaId, Long pacienteId);
 
+    Optional<Cita> findOneByIdAndMedicoId(Long citaId, Long medicoId);
+
     Optional<Cita> findOneByIdAndPacienteIdAndEstadoCita(Long citaId, Long pacienteId, EstadoCita estadoCita);
 
     Optional<Cita> findOneByIdAndMedicoIdAndEstadoCita(Long citaId, Long pacienteId, EstadoCita estadoCita);

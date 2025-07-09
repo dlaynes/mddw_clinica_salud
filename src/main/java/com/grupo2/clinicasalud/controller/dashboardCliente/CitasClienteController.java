@@ -80,10 +80,4 @@ public class CitasClienteController {
         return "dashboard/cliente/citas/ticket";
     }
 
-    private Usuario getUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<Usuario> user = usuarioRepository.findByEmail(auth.getName());
-        return user.orElse(null);
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.grupo2.clinicasalud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -28,10 +29,14 @@ public class Cita {
     @JoinColumn(name="especialidad_id", nullable = false)
     Especialidad especialidad;
 
+    // En un proyecto más avanzado, se consideraría el consultorio a la hora de tomar decisiones
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name="consultorio_id", nullable = false)
     Consultorio consultorio;
 
+    // Para facilitar la programación, se considera que la fecha y hora elegida por el administrador no variará
+    // En la práctica debería haber 2 campos de fecha extra: fechaDeseada y fechaDeAtencion + duración
     @Column(name = "fecha_hora")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaHora;

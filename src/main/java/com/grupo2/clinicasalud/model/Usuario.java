@@ -1,5 +1,6 @@
 package com.grupo2.clinicasalud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,6 +31,7 @@ public class Usuario implements UserDetails {
     @Column(name="email", length = 150, nullable = false)
     private String email;
 
+    @JsonIgnore
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     @Pattern(

@@ -1,5 +1,6 @@
 package com.grupo2.clinicasalud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -36,9 +37,11 @@ public class Especialidad {
     @Size(max=20)
     private String color;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "especialidades", fetch = FetchType.LAZY)
     private Set<Medico> medicos;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "especialidad")
     private List<Cita> citas;
 

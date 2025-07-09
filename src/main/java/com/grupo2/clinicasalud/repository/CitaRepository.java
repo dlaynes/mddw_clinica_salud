@@ -14,6 +14,8 @@ import java.util.Optional;
 
 public interface CitaRepository extends JpaRepository<Cita, Long> {
 
+    Optional<Cita> findOneByIdAndEstadoCita(Long citaId, EstadoCita estadoCita);
+
     List<Cita> findByMedicoIdOrderByFechaHoraDesc(Long medicoId);
 
     List<Cita> findByPacienteIdOrderByFechaHoraDesc(Long pacienteId);

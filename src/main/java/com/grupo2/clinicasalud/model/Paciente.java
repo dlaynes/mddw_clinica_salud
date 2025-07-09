@@ -1,6 +1,6 @@
 package com.grupo2.clinicasalud.model;
 
-import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo2.clinicasalud.model.converter.EstadoCivilAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.GeneroAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.TipoDocumentoAttributeConverter;
@@ -9,8 +9,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +56,7 @@ public class Paciente {
 
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;
 
     @NotNull(message = "El género es obligatorio")
@@ -68,9 +69,11 @@ public class Paciente {
     @Convert(converter = EstadoCivilAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
     private List<Cita> citas;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "paciente")
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;

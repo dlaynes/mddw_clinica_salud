@@ -102,7 +102,7 @@
     <div class="form-container">
 
         <h3 class="text-center mb-4"><i class="bi bi-person-plus me-2"></i>Cita creada satisfactoriamente</h3>
-
+        <!-- En la vida real, también se le envía un correo electrónico al usuario con sus datos de acceso -->
         <div class="mb-4">
             <div class="alert alert-info">
                 Hemos recibido su solicitud, y le hemos creado una cuenta de usuario, con la cual podrá verificar el momento en el que su pedido será atendido
@@ -111,12 +111,13 @@
                 <b>Usuario: </b><span class="text-danger" th:text="${registroEmail}">--</span><br />
                 <b>Contraseña: </b><span class="text-danger" th:text="${registroPassword}">--</span>
             </p>
-            Es <strong>importante</strong> que guarde y conserve estos datos para revisar el momento en el que la cita sea confirmada.
+            Es <strong>importante</strong> que guarde y conserve estos datos para revisar el momento en el que la cita sea confirmada. No cierre esta página hasta que haya podido copiar la información.
             <br />Al finalizar, haga clic en el botón de iniciar sesión.
         </div>
 
         <div class="d-grid gap-2">
-            <a th:href="@{/auth/login}" class="btn btn-primary">
+            <!-- Agregamos target _blank, para que se abra una ventana nueva y no se pierdan los datos temporales -->
+            <a th:href="@{/auth/login}" class="btn btn-primary" target="_blank">
                 Iniciar sesión
             </a>
         </div>

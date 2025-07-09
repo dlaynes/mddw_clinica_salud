@@ -1,5 +1,6 @@
 package com.grupo2.clinicasalud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo2.clinicasalud.validator.coordinates.CoordinatesConstraint;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -44,6 +45,7 @@ public class Consultorio {
     @Column(name = "longitud", precision = 11, scale=2)
     private BigDecimal longitud;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "consultorio")
     private List<Cita> citas;
 

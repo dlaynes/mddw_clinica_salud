@@ -74,6 +74,11 @@
         </div>
 
         <div class="mb-3">
+            <strong class="form-label">Motivo: </strong>
+            <span th:text="${cita.motivo}">--</span>
+        </div>
+
+        <div class="mb-3">
             <strong class="form-label">Estado: </strong>
             <span th:text="${cita.estadoCita}">--</span>
         </div>
@@ -84,6 +89,13 @@
         </div>
 
         <a th:href="@{/dashboard/admin/citas}" class="btn btn-secondary">Volver</a>
+        &nbsp;
+        <a th:href="@{/dashboard/admin/citas/asignar/{id}(id=${cita.id})}" class="btn btn-sm btn-warning"
+           th:if="${cita.estadoCita.name() == 'registrada'}">Asignar</a>
+        &nbsp;
+        <a th:href="@{/dashboard/admin/citas/rechazar/{id}(id=${cita.id})}" class="btn btn-sm btn-danger"
+           th:if="${cita.estadoCita.name() == 'registrada'}" onclick="return confirm('¿Está seguro de que desea rechazar la cita?')">Rechazar</a>
+
     </div>
 </div>
 <!-- Footer -->

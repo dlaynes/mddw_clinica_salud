@@ -1,5 +1,6 @@
 package com.grupo2.clinicasalud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.EstadoCivilAttributeConverter;
 import com.grupo2.clinicasalud.model.converter.GeneroAttributeConverter;
@@ -67,6 +68,7 @@ public class Medico {
     @Convert(converter = EstadoCivilAttributeConverter.class)
     private EstadoCivil estadoCivil;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "medico")
     private List<Cita> citas;
 
@@ -78,6 +80,7 @@ public class Medico {
     )
     private Set<Especialidad> especialidades;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "medico")
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;

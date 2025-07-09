@@ -76,7 +76,17 @@
                 <td th:text="${cita.estadoCita}"></td>
                 <td th:text="${#dates.format(cita.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></td>
                 <td>
-                    <a th:href="@{/dashboard/admin/citas/ver/{id}(id=${cita.id})}" class="btn btn-sm btn-warning">Ver</a>
+                    <a th:href="@{/dashboard/admin/citas/ver/{id}(id=${cita.id})}" class="btn btn-sm btn-info">Ver</a>
+                    <a th:href="@{/dashboard/admin/citas/asignar/{id}(id=${cita.id})}" class="btn btn-sm btn-warning"
+                        th:if="${cita.estadoCita.name() == 'registrada'}">Asignar</a>
+                    <a th:href="@{/dashboard/admin/citas/rechazar/{id}(id=${cita.id})}" class="btn btn-sm btn-danger"
+                       th:if="${cita.estadoCita.name() == 'registrada'}" onclick="return confirm('¿Está seguro de que desea rechazar la cita?')">Rechazar</a>
+
+                    <a th:href="@{/dashboard/admin/citas/enEspera/{id}(id=${cita.id})}" class="btn btn-sm btn-success"
+                       th:if="${cita.estadoCita.name() == 'programada'}">En consultorio</a>
+                    <a th:href="@{/dashboard/admin/citas/cancelar/{id}(id=${cita.id})}" class="btn btn-sm btn-warning"
+                       th:if="${cita.estadoCita.name() == 'programada' || cita.estadoCita().name() == 'enEspera'}"
+                       onclick="return confirm('¿Está seguro de que desea cancelar la cita?')">Cancelar</a>
                 </td>
             </tr>
             </tbody>

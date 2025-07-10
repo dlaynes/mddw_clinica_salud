@@ -33,4 +33,16 @@ public enum EstadoCita {
         };
     };
 
+    public String toBootstrapColor(){
+        return switch (this) {
+            case registrada -> "secondary";
+            case rechazada -> "warning";
+            case programada -> "info";
+            case cancelada -> "danger";
+            case enEspera -> "success";
+            case completada -> "primary";
+            default -> "light";
+        };
+    }
+
 }

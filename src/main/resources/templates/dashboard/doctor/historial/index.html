@@ -82,7 +82,7 @@
                 <td th:text="${hist.especialidad.nombre}"></td>
                 <td th:text="${#strings.abbreviate(hist.notas, 20)}"></td>
                 <td>
-                    <a th:href="@{/dashboard/doctor/historial/ver/{id}(id=${hist.id})}" class="btn btn-sm btn-info">Ver</a>
+                    <a th:href="@{/dashboard/doctor/historial/ver/{id}(id=${hist.id})}" class="btn btn-sm btn-dark">Ver</a>
                 </td>
             </tr>
             </tbody>

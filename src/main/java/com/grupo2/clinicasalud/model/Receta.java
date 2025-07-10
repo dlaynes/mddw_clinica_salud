@@ -18,8 +18,8 @@ public class Receta {
     HistorialMedico historialMedico;
 
     @NotBlank(message = "El medicamento es obligatorio")
-    @Size(min = 5, max = 150, message = "El medicamento debe tener entre 5 y 150 caracteres")
-    @Column(name = "tratamiento", length = 150)
+    @Size(min = 2, max = 150, message = "El medicamento debe tener entre 2 y 150 caracteres")
+    @Column(name = "medicamento", length = 150)
     private String medicamento;
 
     @NotBlank(message = "La dosis es obligatoria")
@@ -35,15 +35,6 @@ public class Receta {
     @Size(min = 5, max = 2000, message = "Las instrucciones deben tener entre 2 y 2000 caracteres")
     @Column(name = "instrucciones", columnDefinition = "TEXT")
     private String instrucciones;
-
-    public Receta(long id, HistorialMedico historialMedico, String medicamento, String dosis, String duracion, String instrucciones) {
-        this.id = id;
-        this.historialMedico = historialMedico;
-        this.medicamento = medicamento;
-        this.dosis = dosis;
-        this.duracion = duracion;
-        this.instrucciones = instrucciones;
-    }
 
     public Receta(){
 

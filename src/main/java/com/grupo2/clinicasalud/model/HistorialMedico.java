@@ -55,6 +55,10 @@ public class HistorialMedico {
     @OneToMany(mappedBy = "historialMedico", fetch = FetchType.LAZY)
     private List<Receta> recetas;
 
+    @Column(name="fecha_registro")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaRegistro;
+
     public long getId() {
         return id;
     }
@@ -141,5 +145,13 @@ public class HistorialMedico {
 
     public void setCita(Cita cita) {
         this.cita = cita;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 }

@@ -68,7 +68,7 @@
                 <td th:text="${#strings.abbreviate(consulta.comentario, 10)}"></td>
                 <td th:text="${consulta.fechaCreacion}"></td>
                 <td>
-                    <a th:href="@{/dashboard/admin/consultas/ver/{id}(id=${consulta.id})}" class="btn btn-sm btn-warning">Ver</a>
+                    <a th:href="@{/dashboard/admin/consultas/ver/{id}(id=${consulta.id})}" class="btn btn-sm btn-dark">Ver</a>
                  </td>
             </tr>
             </tbody>

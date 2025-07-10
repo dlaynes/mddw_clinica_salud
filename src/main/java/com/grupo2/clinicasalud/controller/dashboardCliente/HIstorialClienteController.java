@@ -56,7 +56,7 @@ public class HIstorialClienteController {
             return "redirect:/dashboard/index";
         }
         model.addAttribute("historial", historialMedicoOptional.get());
-
+        model.addAttribute("recetasList", recetaRepository.findByHistorialMedicoId(id));
         return "dashboard/cliente/historial/ver";
     }
 

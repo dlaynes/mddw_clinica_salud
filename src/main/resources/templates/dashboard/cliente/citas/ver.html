@@ -76,7 +76,7 @@
 
         <div class="mb-3">
             <strong class="form-label">Estado: </strong>
-            <span th:text="${cita.estadoCita}">--</span>
+            <span class="text" th:classappend="${'text-'+cita.estadoCita.toBootstrapColor()}" th:text="${cita.estadoCita}">--</span>
         </div>
 
         <div class="mb-3">

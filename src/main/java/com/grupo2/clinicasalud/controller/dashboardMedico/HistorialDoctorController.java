@@ -57,12 +57,32 @@ public class HistorialDoctorController {
             return "redirect:/dashboard/index";
         }
         model.addAttribute("historial", historialMedicoOptional.get());
-
+        model.addAttribute("recetasList", recetaRepository.findByHistorialMedicoId(id));
         return "dashboard/doctor/historial/ver";
     }
 
+    @GetMapping("/ver/{id}/receta")
+    public String receta(@PathVariable(name = "id") Long historialMedicoId, Model model){
+        Medico medico = detalleUsuarioService.getMedicoActual();
+        if(medico == null){
+            System.out.println("ERROR MEDICO no encontrado");
+            return "redirect:/dashboard/index";
+        }
+
+        Optional<HistorialMedico> historialMedicoOptional = historialMedicoRepository.findOneByIdAndMedicoId(historialMedicoId, medico.getId());
+        if(historialMedicoOptional.isEmpty()){
+            return "redirect:/dashboard/index";
+        }
+        Receta receta = new Receta();
+
+        model.addAttribute("receta", receta);
+        model.addAttribute("historial", historialMedicoOptional.get());
+        return "dashboard/doctor/historial/receta";
+    }
+
+
     @GetMapping("/ver/{id}/receta/{recetaId}")
-    public String receta(@PathVariable(name = "id") Long historialMedicoId, @PathVariable(name = "recetaId", required = false) Long recetaId, Model model){
+    public String receta(@PathVariable(name = "id") Long historialMedicoId, @PathVariable(name = "recetaId") Long recetaId, Model model){
         Medico medico = detalleUsuarioService.getMedicoActual();
         if(medico == null){
             System.out.println("ERROR MEDICO no encontrado");
@@ -74,25 +94,20 @@ public class HistorialDoctorController {
             return "redirect:/dashboard/index";
         }
         Receta receta;
-        if(recetaId != null){
-            Optional<Receta> recetaOptional = recetaRepository.findOneByIdAndHistorialMedicoId(recetaId, historialMedicoId);
-            if(recetaOptional.isEmpty()){
-                return "redirect:/dashboard/index";
-            }
-            receta = recetaOptional.get();
-        } else {
-            receta = new Receta();
+        Optional<Receta> recetaOptional = recetaRepository.findOneByIdAndHistorialMedicoId(recetaId, historialMedicoId);
+        if(recetaOptional.isEmpty()){
+            return "redirect:/dashboard/index";
         }
+        receta = recetaOptional.get();
 
         model.addAttribute("receta", receta);
         model.addAttribute("historial", historialMedicoOptional.get());
         return "dashboard/doctor/historial/receta";
     }
 
-    @PostMapping("/ver/{id}/receta/{recetaId}")
+    @PostMapping("/ver/{id}/receta")
     public String guardarReceta(
             @PathVariable(name = "id") Long historialMedicoId,
-            @PathVariable(name = "recetaId", required = false) Long recetaId,
             @Valid @ModelAttribute("receta") Receta receta,
             BindingResult result,
             RedirectAttributes attributes,

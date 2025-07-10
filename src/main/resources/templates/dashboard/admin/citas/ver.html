@@ -80,7 +80,7 @@
 
         <div class="mb-3">
             <strong class="form-label">Estado: </strong>
-            <span th:text="${cita.estadoCita}">--</span>
+            <span th:text="${cita.estadoCita}" class="text" th:classappend="${'text-'+cita.estadoCita.toBootstrapColor()}"></span>
         </div>
 
         <div class="mb-3">

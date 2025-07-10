@@ -31,6 +31,10 @@ public class HistorialMedico {
     @JoinColumn(name="servicio_id")
     private Servicio servicio;
 
+    @OneToOne()
+    @JoinColumn(name="cita_id")
+    private Cita cita;
+
     @Column(name = "fecha_consulta")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Temporal(TemporalType.TIMESTAMP)
@@ -129,5 +133,13 @@ public class HistorialMedico {
 
     public void setNotas(String notas) {
         this.notas = notas;
+    }
+
+    public Cita getCita() {
+        return cita;
+    }
+
+    public void setCita(Cita cita) {
+        this.cita = cita;
     }
 }

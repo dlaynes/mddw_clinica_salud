@@ -76,7 +76,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label" for="fechaConsulta">Fecha término de la consulta</label>
+            <label class="form-label" for="fechaConsulta">Fecha real de la consulta</label>
             <input type="datetime-local" id="fechaConsulta" th:field="*{fechaConsulta}" class="form-control" required>
             <small th:if="${#fields.hasErrors('fechaConsulta')}" th:errorclass="text-danger" th:errors="*{fechaConsulta}"></small>
         </div>

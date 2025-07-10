@@ -54,7 +54,7 @@
     </div>
 
     <form th:action="@{/dashboard/admin/usuarios/editar}" th:object="${usuarioForm}" method="post">
-        <input type="hidden" id="id" name="id" th:value="${usuarioId}" />
+        <input type="hidden" id="id" th:field="*{id}" />
 
         <div class="mb-3">
             <label class="form-label">Email</label>

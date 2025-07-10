@@ -128,13 +128,13 @@ public class CitasDoctorController {
         historialMedico.setEspecialidad(cita.getEspecialidad());
         historialMedico.setMedico(medico);
         historialMedico.setPaciente(cita.getPaciente());
+        historialMedico.setCita(cita);
         historialMedicoRepository.save(historialMedico);
+        cita.setHistorialMedico(historialMedico);
         cita.setEstadoCita(EstadoCita.completada);
         citaRepository.save(cita);
         attributes.addFlashAttribute("crearHistorial", "Fue creado el historial médico con éxito");
-        // return "redirect:/dashboard/doctor/historial/" + historialMedico.getId();
-        return "redirect:/dashboard/doctor/citas";
+        return "redirect:/dashboard/doctor/historial/ver/" + historialMedico.getId();
     }
-
 
 }

@@ -27,7 +27,7 @@ public class UsuarioTransaction {
 
         Long usuarioFormId = usuarioForm.getId();
         Usuario usuario = new Usuario();
-        if(usuarioFormId != null){
+        if(usuarioFormId != null && usuarioFormId != 0){
             usuario.setId(usuarioFormId);
         }
         usuario.setEmail(usuarioForm.getEmail());

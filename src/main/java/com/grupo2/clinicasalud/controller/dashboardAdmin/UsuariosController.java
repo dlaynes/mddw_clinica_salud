@@ -65,10 +65,10 @@ public class UsuariosController {
         Usuario usuario = usuarioOpt.get();
 
         UsuarioForm usuarioForm = new UsuarioForm();
+        usuarioForm.setId(usuario.getId());
         usuarioForm.setEmail(usuario.getEmail());
         usuarioForm.setRoles(usuario.getRoles());
 
-        model.addAttribute("usuarioId", id);
         model.addAttribute("roles", rolRepository.findAll());
         model.addAttribute("usuarioForm", usuarioForm);
 
@@ -86,7 +86,7 @@ public class UsuariosController {
 
         // evitar que 2 usuarios compartan el mismo email
         Optional<Usuario> usuarioAnt = usuarioRepository.findByEmail(usuarioForm.getEmail());
-        if(!usuarioAnt.isEmpty()){
+        if(usuarioAnt.isPresent()){
             Long id = usuarioForm.getId();
             if(id == null || (usuarioAnt.get().getId() != id)){
                 model.addAttribute("errorUsuario", "Ya existe un usuario con el mismo e-mail");
@@ -98,7 +98,12 @@ public class UsuariosController {
         }
 
         try {
+            // Debido a que las tablas Medico y Paciente guardan la misma información
+            // y otros roles no participan, se producen procesos repetitivos e inconexos dentro de este servicio
+            // Lo ideal hubiese sido crear una tabla Perfil, o guardar la información de Usuario
+            // en la tabla ya existente
             usuarioTransaction.guardarUsuario(usuarioForm, passwordEncoder, usuarioRepository, pacienteRepository, medicoRepository);
+
             redirectAttributes.addFlashAttribute("success", "Se han guardado los datos del usuario");
         } catch(Exception e){
             System.out.println("ERROR USUARIO: " + e.getMessage());

@@ -52,6 +52,11 @@ public class Cita {
     @Size(max=2000)
     private String motivo;
 
+    @JsonIgnore
+    @OneToOne()
+    @JoinColumn(name="historial_id")
+    private HistorialMedico historialMedico;
+
     @Column(name="fecha_registro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
@@ -130,5 +135,13 @@ public class Cita {
 
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public HistorialMedico getHistorialMedico() {
+        return historialMedico;
+    }
+
+    public void setHistorialMedico(HistorialMedico historialMedico) {
+        this.historialMedico = historialMedico;
     }
 }

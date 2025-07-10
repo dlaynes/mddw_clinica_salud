@@ -104,7 +104,7 @@
         <a th:href="@{/dashboard/admin/citas/asignar/{id}(id=${cita.id})}" class="btn btn-sm btn-warning"
            th:if="${cita.estadoCita.name() == 'registrada'}">Asignar</a>
         &nbsp;
-        <a th:href="@{/dashboard/admin/citas/enEspera/{id}(id=${cita.id})}" class="btn btn-sm btn-warning"
+        <a th:href="@{/dashboard/admin/citas/enEspera/{id}(id=${cita.id})}" class="btn btn-sm btn-success"
            th:if="${cita.estadoCita.name() == 'programada'}">En espera</a>
         &nbsp;
         <a th:href="@{/dashboard/admin/citas/rechazar/{id}(id=${cita.id})}" class="btn btn-sm btn-danger"

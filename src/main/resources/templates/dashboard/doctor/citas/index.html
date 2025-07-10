@@ -75,7 +75,7 @@
                 <td th:text="${cita.id}"></td>
                 <td th:text="${cita.paciente} ? ${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido} : '--'"></td>
                 <td th:text="${cita.motivo}"></td>
-                <td th:text="${#dates.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
                 <td><span th:text="${cita.estadoCita}" class="text" th:classappend="${'text-'+cita.estadoCita.toBootstrapColor()}"></span></td>
                 <td>
                     <a th:href="@{/dashboard/doctor/citas/ver/{id}(id=${cita.id})}" class="btn btn-sm btn-dark">Ver</a>

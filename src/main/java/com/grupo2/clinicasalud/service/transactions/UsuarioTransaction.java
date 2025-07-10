@@ -28,13 +28,13 @@ public class UsuarioTransaction {
 
     @Transactional
     public void guardarUsuario(UsuarioForm usuarioForm,
+                               Usuario usuario,
                                PasswordEncoder passwordEncoder,
                                UsuarioRepository usuarioRepository,
                                PacienteRepository pacienteRepository,
                                MedicoRepository medicoRepository){
 
         Long usuarioFormId = usuarioForm.getId();
-        Usuario usuario = new Usuario();
         if(usuarioFormId != null && usuarioFormId != 0){
             usuario.setId(usuarioFormId);
         }

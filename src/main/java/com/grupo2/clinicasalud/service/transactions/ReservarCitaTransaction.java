@@ -77,9 +77,7 @@ public class ReservarCitaTransaction {
         cita.setMotivo(reservaCitaForm.getMotivo());
         LocalDate localDate = LocalDate.parse(reservaCitaForm.getFecha());
         LocalTime localTime = LocalTime.parse(reservaCitaForm.getHora());
-        Instant instant = localTime.atDate(localDate)
-                .atZone(ZoneId.systemDefault()).toInstant();
-        cita.setFechaHora(LocalDateTime.from(instant));
+        cita.setFechaHora(LocalDateTime.of(localDate, localTime));
         cita.setPaciente(paciente);
         cita.setConsultorio(consultorioOptional.get());
         cita.setFechaRegistro(LocalDateTime.now());

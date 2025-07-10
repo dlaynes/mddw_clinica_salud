@@ -58,7 +58,7 @@ public class HistorialMedico {
 
     @Column(name="fecha_registro")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
 
     public long getId() {
         return id;
@@ -148,11 +148,11 @@ public class HistorialMedico {
         this.cita = cita;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 }

@@ -75,7 +75,7 @@
 
         <div class="mb-3">
             <strong class="form-label">Fecha y hora: </strong>
-            <span th:text="${cita.fechaHora}">--</span>
+            <span th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}">--</span>
         </div>
 
         <div class="mb-3">
@@ -89,8 +89,8 @@
         </div>
 
         <div class="mb-3">
-            <strong class="form-label">Fecha de creación: </strong>
-            <span th:text="${cita.fechaRegistro}">--</span>
+            <strong class="form-label">Fecha de registro: </strong>
+            <span th:text="${#temporals.format(cita.fechaRegistro, 'dd/MM/yyyy HH:mm')}">--</span>
         </div>
 
         <a th:href="@{/dashboard/cliente/citas}" class="btn btn-secondary">Volver</a>

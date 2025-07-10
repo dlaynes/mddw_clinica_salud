@@ -85,16 +85,21 @@ public class UsuariosController {
         }
 
         // evitar que 2 usuarios compartan el mismo email
+        Usuario usuario;
         Optional<Usuario> usuarioAnt = usuarioRepository.findByEmail(usuarioForm.getEmail());
         if(usuarioAnt.isPresent()){
             Long id = usuarioForm.getId();
-            if(id == null || (usuarioAnt.get().getId() != id)){
+
+            usuario = usuarioAnt.get();
+            if(id == null || (usuario.getId() != id)){
                 model.addAttribute("errorUsuario", "Ya existe un usuario con el mismo e-mail");
                 model.addAttribute("usuarioId", usuarioForm.getId());
                 model.addAttribute("roles", rolRepository.findAll());
                 model.addAttribute("usuarioForm", usuarioForm);
                 return "dashboard/admin/usuarios/editar";
             }
+        } else {
+            usuario = new Usuario();
         }
 
         try {
@@ -102,7 +107,7 @@ public class UsuariosController {
             // y otros roles no participan, se producen procesos repetitivos e inconexos dentro de este servicio
             // Lo ideal hubiese sido crear una tabla Perfil, o guardar la información de Usuario
             // en la tabla ya existente
-            usuarioTransaction.guardarUsuario(usuarioForm, passwordEncoder, usuarioRepository, pacienteRepository, medicoRepository);
+            usuarioTransaction.guardarUsuario(usuarioForm, usuario, passwordEncoder, usuarioRepository, pacienteRepository, medicoRepository);
 
             redirectAttributes.addFlashAttribute("success", "Se han guardado los datos del usuario");
         } catch(Exception e){

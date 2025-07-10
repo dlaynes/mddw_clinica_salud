@@ -47,6 +47,12 @@
     <h2>Historial Médico de mis pacientes</h2>
 
     <div class="table-responsive">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${crearHistorial}">
+            <i class="bi bi-check-circle me-2"></i>
+            Se ha creado el historial satisfactoriamente. A continuación agregue recetas al registro.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de aviso"></button>
+        </div>
+
         <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${recetaSuccess}">
             <i class="bi bi-check-circle me-2"></i>
             La receta ha sido guardada exitosamente
@@ -102,7 +108,7 @@
                         <span th:text="${historial.fechaRegistro}">--</span>
                     </div>
 
-                    <a th:href="@{/dashboard/doctor/historial}" class="btn btn-primary mb-3">Volver</a>
+                    <a th:href="@{/dashboard/doctor/historial}" class="btn btn-primary mb-3">Volver al listado de historiales</a>
 
                 </div>
             </div>

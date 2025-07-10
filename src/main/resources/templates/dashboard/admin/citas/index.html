@@ -88,9 +88,9 @@
                 <td th:text="${cita.paciente} ? ${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido} : '--'"></td>
                 <td th:text="${cita.medico} ? 'Dr. ' + ${cita.medico.nombre} + ' ' + ${cita.medico.apellido} : '--'"></td>
                 <td th:text="${cita.especialidad.nombre}"></td>
-                <td th:text="${#dates.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(cita.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
                 <td><span th:text="${cita.estadoCita}" class="text" th:classappend="${'text-'+cita.estadoCita.toBootstrapColor()}"></span></td>
-                <td th:text="${#dates.format(cita.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(cita.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></td>
                 <td>
                     <a th:href="@{/dashboard/admin/citas/ver/{id}(id=${cita.id})}" class="btn btn-sm btn-dark">Ver</a>
                     <a th:href="@{/dashboard/admin/citas/asignar/{id}(id=${cita.id})}" class="btn btn-sm btn-info"

@@ -68,31 +68,31 @@
 
         <div class="mb-3">
             <label class="form-label" for="nombre">Nombre</label>
-            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required>
+            <input type="text" id="nombre" th:field="*{nombre}" class="form-control">
             <small th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger" th:errors="*{nombre}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label" for="apellido">Apellido</label>
-            <input type="text" id="apellido" th:field="*{apellido}" class="form-control" required>
+            <input type="text" id="apellido" th:field="*{apellido}" class="form-control">
             <small th:if="${#fields.hasErrors('apellido')}" th:errorclass="text-danger" th:errors="*{apellido}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" th:field="*{email}" class="form-control" required>
+            <input type="email" th:field="*{email}" class="form-control">
             <small th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="*{email}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label" for="telefono">Teléfono</label>
-            <input type="text" id="telefono" th:field="*{telefono}" class="form-control" required>
+            <input type="text" id="telefono" th:field="*{telefono}" class="form-control">
             <small th:if="${#fields.hasErrors('telefono')}" th:errorclass="text-danger" th:errors="*{telefono}"></small>
         </div>
 
         <div class="mb-3">
             <label for="estadoCivil" class="form-label">Estado Civil</label>
-            <select id="estadoCivil" th:field="*{estadoCivil}" class="form-control" required>
+            <select id="estadoCivil" th:field="*{estadoCivil}" class="form-control">
                 <option value="">Seleccione un estado Civil</option>
                 <option th:each="estCiv : ${estadosCiviles}" th:value="${estCiv.name()}" th:text="${estCiv.toText()}"></option>
             </select>
@@ -101,7 +101,7 @@
 
         <div class="mb-3">
             <label for="genero" class="form-label">Género</label>
-            <select id="genero" th:field="*{genero}" class="form-control" required>
+            <select id="genero" th:field="*{genero}" class="form-control">
                 <option value="">Seleccione un género</option>
                 <option th:each="gen : ${generos}" th:value="${gen.name()}" th:text="${gen.toText()}"></option>
             </select>
@@ -110,7 +110,7 @@
 
         <div class="mb-3">
             <label for="tipoDocumento" class="form-label">Tipo de documento</label>
-            <select id="tipoDocumento" th:field="*{tipoDocumento}" class="form-control" required>
+            <select id="tipoDocumento" th:field="*{tipoDocumento}" class="form-control">
                 <option value="">Seleccione un tipo de documento</option>
                 <option th:each="tipDoc : ${tiposDocumento}" th:value="${tipDoc.name()}" th:text="${tipDoc.toText()}"></option>
             </select>
@@ -119,7 +119,7 @@
 
         <div class="mb-3">
             <label class="form-label" for="numeroDocumento">Número de documento</label>
-            <input type="text" id="numeroDocumento" th:field="*{numeroDocumento}" class="form-control" required>
+            <input type="text" id="numeroDocumento" th:field="*{numeroDocumento}" class="form-control">
             <small th:if="${#fields.hasErrors('numeroDocumento')}" th:errorclass="text-danger" th:errors="*{numeroDocumento}"></small>
         </div>
 

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -78,6 +79,32 @@ public class CitasClienteController {
         Cita cita =  citaOpt.get();
         model.addAttribute("cita", cita);
         return "dashboard/cliente/citas/ticket";
+    }
+
+    // Un cliente no puede cancelar citas En espera, para evitar problemas
+    // con la logística del hospital
+    @GetMapping("/cancelar/{id}")
+    public String cancelar(@PathVariable Long id, RedirectAttributes attributes){
+        Paciente paciente = detalleUsuarioService.getPacienteActual();
+        if(paciente == null){
+            System.out.println("USUARIO PACIENTE NO ENCONTRADO");
+            return "redirect:/dashboard/index";
+        }
+
+        Optional<Cita> citaOpt = citaRepository.findOneByIdAndEstadoCita(id, EstadoCita.programada);
+        if(citaOpt.isEmpty()){
+            return "redirect:/dashboard/cliente/citas";
+        }
+        Cita cita = citaOpt.get();
+        if(cita.getPaciente().getId() != paciente.getId()){
+            return "redirect:/dashboard/cliente/citas";
+        }
+
+        cita.setEstadoCita(EstadoCita.cancelada);
+        citaRepository.save(cita);
+
+        attributes.addFlashAttribute("cancelarSuccess", "Se canceló la cita");
+        return "redirect:/dashboard/cliente/citas";
     }
 
     @GetMapping("/agenda")

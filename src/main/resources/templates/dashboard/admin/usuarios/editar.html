@@ -64,19 +64,19 @@
 
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" th:field="*{email}" class="form-control" required>
+            <input type="email" th:field="*{email}" class="form-control">
             <small th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="*{email}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label" for="password">Contraseña</label>
-            <input type="password" id="password" th:field="*{password}" class="form-control" required>
+            <input type="password" id="password" th:field="*{password}" class="form-control">
             <small th:if="${#fields.hasErrors('password')}" th:errorclass="text-danger" th:errors="*{password}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label" for="passwordConfirm">Confirmar Contraseña</label>
-            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control" required>
+            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control">
             <small th:if="${#fields.hasErrors('passwordConfirm')}" th:errorclass="text-danger" th:errors="*{passwordConfirm}"></small>
         </div>
 

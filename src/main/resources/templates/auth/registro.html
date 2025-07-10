@@ -115,7 +115,7 @@
                 </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                    <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                    <input type="email" class="form-control" id="email" th:field="*{email}">
                 </div>
                 <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mt-2"></div>
             </div>
@@ -126,7 +126,7 @@
                 </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Mínimo 8 caracteres, mayúsculas y minúsculas, un número y un carácter especial" required>
+                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Mínimo 8 caracteres, mayúsculas y minúsculas, un número y un carácter especial">
                     <button class="btn btn-outline-secondary" type="button" id="togglePassword" title="Mostrar/ocultar contraseña">
                         <i class="bi bi-eye" id="toggleIcon"></i>
                     </button>
@@ -140,7 +140,7 @@
                 </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                    <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}" placeholder="Repite la contraseña" required>
+                    <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}" placeholder="Repite la contraseña">
                 </div>
                 <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="text-danger mt-2"></div>
             </div>
@@ -156,7 +156,7 @@
                 </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
                 </div>
                 <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger mt-2"></div>
             </div>
@@ -167,7 +167,7 @@
                 </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-people"></i></span>
-                    <input type="text" class="form-control" id="apellidos" th:field="*{apellidos}" required>
+                    <input type="text" class="form-control" id="apellidos" th:field="*{apellidos}">
                 </div>
                 <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="text-danger mt-2"></div>
             </div>
@@ -178,7 +178,7 @@
                 </label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                    <input type="text" class="form-control" id="telefono" th:field="*{telefono}" required>
+                    <input type="text" class="form-control" id="telefono" th:field="*{telefono}">
                 </div>
                 <div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-danger mt-2"></div>
             </div>

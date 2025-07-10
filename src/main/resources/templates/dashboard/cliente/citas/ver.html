@@ -97,7 +97,10 @@
         &nbsp;
         <a th:href="@{/dashboard/cliente/citas/ticket/{id}(id=${cita.id})}" class="btn btn-sm btn-secondary"
            th:if="${cita.estadoCita.name() == 'programada'}" target="_blank">Ver ticket</a>
-
+        &nbsp;
+        <a th:href="@{/dashboard/cliente/citas/cancelar/{id}(id=${cita.id})}" class="btn btn-sm btn-danger"
+           onclick="return confirm('¿Está seguro de que desea cancelar la cita?')"
+           th:if="${cita.estadoCita.name() == 'programada'}" target="_blank">Cancelar cita</a>
     </div>
 </div>
 <!-- Footer -->

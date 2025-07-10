@@ -118,22 +118,22 @@
             <!-- Columna izquierda -->
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required th:field="*{nombre}">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre" th:field="*{nombre}">
                     <label for="nombre">Nombres</label>
                     <small th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger" th:errors="*{nombre}"></small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ingresa tu apellido" required th:field="*{apellidos}">
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ingresa tu apellido" th:field="*{apellidos}">
                     <label for="apellidos">Apellidos</label>
                     <small th:if="${#fields.hasErrors('apellidos')}" th:errorclass="text-danger" th:errors="*{apellidos}"></small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu email" required th:field="*{email}">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu email" th:field="*{email}">
                     <label for="email">Correo Electrónico</label>
                     <small th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="*{email}"></small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu número de teléfono" required th:field="*{telefono}">
+                    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu número de teléfono" th:field="*{telefono}">
                     <label for="telefono">Teléfono</label>
                     <small th:if="${#fields.hasErrors('telefono')}" th:errorclass="text-danger" th:errors="*{telefono}"></small>
                 </div>
@@ -142,7 +142,7 @@
             <!-- Columna derecha -->
             <div class="col-md-6">
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="especialidad_id" name="especialidad_id" required th:field="*{especialidad_id}">
+                    <select class="form-select" id="especialidad_id" name="especialidad_id" th:field="*{especialidad_id}">
                         <option value="" disabled selected>Seleccione una especialidad</option>
                         <option th:each="especialidad : ${especialidades}" th:value="${especialidad.id}" th:text="${especialidad.nombre}"></option>
                     </select>
@@ -150,12 +150,12 @@
                     <small th:if="${#fields.hasErrors('especialidad_id')}" th:errorclass="text-danger" th:errors="*{especialidad_id}"></small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="fecha" name="fecha" required th:field="*{fecha}">
+                    <input type="date" class="form-control" id="fecha" name="fecha" th:field="*{fecha}">
                     <label for="fecha">Fecha preferida de la Cita</label>
                     <small th:if="${#fields.hasErrors('fecha')}" th:errorclass="text-danger" th:errors="*{fecha}"></small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="time" class="form-control" id="hora" name="hora" required th:field="*{hora}">
+                    <input type="time" class="form-control" id="hora" name="hora" th:field="*{hora}">
                     <label for="hora">Hora preferida de la Cita</label>
                     <small th:if="${#fields.hasErrors('hora')}" th:errorclass="text-danger" th:errors="*{hora}"></small>
                 </div>

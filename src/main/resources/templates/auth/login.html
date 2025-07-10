@@ -137,7 +137,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-person text-muted"></i>
                     </span>
-                    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Ingresa tu correo electrónico" required autofocus /><br />
+                    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Ingresa tu correo electrónico" autofocus /><br />
                     <small th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="*{email}"></small>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-lock text-muted"></i>
                     </span>
-                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Ingresa tu contraseña" required />
+                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Ingresa tu contraseña" />
                     <button class="btn btn-outline-secondary" type="button" id="togglePassword" title="Mostrar/ocultar contraseña">
                         <i class="bi bi-eye" id="toggleIcon"></i>
                     </button><br />

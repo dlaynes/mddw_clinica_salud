@@ -104,9 +104,10 @@ public class UsuariosController {
 
         try {
             // Debido a que las tablas Medico y Paciente guardan la misma información
-            // y otros roles no participan, se producen procesos repetitivos e inconexos dentro de este servicio
+            // y otros roles no participan, se producen procesos repetitivos e inconexos dentro de este servicio/método
             // Lo ideal hubiese sido crear una tabla Perfil, o guardar la información de Usuario
-            // en la tabla ya existente
+            // en su propia tabla, omitiendo las tablas de pacientes y médicos.
+            // Pero esas soluciones involucran escribir consultas con JOINs para pedir algunos datos del portal
             usuarioTransaction.guardarUsuario(usuarioForm, usuario, passwordEncoder, usuarioRepository, pacienteRepository, medicoRepository);
 
             redirectAttributes.addFlashAttribute("success", "Se han guardado los datos del usuario");

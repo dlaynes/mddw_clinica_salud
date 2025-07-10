@@ -59,13 +59,13 @@
 
         <div class="mb-3">
             <label class="form-label">Nombre</label>
-            <input type="text" th:field="*{nombre}" class="form-control" required>
+            <input type="text" th:field="*{nombre}" class="form-control">
             <small th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger" th:errors="*{nombre}"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Slug (etiqueta)</label>
-            <input type="text" th:field="*{slug}" class="form-control" required>
+            <input type="text" th:field="*{slug}" class="form-control">
             <small th:if="${#fields.hasErrors('slug')}" th:errorclass="text-danger" th:errors="*{slug}"></small>
         </div>
 

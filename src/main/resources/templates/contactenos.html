@@ -113,12 +113,12 @@
         <div class="row g-4">
             <div class="col-md-12">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="nombreCompleto" placeholder="Ingresa tu nombre" required th:field="*{nombreCompleto}">
+                    <input type="text" class="form-control" id="nombreCompleto" placeholder="Ingresa tu nombre" th:field="*{nombreCompleto}">
                     <label for="nombreCompleto">Nombre Completo *</label>
                     <small th:if="${#fields.hasErrors('nombreCompleto')}" th:errorclass="text-danger" th:errors="*{nombreCompleto}"></small>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu email" required th:field="*{email}">
+                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu email"  th:field="*{email}">
                     <label for="email">Correo Electrónico *</label>
                     <small th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="*{email}"></small>
                 </div>

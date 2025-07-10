@@ -103,19 +103,19 @@
 
                     <div class="mb-3">
                         <label class="form-label">Medicamento</label>
-                        <input type="text" th:field="*{medicamento}" class="form-control" required>
+                        <input type="text" th:field="*{medicamento}" class="form-control">
                         <small th:if="${#fields.hasErrors('medicamento')}" th:errorclass="text-danger" th:errors="*{medicamento}"></small>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Dosis</label>
-                        <input type="text" th:field="*{dosis}" class="form-control" required>
+                        <input type="text" th:field="*{dosis}" class="form-control">
                         <small th:if="${#fields.hasErrors('dosis')}" th:errorclass="text-danger" th:errors="*{dosis}"></small>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Duración</label>
-                        <input type="text" th:field="*{duracion}" class="form-control" required>
+                        <input type="text" th:field="*{duracion}" class="form-control">
                         <small th:if="${#fields.hasErrors('duracion')}" th:errorclass="text-danger" th:errors="*{duracion}"></small>
                     </div>
 

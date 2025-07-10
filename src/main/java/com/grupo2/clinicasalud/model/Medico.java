@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +57,7 @@ public class Medico {
 
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @NotNull(message = "El género es obligatorio")
     @Column(name = "genero", length = 1)
@@ -81,8 +82,8 @@ public class Medico {
     private Set<Especialidad> especialidades;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "medico")
-    @JoinColumn(name = "usuario_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
     public Medico(){
@@ -161,11 +162,11 @@ public class Medico {
         this.estadoCivil = estadoCivil;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

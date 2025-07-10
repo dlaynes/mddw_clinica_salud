@@ -55,6 +55,14 @@
 
     <form th:action="@{/dashboard/admin/pacientes/editar}" th:object="${paciente}" method="post">
         <input type="hidden" id="id" th:field="*{id}">
+        <input type="hidden" id="usuario" th:field="*{usuario}">
+        <input type="hidden" id="fechaRegistro" th:field="*{fechaRegistro}">
+
+        <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+            </ul>
+        </div>
 
         <div class="mb-3">
             <label class="form-label" for="nombre">Nombre</label>

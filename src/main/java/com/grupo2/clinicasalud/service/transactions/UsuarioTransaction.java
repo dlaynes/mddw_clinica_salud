@@ -8,10 +8,14 @@ import com.grupo2.clinicasalud.model.form.admin.UsuarioForm;
 import com.grupo2.clinicasalud.repository.MedicoRepository;
 import com.grupo2.clinicasalud.repository.PacienteRepository;
 import com.grupo2.clinicasalud.repository.UsuarioRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
@@ -19,6 +23,10 @@ import java.util.Set;
 @Service
 public class UsuarioTransaction {
 
+    @PersistenceContext
+    private EntityManager em;
+
+    @Transactional
     public void guardarUsuario(UsuarioForm usuarioForm,
                                PasswordEncoder passwordEncoder,
                                UsuarioRepository usuarioRepository,
@@ -43,7 +51,8 @@ public class UsuarioTransaction {
         Medico medico = null;
 
         if(usuario.getId() == 0){
-            usuarioRepository.save(usuario);
+            em.persist(usuario);
+            em.flush();
             Set<Rol> roles = usuario.getRoles();
 
             if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Cliente"))){
@@ -72,17 +81,17 @@ public class UsuarioTransaction {
         }
         if(paciente != null){
             paciente.setUsuario(usuario);
-            pacienteRepository.save(paciente);
-
-            usuario.setPaciente(paciente);
+            em.persist(paciente);
         }
         if(medico != null){
             medico.setUsuario(usuario);
-            medicoRepository.save(medico);
+            em.persist(medico);
 
-            usuario.setMedico(medico);
         }
         if(paciente != null || medico != null){
+            em.flush();
+            usuario.setPaciente(paciente);
+            usuario.setMedico(medico);
             usuarioRepository.save(usuario);
         }
     }
@@ -93,7 +102,7 @@ public class UsuarioTransaction {
         paciente.setNombre(usuarioForm.getNombre());
         paciente.setApellido(usuarioForm.getApellido());
         paciente.setTelefono(usuarioForm.getTelefono());
-        paciente.setFechaRegistro(new Date());
+        paciente.setFechaRegistro(LocalDateTime.now());
         return paciente;
     }
 
@@ -103,7 +112,7 @@ public class UsuarioTransaction {
         medico.setNombre(usuarioForm.getNombre());
         medico.setApellido(usuarioForm.getApellido());
         medico.setTelefono(usuarioForm.getTelefono());
-        medico.setFechaCreacion(new Date());
+        medico.setFechaCreacion(LocalDateTime.now());
         return medico;
     }
 

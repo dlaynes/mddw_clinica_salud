@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -44,7 +45,7 @@ public class Usuario implements UserDetails {
     @CreationTimestamp
     @Column(name = "fecha_registro")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_roles",
@@ -129,11 +130,11 @@ public class Usuario implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
-    public Date getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

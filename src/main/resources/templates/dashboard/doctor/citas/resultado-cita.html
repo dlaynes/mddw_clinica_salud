@@ -50,6 +50,12 @@
     <form th:action="@{/dashboard/doctor/citas/resultadoCita/{id}(id=${cita.id})}" th:object="${historial}" method="post">
         <input type="hidden" id="id" th:field="*{id}" />
 
+        <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+            <ul>
+                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+            </ul>
+        </div>
+
         <div class="mb-3">
             <strong class="form-label">Paciente: </strong>
             <span th:text="${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido}">--</span>

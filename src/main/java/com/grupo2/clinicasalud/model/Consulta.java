@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -38,7 +39,7 @@ public class Consulta {
     private String comentario;
 
     @Column(name= "fecha_creacion", nullable = false)
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     public long getId() {
         return id;
@@ -80,11 +81,11 @@ public class Consulta {
         this.comentario = comentario;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 }

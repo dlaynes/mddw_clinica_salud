@@ -48,6 +48,15 @@
     <h2>Detalle de la cita</h2>
 
     <div>
+        <div class="alert alert-info" th:if="${cita.estadoCita.name() == 'registrada'}">
+            Su cita ha sido registrada en el sistema. Estará siendo validada y podrá ver su ticket apenas haya sido aprobada y se haya seleccionado un médico de la Especialidad seleccionada.
+        </div>
+        <div class="alert alert-info" th:if="${cita.estadoCita.name() == 'programada'}">
+            Su cita ha sido aceptada, y se le ha programado una fecha y hora, la cual puede ser diferente de la seleccionada originalmente. Le recomendamos asistir antes de la hora indicada para una mejor atención.
+        </div>
+        <div class="alert alert-warning" th:if="${cita.estadoCita.name() == 'programada'}">
+            Nota de desarrollo: Un administrador o médico debe marcar esta cita como "En espera", antes de poder generar el historial médico
+        </div>
 
         <div class="mb-3">
             <strong class="form-label">Médico: </strong>

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class HistorialMedico {
     @Column(name = "fecha_consulta")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaConsulta;
+    private LocalDateTime fechaConsulta;
 
     @Size(min = 5, max = 2000, message = "El diagnóstico debe tener entre 5 y 2000 caracteres")
     @Column(name = "diagnostico", columnDefinition = "TEXT")
@@ -99,11 +100,11 @@ public class HistorialMedico {
         this.servicio = servicio;
     }
 
-    public Date getFechaConsulta() {
+    public LocalDateTime getFechaConsulta() {
         return fechaConsulta;
     }
 
-    public void setFechaConsulta(Date fechaConsulta) {
+    public void setFechaConsulta(LocalDateTime fechaConsulta) {
         this.fechaConsulta = fechaConsulta;
     }
 

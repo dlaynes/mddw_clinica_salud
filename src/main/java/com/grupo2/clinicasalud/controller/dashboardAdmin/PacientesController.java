@@ -50,7 +50,7 @@ public class PacientesController {
             model.addAttribute("generos", Genero.values());
             model.addAttribute("tiposDocumento", TipoDocumento.values());
             model.addAttribute("estadosCiviles", EstadoCivil.values());
-            model.addAttribute("medico", paciente);
+            model.addAttribute("paciente", paciente);
             return "dashboard/admin/pacientes/editar";
         }
         pacienteRepository.save(paciente);

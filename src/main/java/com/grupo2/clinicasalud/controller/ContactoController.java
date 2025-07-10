@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Controller
@@ -38,7 +39,7 @@ public class ContactoController {
             model.addAttribute("contacto", contacto);
             return "contactenos";
         }
-        contacto.setFechaCreacion(new Date());
+        contacto.setFechaCreacion(LocalDateTime.now());
         consultaRepository.save(contacto);
         redirectAttributes.addFlashAttribute("success", "Su consulta fue enviada satisfactoriamente. Muy pronto nos pondremos en contacto");
         return "redirect:/contactenos?success=true";

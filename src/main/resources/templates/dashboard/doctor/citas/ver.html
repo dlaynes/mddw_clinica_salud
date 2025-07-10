@@ -47,8 +47,11 @@
 <div layout:fragment="content" class="container-fluid">
     <h2>Detalle de la cita</h2>
 
-    <div>
+    <div class="alert alert-warning" th:if="${cita.estadoCita.name() == 'programada'}">
+        Nota de desarrollo: Un administrador o médico debe marcar esta cita como "En espera", antes de poder generar el historial médico
+    </div>
 
+    <div>
         <div class="mb-3">
             <strong class="form-label">Paciente: </strong>
             <span th:text="${cita.paciente.nombre} + ' ' + ${cita.paciente.apellido}"></span>

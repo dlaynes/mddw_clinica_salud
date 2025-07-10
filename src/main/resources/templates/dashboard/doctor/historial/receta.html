@@ -95,6 +95,12 @@
                 <form th:action="@{/dashboard/doctor/historial/ver/{id}/receta(id=${historial.id})}" th:object="${receta}" method="post">
                     <input type="hidden" th:field="*{id}">
 
+                    <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                        <ul>
+                            <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                        </ul>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Medicamento</label>
                         <input type="text" th:field="*{medicamento}" class="form-control" required>

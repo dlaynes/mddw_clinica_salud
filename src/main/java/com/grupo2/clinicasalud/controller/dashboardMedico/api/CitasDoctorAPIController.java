@@ -39,7 +39,7 @@ public class CitasDoctorAPIController {
         evento.setTitle("E: " + cita.getEspecialidad().getNombre() +
                 ", P: " + cita.getPaciente().getNombre() + " " + cita.getPaciente().getApellido());
         evento.setStart(cita.getFechaHora());
-        evento.setEnd(Date.from(cita.getFechaHora().toInstant().plus(30, ChronoUnit.MINUTES)));
+        evento.setEnd(cita.getFechaHora().plusMinutes(30));
         return evento;
     }
 

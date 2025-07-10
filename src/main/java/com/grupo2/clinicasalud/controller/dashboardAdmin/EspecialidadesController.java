@@ -45,7 +45,7 @@ public class EspecialidadesController {
     public String guardar(@Valid @ModelAttribute("especialidad") Especialidad especialidad, BindingResult result, RedirectAttributes redirectAttributes, Model model){
         if(result.hasErrors()){
             model.addAttribute("especialidad", especialidad);
-            return "dashboard/admin/servicios/editar";
+            return "dashboard/admin/especialidades/editar";
         }
 
         redirectAttributes.addFlashAttribute("success", "Se ha guardado la especialidad");

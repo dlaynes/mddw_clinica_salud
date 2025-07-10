@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -34,15 +35,7 @@ public class Servicio {
 
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
-
-    public Servicio(long id, String slug, String nombre, String descripcion, Date fechaCreacion) {
-        this.id = id;
-        this.slug = slug;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.fechaCreacion = fechaCreacion;
-    }
+    private LocalDateTime fechaCreacion;
 
     public Servicio(){
 
@@ -80,19 +73,12 @@ public class Servicio {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public static List<Servicio> dameServicios(){
-        return Arrays.asList(
-                new Servicio(1, "consulta-medica","Consulta Médica", "Atención personalizada para diagnosticar y tratar tus necesidades de salud", new Date()),
-                new Servicio(2, "laboratorio-clinico","Laboratorio Clínico", "Análisis clínicos precisos para un diagnóstico confiable", new Date()),
-                new Servicio(3, "radiologia","Radiología", "Tecnología avanzada para estudios de imagen y diagnóstico", new Date())
-        );
-    }
 }

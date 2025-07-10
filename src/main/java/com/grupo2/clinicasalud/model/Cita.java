@@ -5,9 +5,7 @@ import com.grupo2.clinicasalud.model.converter.EstadoCitaAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "citas")
@@ -40,8 +38,7 @@ public class Cita {
     // En la práctica debería haber 2 campos de fecha extra: fechaDeseada y fechaDeAtencion + duración
     @Column(name = "fecha_hora")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private Date fechaHora;
+    private LocalDateTime fechaHora;
 
     @Convert(converter = EstadoCitaAttributeConverter.class)
     @Column(name="estado", length = 16)
@@ -59,7 +56,7 @@ public class Cita {
 
     @Column(name="fecha_registro")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
 
     public Cita(){
 
@@ -97,11 +94,11 @@ public class Cita {
         this.especialidad = especialidad;
     }
 
-    public Date getFechaHora() {
+    public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 
@@ -129,11 +126,11 @@ public class Cita {
         this.motivo = motivo;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

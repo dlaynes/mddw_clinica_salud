@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,7 @@ public class Especialidad {
 
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "color", length = 20)
     @Size(max=20)
@@ -45,14 +46,6 @@ public class Especialidad {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "especialidad")
     private List<Cita> citas;
 
-    public Especialidad(long id, String nombre, String descripcion, Date fechaCreacion, String color){
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.color = color;
-        this.fechaCreacion = fechaCreacion;
-    }
-
     public Especialidad(){
 
     }
@@ -65,11 +58,11 @@ public class Especialidad {
         this.id = id;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -113,17 +106,4 @@ public class Especialidad {
         this.citas = citas;
     }
 
-    public static List<Especialidad> dameEspecialidades(){
-        return Arrays.asList(
-                new Especialidad(1,"Medicina General", "Atención primaria integral", new Date(), "primary"),
-                new Especialidad(2,"Cirugía", "Procedimientos quirúrgicos",new Date(),  "danger"),
-                new Especialidad(3,"Pediatría", "Atención infantil", new Date(),  "success"),
-                new Especialidad(4,"Ginecología", "Salud femenina", new Date(),  "warning"),
-                new Especialidad(5,"Cardiología", "Sistema cardiovascular",  new Date(), "info"),
-                new Especialidad(6,"Neurología", "Sistema nervioso", new Date(), "secondary"),
-                new Especialidad(7,"Odontología", "Salud bucal", new Date(), "dark"),
-                new Especialidad(8,"Psiquiatría", "Salud mental", new Date(), "success")
-
-        );
-    }
 }

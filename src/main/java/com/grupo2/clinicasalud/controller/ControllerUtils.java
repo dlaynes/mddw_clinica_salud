@@ -23,6 +23,9 @@ public class ControllerUtils {
 
     @ModelAttribute("nombreUsuario")
     String getNombreUsuario( @AuthenticationPrincipal Usuario user){
+        if(user == null){
+            return "Visitante";
+        }
         if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("Admin"))){
             return "Admin";
         }

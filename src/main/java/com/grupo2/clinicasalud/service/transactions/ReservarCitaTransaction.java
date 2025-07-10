@@ -4,14 +4,14 @@ import com.grupo2.clinicasalud.model.*;
 import com.grupo2.clinicasalud.model.form.ReservaCitaForm;
 import com.grupo2.clinicasalud.repository.*;
 import com.grupo2.clinicasalud.security.utils.PasswordGen;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
@@ -20,6 +20,10 @@ import java.util.Set;
 @Service
 public class ReservarCitaTransaction {
 
+    @PersistenceContext
+    private EntityManager em;
+
+    @Transactional
     public void guardarCita(
             ReservaCitaForm reservaCitaForm,
             Especialidad especialidad,
@@ -49,7 +53,8 @@ public class ReservarCitaTransaction {
                 .orElseThrow(() -> new RuntimeException("Error: Rol Cliente no encontrado."));
         roles.add(clienteRol);
         usuario.setRoles(roles);
-        usuarioRepository.save(usuario);
+        em.persist(usuario);
+        em.flush();
 
         // TO DO: enviar un correo con la información. Luego pedirle al usuario que cambie su contraseña
 
@@ -59,8 +64,12 @@ public class ReservarCitaTransaction {
         paciente.setEmail(reservaCitaForm.getEmail());
         paciente.setTelefono(reservaCitaForm.getTelefono());
         paciente.setUsuario(usuario);
-        paciente.setFechaRegistro(new Date());
-        pacienteRepository.save(paciente);
+        paciente.setFechaRegistro(LocalDateTime.now());
+        em.persist(paciente);
+        em.flush();
+
+        usuario.setPaciente(paciente);
+        usuarioRepository.save(usuario);
 
         Cita cita = new Cita();
         cita.setEstadoCita(EstadoCita.registrada);
@@ -70,10 +79,10 @@ public class ReservarCitaTransaction {
         LocalTime localTime = LocalTime.parse(reservaCitaForm.getHora());
         Instant instant = localTime.atDate(localDate)
                 .atZone(ZoneId.systemDefault()).toInstant();
-        cita.setFechaHora(Date.from(instant));
+        cita.setFechaHora(LocalDateTime.from(instant));
         cita.setPaciente(paciente);
         cita.setConsultorio(consultorioOptional.get());
-        cita.setFechaRegistro(new Date());
+        cita.setFechaRegistro(LocalDateTime.now());
         citaRepository.save(cita);
     }
 }

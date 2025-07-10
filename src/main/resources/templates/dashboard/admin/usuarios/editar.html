@@ -44,7 +44,7 @@
 <!-- Barra de navegación -->
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
-<div>
+<div class="container-fluid">
     <h2 th:text="${usuarioForm.id != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h2>
 
     <div th:if="${errorUsuario}" class="alert alert-danger alert-dismissible fade show" role="alert">

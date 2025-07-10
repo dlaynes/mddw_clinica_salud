@@ -44,7 +44,7 @@
 <!-- Barra de navegación -->
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
-<div>
+<div class="container-fluid">
     <h2>Llenar historial médico de una cita</h2>
 
     <form th:action="@{/dashboard/doctor/citas/resultadoCita/{id}(id=${cita.id})}" th:object="${historial}" method="post">

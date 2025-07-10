@@ -44,7 +44,7 @@
 <!-- Barra de navegación -->
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="container-fluid">
     <h2 th:text="${especialidad.id != null} ? 'Editar Especialidad' : 'Nueva Especialidad'"></h2>
 
     <form th:action="@{/dashboard/admin/especialidades/editar}" th:object="${especialidad}" method="post">

@@ -22,28 +22,44 @@
         <div class="collapse navbar-collapse" id="navbarNav"  sec:authorize="hasAuthority('Admin')">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/index') ? 'active':''}"
+                       th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/admin/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/admin/citas') ? 'active':''}"
+                       th:href="@{/dashboard/admin/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/admin/pacientes}"><i class="bi bi-people"></i> Pacientes</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/admin/pacientes') ? 'active':''}"
+                       th:href="@{/dashboard/admin/pacientes}"><i class="bi bi-people"></i> Pacientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/admin/medicos}"><i class="bi bi-person-badge"></i> Médicos</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/admin/medicos') ? 'active':''}"
+                       th:href="@{/dashboard/admin/medicos}"><i class="bi bi-person-badge"></i> Médicos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/admin/especialidades}"><i class="bi bi-building"></i> Especialidades</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/admin/especialidades') ? 'active':''}"
+                       th:href="@{/dashboard/admin/especialidades}"><i class="bi bi-building"></i> Especialidades</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/admin/usuarios}"><i class="bi bi-building"></i> Usuarios</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/admin/usuarios') ? 'active':''}"
+                       th:href="@{/dashboard/admin/usuarios}"><i class="bi bi-building"></i> Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/admin/servicios}"><i class="bi bi-building"></i> Servicios</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/admin/servicios') ? 'active':''}"
+                       th:href="@{/dashboard/admin/servicios}"><i class="bi bi-building"></i> Servicios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/admin/consultas}"><i class="bi bi-building"></i> Consultas</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/admin/consultas') ? 'active':''}"
+                       th:href="@{/dashboard/admin/consultas}"><i class="bi bi-building"></i> Consultas</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/auth/logout}">Cerrar sesión</a>
@@ -56,51 +72,61 @@
         <div class="collapse navbar-collapse" id="navbarNavMedicos"  sec:authorize="hasAuthority('Doctor') && !hasAuthority('Cliente') && !hasAuthority('Admin')">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/index') ? 'active':''}"
+                       th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/doctor/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/doctor/citas') ? 'active':''}"
+                       th:href="@{/dashboard/doctor/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/doctor/historial}"><i class="bi bi-people"></i> Historial médico</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/doctor/historial') ? 'active':''}"
+                       th:href="@{/dashboard/doctor/historial}"><i class="bi bi-people"></i> Historial médico</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/doctor/pacientes}"><i class="bi bi-people"></i> Pacientes</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/doctor/pacientes') ? 'active':''}"
+                       th:href="@{/dashboard/doctor/pacientes}"><i class="bi bi-people"></i> Pacientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/doctor/agenda}"><i class="bi bi-people"></i> Agenda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/doctor/perfil}"><i class="bi bi-person-badge"></i> Perfil</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/doctor/agenda') ? 'active':''}"
+                       th:href="@{/dashboard/doctor/agenda}"><i class="bi bi-people"></i> Agenda</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/auth/logout}">Cerrar sesión</a>
                 </li>
             </ul>
             <div class="ms-3">
-                <span class="text-white"><i class="bi bi-person-circle"></i> Nombre Médico</span>
+                <span class="text-white"><i class="bi bi-person-circle"></i> <span th:text="${nombreUsuario}">Nombre usuario</span></span>
             </div>
         </div>
         <div class="collapse navbar-collapse" id="navbarNavClientes"  sec:authorize="hasAuthority('Cliente') && !hasAuthority('Doctor') && !hasAuthority('Admin')">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/index') ? 'active':''}"
+                       th:href="@{/dashboard/index}"><i class="bi bi-house-door"></i> Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/cliente/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/cliente/citas') ? 'active':''}"
+                       th:href="@{/dashboard/cliente/citas}"><i class="bi bi-calendar-check"></i> Citas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/cliente/historial}"><i class="bi bi-people"></i> Historial médico</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/dashboard/cliente/perfil}"><i class="bi bi-person-badge"></i> Perfil</a>
+                    <a class="nav-link"
+                       th:classappend="${#strings.startsWith(requestURI, '/dashboard/cliente/historial') ? 'active':''}"
+                       th:href="@{/dashboard/cliente/historial}"><i class="bi bi-people"></i> Historial médico</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/auth/logout}">Cerrar sesión</a>
                 </li>
             </ul>
             <div class="ms-3">
-                <span class="text-white"><i class="bi bi-person-circle"></i> Nombre Cliente</span>
+                <span class="text-white"><i class="bi bi-person-circle"></i> <span th:text="${nombreUsuario}">Nombre usuario</span></span>
             </div>
         </div>
     </div>

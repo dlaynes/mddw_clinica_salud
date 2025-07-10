@@ -43,7 +43,7 @@
 <!-- Barra de navegación -->
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="container-fluid">
     <h2>Lista de Servicios</h2>
 
     <a th:href="@{/dashboard/admin/servicios/nuevo}" class="btn btn-primary mb-3">Nuevo Servicio</a>

@@ -45,7 +45,7 @@
 <div th:replace="~{fragments/dashboard/nav :: nav}"></div>
 
 <div>
-    <h2 th:text="${usuarioId != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h2>
+    <h2 th:text="${usuarioForm.id != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h2>
 
     <div th:if="${errorUsuario}" class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-2"></i>

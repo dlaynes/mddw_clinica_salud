@@ -30,6 +30,7 @@ public class HistorialDoctorController {
     @Autowired
     DetalleUsuarioService detalleUsuarioService;
 
+    @GetMapping
     public String index(Model model){
         Medico medico = detalleUsuarioService.getMedicoActual();
         if(medico == null){
@@ -37,7 +38,7 @@ public class HistorialDoctorController {
             return "redirect:/dashboard/index";
         }
 
-        List<HistorialMedico> historialMedicoList = historialMedicoRepository.findByMedicoIdOrderByFechaHoraDesc(medico.getId());
+        List<HistorialMedico> historialMedicoList = historialMedicoRepository.findByMedicoIdOrderByFechaConsultaDesc(medico.getId());
         model.addAttribute("historialList", historialMedicoList);
 
         return "dashboard/doctor/historial/index";

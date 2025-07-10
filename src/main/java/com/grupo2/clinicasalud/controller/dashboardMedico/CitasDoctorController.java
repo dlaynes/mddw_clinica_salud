@@ -137,4 +137,9 @@ public class CitasDoctorController {
         return "redirect:/dashboard/doctor/historial/ver/" + historialMedico.getId();
     }
 
+    @GetMapping("/agenda")
+    public String agenda(){
+        return "dashboard/doctor/citas/agenda";
+    }
+
 }

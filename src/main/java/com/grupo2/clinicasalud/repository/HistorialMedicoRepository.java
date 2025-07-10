@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface HistorialMedicoRepository extends JpaRepository<HistorialMedico, Long> {
 
-    public List<HistorialMedico> findByMedicoIdOrderByFechaHoraDesc(Long medicoId);
+    public List<HistorialMedico> findByMedicoIdOrderByFechaConsultaDesc(Long medicoId);
 
-    public List<HistorialMedico> findByPacienteIdIdOrderByFechaHoraDesc(Long pacienteId);
+    public List<HistorialMedico> findByPacienteIdOrderByFechaConsultaDesc(Long pacienteId);
 
     public Optional<HistorialMedico> findOneByIdAndMedicoId(Long id, Long medicoId);
 

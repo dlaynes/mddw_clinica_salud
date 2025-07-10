@@ -24,9 +24,9 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     Optional<Cita> findOneByIdAndMedicoIdAndEstadoCita(Long citaId, Long pacienteId, EstadoCita estadoCita);
 
-    List<Cita> findByMedicoIdOrderByFechaHoraDesc(Long medicoId);
+    List<Cita> findByMedicoIdAndFechaHoraBetweenOrderByFechaHoraDesc(Long medicoId, LocalDateTime start, LocalDateTime end);
 
-    List<Cita> findByPacienteIdOrderByFechaHoraDesc(Long pacienteId);
+    List<Cita> findByPacienteIdAndFechaHoraBetweenOrderByFechaHoraDesc(Long pacienteId, LocalDateTime start, LocalDateTime end);
 
     long countByFechaHoraBetween(LocalDateTime start, LocalDateTime end);
 
@@ -40,6 +40,9 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     long countByMedicoId(Long medicoId);
 
+    List<Cita> findByMedicoIdOrderByFechaHoraDesc(long id);
+
+    List<Cita> findByPacienteIdOrderByFechaHoraDesc(long id);
 
     /*
     @Query("SELECT c FROM Cita c WHERE " +

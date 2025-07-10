@@ -80,4 +80,9 @@ public class CitasClienteController {
         return "dashboard/cliente/citas/ticket";
     }
 
+    @GetMapping("/agenda")
+    public String agenda(){
+        return "dashboard/cliente/citas/agenda";
+    }
+
 }

@@ -23,10 +23,6 @@ import java.util.Set;
 @Service
 public class UsuarioTransaction {
 
-    @PersistenceContext
-    private EntityManager em;
-
-    @Transactional
     public void guardarUsuario(UsuarioForm usuarioForm,
                                Usuario usuario,
                                PasswordEncoder passwordEncoder,
@@ -47,12 +43,12 @@ public class UsuarioTransaction {
         }
         usuario.setRoles(usuarioForm.getRoles());
 
-        em.getTransaction().begin();
         Paciente paciente = null;
         Medico medico = null;
-        if(usuario.getId() == 0){
-            usuarioRepository.save(usuario);
+        long id = usuario.getId();
+        usuarioRepository.save(usuario);
 
+        if(id == 0){
             Set<Rol> roles = usuario.getRoles();
 
             if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Cliente"))){
@@ -78,8 +74,6 @@ public class UsuarioTransaction {
         if(paciente != null || medico != null){
             usuarioRepository.save(usuario);
         }
-
-        em.getTransaction().commit();
     }
 
     private Paciente crearPaciente(UsuarioForm usuarioForm){

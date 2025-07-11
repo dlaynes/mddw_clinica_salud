@@ -46,12 +46,20 @@
 <div layout:fragment="content" class="container-fluid">
     <h2>Mis citas en la Clínica Salud</h2>
 
-<div class="table-responsive">
+    <a th:href="@{/dashboard/cliente/citas/crear}" class="btn btn-primary mb-3">Nueva Cita</a>
+
+    <div class="table-responsive">
 
     <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${cancelarSuccess}">
         <i class="bi bi-check-circle me-2"></i>
-        La cita ha sido correctamente cancelada
+        La cita ha sido correctamente cancelada.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de aviso"></button>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${crearSuccess}">
+        <i class="bi bi-check-circle me-2"></i>
+        Su cita ha sido registrada en el sistema. Estará siendo validada y podrá ver su ticket apenas haya sido aprobada y se haya seleccionado un médico de la Especialidad seleccionada.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
     </div>
 
     <table class="table table-striped">
@@ -61,7 +69,7 @@
             <th>Médico</th>
             <th>Especialidad</th>
             <th>Motivo</th>
-            <th>Fecha</th>
+            <th>Fecha (Solicitada/Confirmada)</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>

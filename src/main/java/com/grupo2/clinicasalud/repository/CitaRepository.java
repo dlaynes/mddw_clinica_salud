@@ -1,6 +1,7 @@
 package com.grupo2.clinicasalud.repository;
 
 import com.grupo2.clinicasalud.model.Cita;
+import com.grupo2.clinicasalud.model.Especialidad;
 import com.grupo2.clinicasalud.model.EstadoCita;
 import com.grupo2.clinicasalud.model.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -43,6 +44,8 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     List<Cita> findByMedicoIdOrderByFechaHoraDesc(long id);
 
     List<Cita> findByPacienteIdOrderByFechaHoraDesc(long id);
+
+    long countByPacienteIdAndEspecialidadAndEstadoCitaIn(long id, Especialidad especialidad, List<EstadoCita> estadoCitas);
 
     /*
     @Query("SELECT c FROM Cita c WHERE " +

@@ -122,6 +122,7 @@
                 <td class="text-center" th:text="${paciente.numeroDocumento}"></td>
                 <td>
                     <a th:href="@{/dashboard/admin/pacientes/editar/{id}(id=${paciente.id})}" class="btn btn-sm btn-warning">Editar</a>
+                    <a th:href="@{/dashboard/admin/pacientes/crear-cita/{id}(id=${paciente.id})}" class="btn btn-sm btn-info">Crear cita</a>
                     <a th:href="@{/dashboard/admin/pacientes/eliminar/{id}(id=${paciente.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro que desea borrar al paciente ${paciente.nombre}?')">Eliminar</a>
                 </td>
             </tr>

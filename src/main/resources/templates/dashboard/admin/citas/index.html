@@ -47,15 +47,19 @@
     <h2>Citas de los clientes de la Clínica Salud</h2>
 
     <div class="table-responsive">
-
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${crearSuccess}">
+            <i class="bi bi-check-circle me-2"></i>
+            La cita ha sido correctamente creada y programada. Para poder agregar los resultados/historial, debe ser marcada como &quot;En Espera&quot;.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
+        </div>
         <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${asignarSuccess}">
             <i class="bi bi-check-circle me-2"></i>
-            La cita ha sido correctamente programada
+            La cita ha sido correctamente programada Para poder agregar los resultados/historial, debe ser marcada como &quot;En Espera&quot;.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
         </div>
         <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${enEsperaSuccess}">
             <i class="bi bi-check-circle me-2"></i>
-            La cita ha sido correctamente marcada como En Espera en el consultorio
+            La cita ha sido correctamente marcada como En Espera en el consultorio. Ya es posible llenar el historial de la misma.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
         </div>
         <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${rechazarSuccess}">

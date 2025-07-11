@@ -29,7 +29,7 @@ public class CitasController {
 
     @GetMapping
     public String index(Model model){
-        List<Cita> citaList = citaRepository.findAll();
+        List<Cita> citaList = citaRepository.findAllByOrderByFechaRegistroDesc();
         model.addAttribute("citas", citaList);
 
         return "dashboard/admin/citas/index";

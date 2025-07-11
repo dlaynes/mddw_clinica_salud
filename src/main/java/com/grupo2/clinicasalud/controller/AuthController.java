@@ -1,13 +1,10 @@
 package com.grupo2.clinicasalud.controller;
 
 import com.grupo2.clinicasalud.model.Paciente;
-import com.grupo2.clinicasalud.model.Rol;
 import com.grupo2.clinicasalud.model.Usuario;
 import com.grupo2.clinicasalud.model.form.LoginForm;
 import com.grupo2.clinicasalud.model.form.RegistroForm;
-import com.grupo2.clinicasalud.repository.PacienteRepository;
-import com.grupo2.clinicasalud.repository.RolRepository;
-import com.grupo2.clinicasalud.repository.UsuarioRepository;
+import com.grupo2.clinicasalud.service.PacienteService;
 import com.grupo2.clinicasalud.service.auth.DetalleUsuarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -19,9 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @RequestMapping("/auth")
 @Controller
 public class AuthController {
@@ -30,10 +24,7 @@ public class AuthController {
     private DetalleUsuarioService detalleUsuarioService;
 
     @Autowired
-    private PacienteRepository pacienteRepository;
-
-    @Autowired
-    private RolRepository roleRepository;
+    private PacienteService pacienteService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -82,13 +73,13 @@ public class AuthController {
 
         Usuario usuario = detalleUsuarioService.guardarCliente(email, registroForm.getPassword(), passwordEncoder);
 
-        Paciente paciente = new Paciente();
-        paciente.setNombre(registroForm.getNombre());
-        paciente.setApellido(registroForm.getApellidos());
-        paciente.setEmail(registroForm.getEmail());
-        paciente.setTelefono(registroForm.getTelefono());
-        paciente.setUsuarioId(usuario.getId());
-        pacienteRepository.save(paciente);
+        Paciente paciente = pacienteService.guardarPaciente(
+                registroForm.getNombre(),
+                registroForm.getApellidos(),
+                registroForm.getEmail(),
+                registroForm.getTelefono(),
+                usuario.getId()
+        );
 
         usuario.setPacienteId(paciente.getId());
         detalleUsuarioService.guardarUsuario(usuario);

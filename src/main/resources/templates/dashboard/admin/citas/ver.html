@@ -48,16 +48,15 @@
     <h2>Detalle de la cita</h2>
 
     <div class="alert alert-info" th:if="${cita.estadoCita.name() == 'registrada'}">
-        Esta cita ha sido creada recientemente. Mediante el botón "Asignar", le asignaremos un botón de la especialidad seleccionada y cambiaremos su estado a programada.<br />
+        Esta cita ha sido creada recientemente. Mediante el botón &quot;Asignar&quot;, podremos seleccionar un especialista y cambiaremos su estado a programada.<br />
         Si el administrador considera que la cita no es válida, debe hacer clic en el botón "Rechazar"
     </div>
     <div class="alert alert-info" th:if="${cita.estadoCita.name() == 'programada'}">
-        Un administrador o médico debe marcar esta cita como "En espera", antes de poder generar el historial médico
+        Un administrador o médico debe marcar esta cita como &quot;En espera&quot;, antes de poder generar el historial médico
     </div>
     <div class="alert alert-info" th:if="${cita.estadoCita.name() == 'enEspera'}">
-        El médico asignado debe llenar los resultados de la cita, para poder generar el historial médico
+        El médico asignado debe llenar los resultados de la cita, para poder ver el historial médico
     </div>
-
     <div>
         <div class="mb-3">
             <strong class="form-label">Paciente: </strong>

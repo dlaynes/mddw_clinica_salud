@@ -49,7 +49,7 @@
     <div class="table-responsive">
         <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${crearSuccess}">
             <i class="bi bi-check-circle me-2"></i>
-            La cita ha sido correctamente creada y programada. Para poder agregar los resultados/historial, debe ser marcada como &quot;En Espera&quot;.
+            La cita ha sido correctamente creada. Para poder asignarle un doctor, debe ser marcada como &quot;Programada&quot;.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
         </div>
         <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${asignarSuccess}">
@@ -59,7 +59,7 @@
         </div>
         <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${enEsperaSuccess}">
             <i class="bi bi-check-circle me-2"></i>
-            La cita ha sido correctamente marcada como En Espera en el consultorio. Ya es posible llenar el historial de la misma.
+            La cita ha sido correctamente marcada como En Espera en el consultorio. El especialista médico ya puede llenar el historial de la misma.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de éxito"></button>
         </div>
         <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${rechazarSuccess}">

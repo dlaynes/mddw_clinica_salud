@@ -27,7 +27,7 @@ import java.util.Set;
 public class AuthController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private DetalleUsuarioService detalleUsuarioService;
 
     @Autowired
     private PacienteRepository pacienteRepository;
@@ -75,21 +75,12 @@ public class AuthController {
 
         String email = registroForm.getEmail().toLowerCase();
 
-        if (usuarioRepository.existsByEmail(email)) {
+        if (detalleUsuarioService.existeConCorreo(email)) {
             redirectAttributes.addFlashAttribute("param.error", "El email ya está registrado");
             return "redirect:/auth/registro";
         }
 
-        Usuario usuario = new Usuario();
-        usuario.setEmail(email);
-        usuario.setPassword(passwordEncoder.encode(registroForm.getPassword()));
-
-        // Asignar rol
-        Set<Rol> roles = new HashSet<>();
-        Rol clienteRol = roleRepository.findByNombre("Cliente")
-                .orElseThrow(() -> new RuntimeException("Error: Rol Cliente no encontrado."));
-        roles.add(clienteRol);
-        usuario.setRoles(roles);
+        Usuario usuario = detalleUsuarioService.guardarCliente(email, registroForm.getPassword(), passwordEncoder);
 
         Paciente paciente = new Paciente();
         paciente.setNombre(registroForm.getNombre());
@@ -100,7 +91,7 @@ public class AuthController {
         pacienteRepository.save(paciente);
 
         usuario.setPacienteId(paciente.getId());
-        usuarioRepository.save(usuario);
+        detalleUsuarioService.guardarUsuario(usuario);
 
         redirectAttributes.addFlashAttribute("param:success", "Usuario registrado exitosamente");
         return "redirect:/auth/login";

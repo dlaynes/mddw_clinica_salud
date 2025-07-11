@@ -63,6 +63,18 @@ public class DetalleUsuarioService implements UserDetailsService {
         return user.orElse(null);
     }
 
+    public boolean existeConCorreo(String email){
+        return usuarioRepository.existsByEmail(email);
+    }
+
+    public Optional<Usuario> buscarPorEmail(String email){
+        return usuarioRepository.findByEmail(email);
+    }
+
+    public void guardarUsuario(Usuario usuario){
+        usuarioRepository.save(usuario);
+    }
+
     public Usuario guardarCliente(String email, String password, PasswordEncoder passwordEncoder){
         Usuario usuario = new Usuario();
         usuario.setEmail(email);

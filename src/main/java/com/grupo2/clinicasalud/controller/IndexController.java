@@ -36,9 +36,6 @@ public class IndexController {
     private ServicioRepository servicioRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
     private DetalleUsuarioService detalleUsuarioService;
 
     @Autowired
@@ -82,7 +79,7 @@ public class IndexController {
             model.addAttribute("reserva", reserva);
             return "index";
         }
-        Optional<Usuario> usuarioContainer = usuarioRepository.findByEmail(reserva.getEmail());
+        Optional<Usuario> usuarioContainer = detalleUsuarioService.buscarPorEmail(reserva.getEmail());
 
         if(usuarioContainer.isEmpty()){
             Optional<Consultorio> consultorioOptional = consultorioRepository.findById(1L);
@@ -102,7 +99,7 @@ public class IndexController {
             );
 
             usuario.setPacienteId(paciente.getId());
-            usuarioRepository.save(usuario);
+            detalleUsuarioService.guardarUsuario(usuario);
 
             Cita cita = citaService.guardarCitaDesdeForm(reserva, paciente, especialidadContainer.get(), consultorioOptional.get());
 

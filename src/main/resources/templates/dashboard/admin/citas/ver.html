@@ -49,7 +49,7 @@
 
     <div class="alert alert-info" th:if="${cita.estadoCita.name() == 'registrada'}">
         Esta cita ha sido creada recientemente. Mediante el botón &quot;Asignar&quot;, podremos seleccionar un especialista y cambiaremos su estado a programada.<br />
-        Si el administrador considera que la cita no es válida, debe hacer clic en el botón "Rechazar"
+        Si el administrador considera que la cita no es válida, debe hacer clic en el botón &quot;Rechazar&quot;
     </div>
     <div class="alert alert-info" th:if="${cita.estadoCita.name() == 'programada'}">
         Un administrador o médico debe marcar esta cita como &quot;En espera&quot;, antes de poder generar el historial médico

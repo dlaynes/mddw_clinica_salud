@@ -5,6 +5,7 @@ import com.grupo2.clinicasalud.model.Especialidad;
 import com.grupo2.clinicasalud.model.EstadoCita;
 import com.grupo2.clinicasalud.model.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -29,11 +30,15 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     List<Cita> findByPacienteIdAndFechaHoraBetweenOrderByFechaHoraDesc(Long pacienteId, LocalDateTime start, LocalDateTime end);
 
+    long countByMedicoIdAndFechaHoraBetween(long medicoId, LocalDateTime start, LocalDateTime end);
+
     long countByFechaHoraBetween(LocalDateTime start, LocalDateTime end);
 
     List<Cita> findByFechaHoraBetweenOrderByFechaHoraAsc(LocalDateTime start, LocalDateTime end);
 
     long countByEstadoCita(EstadoCita estado);
+
+    long countByMedicoIdAndEstadoCita(long medicoId, EstadoCita estado);
 
     List<Cita> findByEstadoCitaOrderByFechaHoraDesc(EstadoCita estado);
 
@@ -48,6 +53,10 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     List<Cita> findAllByOrderByFechaRegistroDesc();
 
     long countByPacienteIdAndEspecialidadAndEstadoCitaIn(long id, Especialidad especialidad, List<EstadoCita> estadoCitas);
+
+    @NativeQuery("SELECT DISTINCT COUNT(p.paciente_id) FROM pacientes p " +
+            "JOIN citas c ON c.paciente_id = p.paciente_id WHERE c.medico_id = :medicoId")
+    long contarPacientesDeMedico(@Param("medicoId") long medicoId);
 
     /*
     @Query("SELECT c FROM Cita c WHERE " +

@@ -65,7 +65,7 @@
 
     <!-- Estadísticas rápidas -->
     <div class="row mb-4">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card stat-card border-left-primary">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
@@ -80,13 +80,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card stat-card border-left-success">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
                             <h6 class="text-muted">Total Pacientes</h6>
                             <h3 th:text="${totalPacientes}">5</h3>
+                        </div>
+                        <div class="text-success">
+                            <i class="bi bi-people card-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card border-left-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="text-muted">Citas pendientes</h6>
+                            <h3 th:text="${citasPendientes}">5</h3>
                         </div>
                         <div class="text-success">
                             <i class="bi bi-people card-icon"></i>

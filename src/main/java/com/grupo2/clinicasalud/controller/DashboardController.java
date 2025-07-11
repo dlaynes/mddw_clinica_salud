@@ -1,10 +1,12 @@
 package com.grupo2.clinicasalud.controller;
 
 import com.grupo2.clinicasalud.model.EstadoCita;
+import com.grupo2.clinicasalud.model.Medico;
 import com.grupo2.clinicasalud.model.Usuario;
 import com.grupo2.clinicasalud.service.CitaService;
 import com.grupo2.clinicasalud.service.MedicoService;
 import com.grupo2.clinicasalud.service.PacienteService;
+import com.grupo2.clinicasalud.service.auth.DetalleUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ import java.time.LocalTime;
 @Controller
 @RequestMapping("/dashboard")
 public class DashboardController {
+
+    @Autowired
+    private DetalleUsuarioService detalleUsuarioService;
 
     @Autowired
     private CitaService citaService;
@@ -65,10 +70,19 @@ public class DashboardController {
     }
 
     private String indexMedicos(Model model){
+        Medico medico = detalleUsuarioService.getMedicoActual();
+        if(medico == null){
+            return "redirect:/";
+        }
 
-        model.addAttribute("citasHoy", 0);
-        model.addAttribute("totalPacientes", 0);
-        model.addAttribute("citasPendientes",0);
+        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+
+        long medicoId = medico.getId();
+
+        model.addAttribute("citasHoy", citaService.countCitasDeDoctorBetween(medicoId, startOfDay, endOfDay));
+        model.addAttribute("totalPacientes", citaService.contarPacientesDeMedico(medicoId));
+        model.addAttribute("citasPendientes", citaService.countCitasDeDoctorByEstado(medicoId, EstadoCita.programada));
 
         return "dashboard/index_medicos";
     }

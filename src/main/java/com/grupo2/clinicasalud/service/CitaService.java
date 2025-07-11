@@ -59,12 +59,24 @@ public class CitaService {
         return repository.countByFechaHoraBetween(start, end);
     }
 
+    public long countCitasDeDoctorBetween(long medicoId, LocalDateTime start, LocalDateTime end){
+        return repository.countByMedicoIdAndFechaHoraBetween(medicoId, start, end);
+    }
+
     public List<Cita> findCitasBetween(LocalDateTime start, LocalDateTime end) {
         return repository.findByFechaHoraBetweenOrderByFechaHoraAsc(start, end);
     }
 
     public long countCitasByEstado(EstadoCita estadoCita){
         return repository.countByEstadoCita(estadoCita);
+    }
+
+    public long countCitasDeDoctorByEstado(long medicoId, EstadoCita estadoCita){
+        return repository.countByMedicoIdAndEstadoCita(medicoId, estadoCita);
+    }
+
+    public long contarPacientesDeMedico(long medicoId){
+        return repository.contarPacientesDeMedico(medicoId);
     }
 
     public Cita guardarCitaDesdeForm(ReservaCitaForm reserva, Paciente paciente, Especialidad especialidad, Consultorio consultorio){

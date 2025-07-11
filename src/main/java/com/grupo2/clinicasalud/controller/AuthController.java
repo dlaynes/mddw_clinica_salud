@@ -8,6 +8,7 @@ import com.grupo2.clinicasalud.model.form.RegistroForm;
 import com.grupo2.clinicasalud.repository.PacienteRepository;
 import com.grupo2.clinicasalud.repository.RolRepository;
 import com.grupo2.clinicasalud.repository.UsuarioRepository;
+import com.grupo2.clinicasalud.service.auth.DetalleUsuarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,14 +96,11 @@ public class AuthController {
         paciente.setApellido(registroForm.getApellidos());
         paciente.setEmail(registroForm.getEmail());
         paciente.setTelefono(registroForm.getTelefono());
-        // Es necesario que el registro del paciente tenga un ID antes de asociarlo al usuario actual
+        paciente.setUsuarioId(usuario.getId());
         pacienteRepository.save(paciente);
 
-        usuario.setPaciente(paciente);
+        usuario.setPacienteId(paciente.getId());
         usuarioRepository.save(usuario);
-
-        paciente.setUsuario(usuario);
-        pacienteRepository.save(paciente);
 
         redirectAttributes.addFlashAttribute("param:success", "Usuario registrado exitosamente");
         return "redirect:/auth/login";

@@ -74,10 +74,8 @@ public class Paciente {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
     private List<Cita> citas;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "paciente")
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @Column(name = "usuario_id", nullable = false)
+    private Long usuarioId;
 
     @Column(name="fecha_registro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -175,12 +173,12 @@ public class Paciente {
         this.citas = citas;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public LocalDateTime getFechaRegistro() {

@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -53,13 +52,11 @@ public class Usuario implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="paciente_id")
-    private Paciente paciente;
+    @Column(name="paciente_id")
+    private Long pacienteId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="medico_id")
-    private Medico medico;
+    @Column(name="medico_id")
+    private Long medicoId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -138,19 +135,19 @@ public class Usuario implements UserDetails {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public Long getPacienteId() {
+        return pacienteId;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setPacienteId(Long pacienteId) {
+        this.pacienteId = pacienteId;
     }
 
-    public Medico getMedico() {
-        return medico;
+    public Long getMedicoId() {
+        return medicoId;
     }
 
-    public void setMedico(Medico medico) {
-        this.medico = medico;
+    public void setMedicoId(Long medicoId) {
+        this.medicoId = medicoId;
     }
 }

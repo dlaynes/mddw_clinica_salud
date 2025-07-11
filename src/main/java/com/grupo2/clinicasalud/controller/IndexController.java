@@ -4,7 +4,9 @@ import com.grupo2.clinicasalud.model.*;
 import com.grupo2.clinicasalud.model.form.ReservaCitaForm;
 import com.grupo2.clinicasalud.repository.*;
 import com.grupo2.clinicasalud.security.utils.PasswordGen;
-import com.grupo2.clinicasalud.service.transactions.ReservarCitaTransaction;
+import com.grupo2.clinicasalud.service.CitaService;
+import com.grupo2.clinicasalud.service.PacienteService;
+import com.grupo2.clinicasalud.service.auth.DetalleUsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.validation.Valid;
@@ -13,11 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -27,7 +27,7 @@ import java.util.*;
 public class IndexController {
 
     @Autowired
-    private RolRepository roleRepository;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private EspecialidadRepository especialidadRepository;
@@ -39,20 +39,16 @@ public class IndexController {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private DetalleUsuarioService detalleUsuarioService;
 
     @Autowired
-    private CitaRepository citaRepository;
+    private PacienteService pacienteService;
+
+    @Autowired
+    private CitaService citaService;
 
     @Autowired
     private ConsultorioRepository consultorioRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private ReservarCitaTransaction reservaCitaTransacion;
-
 
     @GetMapping("/")
     private String indice(Model model) {
@@ -89,11 +85,26 @@ public class IndexController {
         Optional<Usuario> usuarioContainer = usuarioRepository.findByEmail(reserva.getEmail());
 
         if(usuarioContainer.isEmpty()){
+            Optional<Consultorio> consultorioOptional = consultorioRepository.findById(1L);
+            if(consultorioOptional.isEmpty()){
+                throw new RuntimeException("Error: No se encontró un consultorio.");
+            }
+
             String password = PasswordGen.generatePasPassword(16);
-            reservaCitaTransacion.guardarCita(
-                    reserva, especialidadContainer.get(),
-                    citaRepository, pacienteRepository, usuarioRepository, roleRepository, consultorioRepository,
-                    password, passwordEncoder);
+            Usuario usuario = detalleUsuarioService.guardarCliente(reserva.getEmail(), password, passwordEncoder);
+
+            Paciente paciente = pacienteService.guardarPaciente(
+                reserva.getNombre(),
+                reserva.getApellidos(),
+                reserva.getEmail(),
+                reserva.getTelefono(),
+                usuario.getId()
+            );
+
+            usuario.setPacienteId(paciente.getId());
+            usuarioRepository.save(usuario);
+
+            Cita cita = citaService.guardarCitaDesdeForm(reserva, paciente, especialidadContainer.get(), consultorioOptional.get());
 
             redirectAttributes.addFlashAttribute("registroEmail", reserva.getEmail());
             redirectAttributes.addFlashAttribute("registroPassword", password);

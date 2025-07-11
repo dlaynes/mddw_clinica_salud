@@ -47,12 +47,12 @@ public class UsuarioTransaction {
         }
         usuario.setRoles(usuarioForm.getRoles());
 
+        em.getTransaction().begin();
         Paciente paciente = null;
         Medico medico = null;
-
         if(usuario.getId() == 0){
-            em.persist(usuario);
-            em.flush();
+            usuarioRepository.save(usuario);
+
             Set<Rol> roles = usuario.getRoles();
 
             if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Cliente"))){
@@ -61,39 +61,25 @@ public class UsuarioTransaction {
             if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Doctor"))){
                 medico = crearMedico(usuarioForm);
             }
-        } else {
-            usuarioRepository.save(usuario);
-            Set<Rol> roles = usuario.getRoles();
-
-            // Creamos las cuentas si no existen. De otra manera, las dejamos en el sistema
-            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Doctor"))){
-                Optional<Medico> medicoOpt = medicoRepository.findByUsuarioId(usuario.getId());
-                if(medicoOpt.isEmpty()){
-                    medico = crearMedico(usuarioForm);
-                }
-            }
-            if(roles.stream().anyMatch(rol -> rol.getNombre().equals("Cliente"))){
-                Optional<Paciente> pacienteOpt = pacienteRepository.findByUsuarioId(usuario.getId());
-                if(pacienteOpt.isEmpty()){
-                    paciente = crearPaciente(usuarioForm);
-                }
-            }
         }
+
         if(paciente != null){
-            paciente.setUsuario(usuario);
-            em.persist(paciente);
+            paciente.setUsuarioId(usuario.getId());
+            pacienteRepository.save(paciente);
+
+            usuario.setPacienteId(paciente.getId());
         }
         if(medico != null){
             medico.setUsuario(usuario);
-            em.persist(medico);
+            medicoRepository.save(medico);
 
+            usuario.setMedicoId(medico.getId());
         }
         if(paciente != null || medico != null){
-            em.flush();
-            usuario.setPaciente(paciente);
-            usuario.setMedico(medico);
             usuarioRepository.save(usuario);
         }
+
+        em.getTransaction().commit();
     }
 
     private Paciente crearPaciente(UsuarioForm usuarioForm){

@@ -38,11 +38,11 @@ public class Consultorio {
     private String imagen;
 
     @CoordinatesConstraint
-    @Column(name = "latitud", precision = 11, scale=2)
+    @Column(name = "latitud", precision = 11, scale=8)
     private BigDecimal latitud;
 
     @CoordinatesConstraint
-    @Column(name = "longitud", precision = 11, scale=2)
+    @Column(name = "longitud", precision = 11, scale=8)
     private BigDecimal longitud;
 
     @JsonIgnore

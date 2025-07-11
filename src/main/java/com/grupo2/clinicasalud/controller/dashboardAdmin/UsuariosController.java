@@ -50,7 +50,6 @@ public class UsuariosController {
     @GetMapping("/nuevo")
     public String nuevo(Model model){
         UsuarioForm usuarioForm = new UsuarioForm();
-        model.addAttribute("usuarioId", null);
         model.addAttribute("roles", rolRepository.findAll());
         model.addAttribute("usuarioForm", usuarioForm);
         return "dashboard/admin/usuarios/editar";

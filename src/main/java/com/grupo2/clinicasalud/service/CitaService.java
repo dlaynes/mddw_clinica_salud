@@ -1,15 +1,15 @@
 package com.grupo2.clinicasalud.service;
 
-import com.grupo2.clinicasalud.model.Cita;
-import com.grupo2.clinicasalud.model.EstadoCita;
-import com.grupo2.clinicasalud.model.Medico;
-import com.grupo2.clinicasalud.model.Paciente;
+import com.grupo2.clinicasalud.model.*;
+import com.grupo2.clinicasalud.model.form.ReservaCitaForm;
 import com.grupo2.clinicasalud.repository.CitaRepository;
 import com.grupo2.clinicasalud.repository.ConsultorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -67,5 +67,19 @@ public class CitaService {
         return repository.countByEstadoCita(estadoCita);
     }
 
+    public Cita guardarCitaDesdeForm(ReservaCitaForm reserva, Paciente paciente, Especialidad especialidad, Consultorio consultorio){
+        Cita cita = new Cita();
+        cita.setEstadoCita(EstadoCita.registrada);
+        cita.setEspecialidad(especialidad);
+        cita.setMotivo(reserva.getMotivo());
+        LocalDate localDate = LocalDate.parse(reserva.getFecha());
+        LocalTime localTime = LocalTime.parse(reserva.getHora());
+        cita.setFechaHora(LocalDateTime.of(localDate, localTime));
+        cita.setPaciente(paciente);
+        cita.setConsultorio(consultorio);
+        cita.setFechaRegistro(LocalDateTime.now());
+        repository.save(cita);
+        return cita;
+    }
 
 }

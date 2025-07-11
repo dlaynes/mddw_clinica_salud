@@ -4,9 +4,9 @@ public enum EstadoCita {
     registrada, // Cuando la cita es creada por un visitante
     rechazada, // Cuando se rechaza una cita creada por un visitante
     programada, // Cuando se acepta una cita creada por un visitante o es llenada desde el panel de control
-    completada, // Cuando se concluye una cita
-    cancelada, // Cuando se cancela una cita programada
-    enEspera; // Cuando el cliente asiste a una cita, o se encuentra en proceso
+    completada, // Cuando se concluye una cita y se llena el historial médico
+    cancelada, // Cuando se cancela una cita programada o en espera
+    enEspera; // Cuando el cliente asiste a una cita, o se encuentra en proceso (cola en el local)
 
     @Override
     public String toString() {

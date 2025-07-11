@@ -1,10 +1,13 @@
 package com.grupo2.clinicasalud.service;
 
 import com.grupo2.clinicasalud.model.Paciente;
+import com.grupo2.clinicasalud.model.Usuario;
+import com.grupo2.clinicasalud.model.form.ReservaCitaForm;
 import com.grupo2.clinicasalud.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -53,6 +56,19 @@ public class PacienteService {
 
     public long countPacientes() {
         return repository.count();
+    }
+
+    public Paciente guardarPaciente(String nombre, String apellidos, String email, String telefono, Long usuarioId){
+        Paciente paciente = new Paciente();
+        paciente.setNombre(nombre);
+        paciente.setApellido(apellidos);
+        paciente.setEmail(email);
+        paciente.setTelefono(telefono);
+        paciente.setUsuarioId(usuarioId);
+        paciente.setFechaRegistro(LocalDateTime.now());
+        repository.save(paciente);
+
+        return paciente;
     }
 
 }

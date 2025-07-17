@@ -1,1 +1,0 @@
-ALTER TABLE recetas DROP COLUMN IF EXISTS tratamiento;

@@ -53,22 +53,25 @@ public class AuthController {
     @Transactional
     @PostMapping("/registro")
     public String registerUser(@Valid @ModelAttribute("usuario") RegistroForm registroForm, BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes, Model model) {
         if(bindingResult.hasErrors()){
-            return "redirect:/auth/registro";
+            model.addAttribute("usuario", registroForm);
+            return "/auth/registro";
         }
 
         // Validaciones
         if (!registroForm.getPassword().equals(registroForm.getPasswordConfirm())) {
-            redirectAttributes.addFlashAttribute("param.error", "Las contraseñas no coinciden");
-            return "redirect:/auth/registro";
+            model.addAttribute("formError", "Las contraseñas no coinciden");
+            model.addAttribute("usuario", registroForm);
+            return "/auth/registro";
         }
 
         String email = registroForm.getEmail().toLowerCase();
 
         if (detalleUsuarioService.existeConCorreo(email)) {
-            redirectAttributes.addFlashAttribute("param.error", "El email ya está registrado");
-            return "redirect:/auth/registro";
+            model.addAttribute("formError", "El email ya está registrado");
+            model.addAttribute("usuario", registroForm);
+            return "/auth/registro";
         }
 
         Usuario usuario = detalleUsuarioService.guardarCliente(email, registroForm.getPassword(), passwordEncoder);
@@ -85,7 +88,7 @@ public class AuthController {
         detalleUsuarioService.guardarUsuario(usuario);
 
         redirectAttributes.addFlashAttribute("param:success", "Usuario registrado exitosamente");
-        return "redirect:/auth/login";
+        return "redirect:/auth/login?register=true";
     }
 
 }

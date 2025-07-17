@@ -103,9 +103,16 @@
         <form method="post" th:action="@{/auth/registro}" th:object="${usuario}">
             <h3 class="text-center mb-4"><i class="bi bi-person-plus me-2"></i>Crear una cuenta</h3>
 
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta"></button>
+            </div>
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${formError}">
                 <i class="bi bi-exclamation-triangle me-2"></i>
-                <strong>Error:</strong> <span th:text="${param.error}"></span>
+                <strong>Error:</strong> <span th:text="${formError}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar alerta de error"></button>
             </div>
 
